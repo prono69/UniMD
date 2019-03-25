@@ -5,6 +5,7 @@
 import asyncio
 import io
 import os
+import uniborg
 from telethon import events
 from telethon.tl import functions, types
 

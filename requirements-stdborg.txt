@@ -15,4 +15,4 @@ telegraph
 urbandict
 wikipedia
 youtube-dl
-
+pyrogram
