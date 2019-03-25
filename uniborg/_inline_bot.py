@@ -4,7 +4,7 @@
 from math import ceil
 import re
 from telethon import events, custom
-
+from uniborg import Uniborg
 
 @borg.on(events.NewMessage(pattern=r"\.ib (.[^ ]*) (.*)", outgoing=True))
 async def _(event):
