@@ -16,11 +16,14 @@
 Syntax: .remove.bg https://link.to/image.extension
 Syntax: .remove.bg as reply to a media"""
 import asyncio
-from datetime import datetime
 import os
-import requests
-from telethon import events
 import time
+from datetime import datetime
+
+import requests
+
+import telethon
+from telethon import events
 from uniborg.util import progress
 
 

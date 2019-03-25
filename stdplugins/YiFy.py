@@ -3,10 +3,12 @@
 # (c) Shrimadhav U K
 
 
-from telethon import events
 import asyncio
-from bs4 import BeautifulSoup
+import telethon
 import requests
+from bs4 import BeautifulSoup
+
+from telethon import events
 
 
 @borg.on(events.NewMessage(pattern=r"\.yify recents", outgoing=True))
@@ -35,4 +37,3 @@ async def _(event):
             )
             # return False
             await asyncio.sleep(120)
-

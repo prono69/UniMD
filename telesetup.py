@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 # (c) https://t.me/TelethonChat/37677
 
+import os
+import telethon
 import telethon.sync
 from telethon import TelegramClient, events
-from telethon.tl import types, functions
-import os
+from telethon.tl import functions, types
 
 APP_ID = os.environ.get("APP_ID", None)
 API_HASH = os.environ.get("API_HASH", None)
@@ -29,4 +30,3 @@ if __name__ == "__main__":
     print(event.raw_text)"""
   print("Loaded")
   # client.run_until_disconnected()
-
