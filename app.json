@@ -84,6 +84,11 @@
       "value": "9",
       "required": false
     },
+    "GOOGLE_SEARCH_COUNT_LIMIT": {
+      "description": "How many search result should appear when you do a .google search search? (setting a low value is preferred)",
+      "value": "9",
+      "required": false
+    },
     "TG_BOT_TOKEN_BF_HER": {
       "description": "Obtain a Telegram bot token by contacting @BotFather",
       "required": false
@@ -113,7 +118,12 @@
       "required": false
     }
   },
-  "addons": [],
+  "addons": [{
+    "plan": "heroku-postgresql",
+    "options": {
+      "version": "9.5"
+    }
+  }],
   "buildpacks": [{
     "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
   }, {

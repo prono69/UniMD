@@ -7,10 +7,12 @@ gsearch
 gtts
 hachoir
 Pillow
+psycopg2
 mtranslate
 regex
 requests
 speedtest-cli
+sqlalchemy
 telegraph
 urbandict
 wikipedia

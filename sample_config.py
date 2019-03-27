@@ -38,6 +38,7 @@ class Config(object):
     # Send .get_id in any group with all your administration bots (added)
     G_BAN_LOGGER_GROUP = int(os.environ.get("G_BAN_LOGGER_GROUP", -100123456789))
     # TG API limit. An album can have atmost 10 media!
+    GOOGLE_SEARCH_COUNT_LIMIT = int(os.environ.get("GOOGLE_SEARCH_COUNT_LIMIT", 9))
     TG_GLOBAL_ALBUM_LIMIT = int(os.environ.get("TG_GLOBAL_ALBUM_LIMIT", 9))
     # Telegram BOT Token from @BotFather
     TG_BOT_TOKEN_BF_HER = os.environ.get("TG_BOT_TOKEN_BF_HER", None)
@@ -85,6 +86,10 @@ class Config(object):
     NC_LOG_P_M_S = bool(os.environ.get("NC_LOG_P_M_S", False))
     # send .get_id in any channel to forward all your NEW PMs to this group
     PM_LOGGR_BOT_API_ID = int(os.environ.get("PM_LOGGR_BOT_API_ID", "-100"))
+    # For Databases
+    # can be None in which case plugins requiring
+    # DataBase would not work
+    DB_URI = os.environ.get("DATABASE_URL", None)
 
 
 class Production(Config):
