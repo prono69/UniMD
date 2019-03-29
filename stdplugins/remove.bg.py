@@ -21,7 +21,7 @@ import time
 from datetime import datetime
 
 import requests
-
+import io
 import telethon
 from telethon import events
 from uniborg.util import progress

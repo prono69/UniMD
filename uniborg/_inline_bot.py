@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # (c) Shrimadhav U K
-from math import ceil
 import re
-from telethon import events, custom
+from math import ceil
+
+from telethon import custom, events
 from uniborg import Uniborg
+
 
 @borg.on(events.NewMessage(pattern=r"\.ib (.[^ ]*) (.*)", outgoing=True))
 async def _(event):
