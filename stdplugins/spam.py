@@ -5,8 +5,7 @@
 #
 
 from asyncio import wait
-import LOGGER
-import LOGGER_GROUP
+
 from telethon import events
 
 
