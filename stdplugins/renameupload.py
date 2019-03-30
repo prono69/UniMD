@@ -3,22 +3,22 @@ Syntax:
 .rename file.name as reply to a Telegram media
 .rnupload file.name as reply to a Telegram media to rename and upload
 .rnstreamupload file.name as reply to a Telegram media to rename and upload as streamable file"""
-from telethon import events
-import aiohttp
 import asyncio
 import json
 import os
-import requests
 import subprocess
+import time
 from datetime import datetime
+
+import requests
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 
-from telethon.tl.types import DocumentAttributeVideo
+import aiohttp
+from telethon import events
 from telethon.errors import MessageNotModifiedError
-
-import time
-from uniborg.util import progress, humanbytes, TimeFormatter
+from telethon.tl.types import DocumentAttributeVideo
+from uniborg.util import TimeFormatter, humanbytes, progress
 
 thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
 
