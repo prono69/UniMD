@@ -6,20 +6,20 @@ Available Commands:
 .upload <Path To File>
 .uploadir <Path To Directory>
 .uploadasstream <Path To File>"""
-from telethon import events
+import asyncio
 import json
 import os
 import subprocess
-import requests
 import time
-import asyncio
 from datetime import datetime
+
+import requests
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 
-from telethon.tl.types import DocumentAttributeVideo
+from telethon import events
 from telethon.errors import MessageNotModifiedError
-
+from telethon.tl.types import DocumentAttributeVideo
 from uniborg.util import progress
 
 thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
@@ -226,4 +226,3 @@ async def _(event):
             await event.edit("Uploaded in {} seconds.".format(ms))
     else:
         await event.edit("404: File Not Found")
-
