@@ -16,7 +16,6 @@ import aiohttp
 from telethon import events
 from telethon.errors import MessageNotModifiedError
 from telethon.tl.types import DocumentAttributeVideo
-from uniborg import borg
 from uniborg.util import humanbytes, progress, time_formatter
 
 
