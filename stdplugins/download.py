@@ -7,7 +7,7 @@ import json
 import os
 import time
 from datetime import datetime
-from uniborg import Uniborg
+
 import requests
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
@@ -16,6 +16,7 @@ import aiohttp
 from telethon import events
 from telethon.errors import MessageNotModifiedError
 from telethon.tl.types import DocumentAttributeVideo
+from uniborg import Uniborg
 from uniborg.util import humanbytes, progress, time_formatter
 
 
@@ -105,7 +106,7 @@ URL: {}
 File Name: {}
 File Size: {}
 Downloaded: {}
-ETA: {}""".format(url, file_name, humanbytes(total_length), humanbytes(downloaded), TimeFormatter(estimated_total_time))
+ETA: {}""".format(url, file_name, humanbytes(total_length), humanbytes(downloaded), time_formatter(estimated_total_time))
                         if current_message != display_message:
                             await event.edit(current_message)
                             display_message = current_message
