@@ -13,9 +13,11 @@ from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 
 import aiohttp
+import Config
 from telethon import events
 from telethon.errors import MessageNotModifiedError
 from telethon.tl.types import DocumentAttributeVideo
+from uniborg import borg
 from uniborg.util import humanbytes, progress, time_formatter
 
 

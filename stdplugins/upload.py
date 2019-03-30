@@ -16,10 +16,11 @@ from datetime import datetime
 import requests
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
-
+import Config
 from telethon import events
 from telethon.errors import MessageNotModifiedError
 from telethon.tl.types import DocumentAttributeVideo
+from uniborg import borg
 from uniborg.util import progress
 
 thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
