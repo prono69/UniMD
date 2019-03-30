@@ -19,7 +19,6 @@ from hachoir.parser import createParser
 from telethon import events
 from telethon.errors import MessageNotModifiedError
 from telethon.tl.types import DocumentAttributeVideo
-from uniborg import borg
 from uniborg.util import progress
 
 thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
