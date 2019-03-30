@@ -8,7 +8,7 @@ import time
 
 from telethon import events
 from telethon.tl.functions.messages import GetPeerDialogsRequest
-from uniborg.util import time_formatter
+
 
 
 def admin_cmd(pattern):
