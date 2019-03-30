@@ -18,7 +18,7 @@ import aiohttp
 from telethon import events
 from telethon.errors import MessageNotModifiedError
 from telethon.tl.types import DocumentAttributeVideo
-from uniborg.util import TimeFormatter, humanbytes, progress
+from uniborg.util import progress, humanbytes, time_formatter
 
 thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
 

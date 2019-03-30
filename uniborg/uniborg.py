@@ -6,12 +6,12 @@ import importlib.util
 import logging
 from pathlib import Path
 
-from telethon import TelegramClient
-import telethon.utils
 import telethon.events
+import telethon.utils
+from telethon import TelegramClient
 
-from .storage import Storage
 from . import hacks
+from .storage import Storage
 
 
 class Uniborg(TelegramClient):
