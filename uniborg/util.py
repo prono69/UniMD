@@ -5,10 +5,10 @@
 import math
 import re
 import time
-from uniborg.util import  humanbytes, time_formatter
 
 from telethon import events
 from telethon.tl.functions.messages import GetPeerDialogsRequest
+from uniborg.util import time_formatter
 
 
 def admin_cmd(pattern):
