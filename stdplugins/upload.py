@@ -16,7 +16,6 @@ from datetime import datetime
 import requests
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
-import Config
 from telethon import events
 from telethon.errors import MessageNotModifiedError
 from telethon.tl.types import DocumentAttributeVideo
