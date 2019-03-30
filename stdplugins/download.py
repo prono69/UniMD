@@ -2,21 +2,21 @@
 Syntax:
 .download as reply to a Telegram media
 .download url | file.name to download files from a Public Link"""
-from telethon import events
-import aiohttp
 import asyncio
 import json
 import os
-import requests
+import time
 from datetime import datetime
+
+import requests
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 
-from telethon.tl.types import DocumentAttributeVideo
+import aiohttp
+from telethon import events
 from telethon.errors import MessageNotModifiedError
-
-import time
-from uniborg.util import progress, humanbytes, time_formatter
+from telethon.tl.types import DocumentAttributeVideo
+from uniborg.util import humanbytes, progress, time_formatter
 
 
 @borg.on(events.NewMessage(pattern=r"\.download ?(.*)", outgoing=True))
