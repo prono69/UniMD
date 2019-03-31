@@ -1,26 +1,92 @@
 """Download Files to your local server
 Syntax:
-.download as reply to a Telegram media
+.fast download
+.download
 .download url | file.name to download files from a Public Link"""
+
+import aiohttp
 import asyncio
-import json
 import os
 import time
 from datetime import datetime
-
-import requests
-from hachoir.metadata import extractMetadata
-from hachoir.parser import createParser
-
-import aiohttp
 from telethon import events
-from telethon.errors import MessageNotModifiedError
 from telethon.tl.types import DocumentAttributeVideo
-from uniborg import Uniborg
-from uniborg.util import humanbytes, progress, time_formatter
+from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
 
 
-@borg.on(events.NewMessage(pattern=r"\.download ?(.*)", outgoing=True))
+@borg.on(admin_cmd(r"\.fast download"))
+async def _(event):
+    if event.fwd_from:
+        return
+    current_message_id = event.message.id
+    if event.reply_to_msg_id:
+        await event.edit("Processing ...")
+        first_message_id = event.reply_to_msg_id
+        links = []
+        async for message in borg.iter_messages(
+            event.chat_id,
+            min_id=first_message_id,
+            max_id=current_message_id,
+            from_user=borg.me
+        ):
+            current_message = message.message
+            if current_message.startswith("http"):
+                links.append(current_message)
+        logger.info(links)
+        await event.edit(
+            "Found {} links in {} messages. ".format(len(links), current_message_id - first_message_id)
+        )
+        start = datetime.now()
+        downloaded_links = 0
+        for current_link in links:
+            msg = await event.reply("Initiating Download `{}`".format(current_link))
+            url = current_link
+            file_name = os.path.basename(url)
+            to_download_directory = Config.TMP_DOWNLOAD_DIRECTORY
+            if "|" in current_link:
+                url, file_name = current_link.split("|")
+            url = url.strip()
+            file_name = file_name.strip()
+            downloaded_file_name = os.path.join(to_download_directory, file_name)
+            async with aiohttp.ClientSession() as session:
+                c_time = time.time()
+                await download_coroutine(
+                    session,
+                    url,
+                    downloaded_file_name,
+                    msg,
+                    c_time
+                )
+            if os.path.exists(downloaded_file_name):
+                await msg.delete()
+                downloaded_links = downloaded_links + 1
+                await event.edit(
+                    "Downloaded {} / {} links in {} messages. ".format(
+                        downloaded_links,
+                        len(links),
+                        current_message_id - first_message_id
+                    )
+                )
+            else:
+                await msg.edit("Incorrect URL\n {}".format(input_str))
+        end = datetime.now()
+        ms = (end - start).seconds
+        await event.edit(
+            "Downloaded {} links in {} messages in {} seconds.".format(
+                len(links),
+                current_message_id - first_message_id,
+                ms
+            )
+        )
+    else:
+        await event.edit(
+            "Reply `.fast download` to " + \
+            "download all links till the current message"
+        )
+
+
+
+@borg.on(admin_cmd(r"\.download ?(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -31,17 +97,21 @@ async def _(event):
     if event.reply_to_msg_id:
         start = datetime.now()
         reply_message = await event.get_reply_message()
-        c_time = time.time()
-        downloaded_file_name = await borg.download_media(
-            reply_message,
-            Config.TMP_DOWNLOAD_DIRECTORY,
-            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(d, t, event, c_time, "trying to download")
+        try:
+            c_time = time.time()
+            downloaded_file_name = await borg.download_media(
+                reply_message,
+                Config.TMP_DOWNLOAD_DIRECTORY,
+                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                    progress(d, t, event, c_time, "trying to download")
+                )
             )
-        )
-        end = datetime.now()
-        ms = (end - start).seconds
-        await event.edit("Downloaded to `{}` in {} seconds.".format(downloaded_file_name, ms))
+        except Exception as e:  # pylint:disable=C0103,W0703
+            await event.edit(str(e))
+        else:
+            end = datetime.now()
+            ms = (end - start).seconds
+            await event.edit("Downloaded to `{}` in {} seconds.".format(downloaded_file_name, ms))
     elif input_str:
         start = datetime.now()
         url = input_str
@@ -106,7 +176,13 @@ URL: {}
 File Name: {}
 File Size: {}
 Downloaded: {}
-ETA: {}""".format(url, file_name, humanbytes(total_length), humanbytes(downloaded), time_formatter(estimated_total_time))
+ETA: {}""".format(
+    url,
+    file_name,
+    humanbytes(total_length),
+    humanbytes(downloaded),
+    time_formatter(estimated_total_time)
+)
                         if current_message != display_message:
                             await event.edit(current_message)
                             display_message = current_message

@@ -6,8 +6,8 @@ Available Commands:
 .upload <Path To File>
 .uploadir <Path To Directory>
 .uploadasstream <Path To File>"""
+
 import asyncio
-import json
 import os
 import subprocess
 import time
@@ -17,7 +17,6 @@ import requests
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from telethon import events
-from telethon.errors import MessageNotModifiedError
 from telethon.tl.types import DocumentAttributeVideo
 from uniborg.util import progress
 
@@ -30,8 +29,7 @@ def get_lst_of_files(input_directory, output_lst):
         current_file_name = os.path.join(input_directory, file_name)
         if os.path.isdir(current_file_name):
             return get_lst_of_files(current_file_name, output_lst)
-        else:
-            output_lst.append(current_file_name)
+        output_lst.append(current_file_name)
     return output_lst
 
 
@@ -46,7 +44,11 @@ async def _(event):
         lst_of_files = sorted(get_lst_of_files(input_str, []))
         logger.info(lst_of_files)
         u = 0
-        await event.edit("Found {} files. Uploading will start soon. Please wait!".format(len(lst_of_files)))
+        await event.edit(
+            "Found {} files. ".format(len(lst_of_files)) + \
+            "Uploading will start soon. " + \
+            "Please wait!"
+        )
         thumb = None
         if os.path.exists(thumb_image_path):
             thumb = thumb_image_path
@@ -80,7 +82,6 @@ async def _(event):
                         )
                     ]
                 try:
-                    c_time = time.time()
                     await borg.send_file(
                         event.chat_id,
                         single_file,
@@ -171,7 +172,11 @@ async def _(event):
     file_name = input_str
     if os.path.exists(file_name):
         if not file_name.endswith((".mkv", ".mp4", ".mp3", ".flac")):
-            await event.edit("Sorry. But I don't think {} is a streamable file. Please try again.\n**Supported Formats**: MKV, MP4, MP3, FLAC".format(file_name))
+            await event.edit(
+                "Sorry. But I don't think {} is a streamable file.".format(file_name) + \
+                " Please try again.\n" + \
+                "**Supported Formats**: MKV, MP4, MP3, FLAC"
+            )
             return False
         if os.path.exists(thumb_image_path):
             thumb = thumb_image_path
