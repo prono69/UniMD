@@ -31,7 +31,7 @@ async def _(event):
             }
             data = open(required_file_name, "rb").read()
             response = requests.post(
-                "https://gateway-lon.watsonplatform.net/speech-to-text/api/v1/recognize",
+                "https://gateway-lon.watsonplatform.net/speech-to-text/api",
                 headers=headers,
                 data=data,
                 auth=('apikey', Config.IBM_WATSON_CRED_PASSWORD)
