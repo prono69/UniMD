@@ -1,5 +1,5 @@
 """Default Permission in Telegram 5.0.1
-Available Commands: .lock <option>, .unlock <option>, .dblocks
+Available Commands: .lock <option>, .unlock <option>, .locks
 API Options: msg, media, sticker, gif, gamee, ainline, gpoll, adduser, cpin, changeinfo
 DB Options: url, bots, forward"""
 
@@ -8,11 +8,13 @@ from sql_helpers.locks_sql import update_lock, is_locked, get_locks
 from uniborg.util import admin_cmd
 
 
-@borg.on(admin_cmd(r"\.lock ?(.*)"))
+@borg.on(admin_cmd(r"\.lock( (?P<target>\S+)|$)"))
 async def _(event):
+     # Space weirdness in regex required because argument is optional and other
+     # commands start with ".lock"
     if event.fwd_from:
         return
-    input_str = event.pattern_match.group(1)
+    input_str = event.pattern_match.group("target")
     peer_id = event.chat_id
     if input_str in (("url", "bots", "forward")):
         update_lock(peer_id, input_str, True)
@@ -30,26 +32,27 @@ async def _(event):
         adduser = None
         cpin = None
         changeinfo = None
-        if "msg" in input_str:
-            msg = True
-        if "media" in input_str:
-            media = True
-        if "sticker" in input_str:
-            sticker = True
-        if "gif" in input_str:
-            gif = True
-        if "gamee" in input_str:
-            gamee = True
-        if "ainline" in input_str:
-            ainline = True
-        if "gpoll" in input_str:
-            gpoll = True
-        if "adduser" in input_str:
-            adduser = True
-        if "cpin" in input_str:
-            cpin = True
-        if "changeinfo" in input_str:
-            changeinfo = True
+        if input_str:
+            if "msg" in input_str:
+                msg = True
+            if "media" in input_str:
+                media = True
+            if "sticker" in input_str:
+                sticker = True
+            if "gif" in input_str:
+                gif = True
+            if "gamee" in input_str:
+                gamee = True
+            if "ainline" in input_str:
+                ainline = True
+            if "gpoll" in input_str:
+                gpoll = True
+            if "adduser" in input_str:
+                adduser = True
+            if "cpin" in input_str:
+                cpin = True
+            if "changeinfo" in input_str:
+                changeinfo = True
         banned_rights = types.ChatBannedRights(
             until_date=None,
             # view_messages=None,
@@ -96,25 +99,29 @@ async def _(event):
         )
 
 
-@borg.on(admin_cmd(r"\.dblocks"))
+@borg.on(admin_cmd(r"\.locks"))
 async def _(event):
     if event.fwd_from:
         return
     res = ""
-    current_locks = get_locks(event.chat_id)
-    if not current_locks:
+    current_db_locks = get_locks(event.chat_id)
+    if not current_db_locks:
         res = "There are no DataBase locks in this chat"
     else:
         res = "Following are the DataBase locks in this chat: \n"
+<<<<<<< HEAD
 <<<<<<< HEAD
         res += "👉 `url`: `{}`\n".format(current_locks.url)
         res += "👉 `forward`: `{}`\n".format(current_locks.forward)
         res += "👉 `bots`: `{}`\n".format(current_locks.bots)
 =======
+=======
+>>>>>>> parent of 9c46abd... Revert "IMprove locks"
         res += "👉 `url`: `{}`\n".format(current_db_locks.url)
         res += "👉 `forward`: `{}`\n".format(current_db_locks.forward)
         res += "👉 `bots`: `{}`\n".format(current_db_locks.bots)
         res += "👉 `commands`: `{}`\n".format(current_db_locks.commands)
+<<<<<<< HEAD
     current_chat = await event.get_chat()
     try:
         current_api_locks = current_chat.default_banned_rights
@@ -133,6 +140,20 @@ async def _(event):
         res += "👉 `cpin`: `{}`\n".format(current_api_locks.pin_messages)
         res += "👉 `changeinfo`: `{}`\n".format(current_api_locks.change_info)
 >>>>>>> parent of 1132ac6... Revert "Fix locks in PM"
+=======
+    current_api_locks = (await event.get_chat()).default_banned_rights
+    res += "\nFollowing are the API locks in this chat: \n"
+    res += "👉 `msg`: `{}`\n".format(current_api_locks.send_messages)
+    res += "👉 `media`: `{}`\n".format(current_api_locks.send_media)
+    res += "👉 `sticker`: `{}`\n".format(current_api_locks.send_stickers)
+    res += "👉 `gif`: `{}`\n".format(current_api_locks.send_gifs)
+    res += "👉 `gamee`: `{}`\n".format(current_api_locks.send_games)
+    res += "👉 `ainline`: `{}`\n".format(current_api_locks.send_inline)
+    res += "👉 `gpoll`: `{}`\n".format(current_api_locks.send_polls)
+    res += "👉 `adduser`: `{}`\n".format(current_api_locks.invite_users)
+    res += "👉 `cpin`: `{}`\n".format(current_api_locks.pin_messages)
+    res += "👉 `changeinfo`: `{}`\n".format(current_api_locks.change_info)
+>>>>>>> parent of 9c46abd... Revert "IMprove locks"
     await event.edit(res)
 
 
