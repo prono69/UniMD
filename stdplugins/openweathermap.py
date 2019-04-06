@@ -16,9 +16,9 @@ async def _(event):
     if response_api["cod"] == 200:
         await event.edit(
             """**{}**
-{}°С temperature from {} to {}°С, wind {}m/s.clouds {}%, {}hpa
-Sunrise: {}
-Sunset: {}""".format(
+**{}°С** temperature from **{}** to **{}°С**, wind **{}m/s**.clouds **{}%**, **{}hpa**
+Sunrise: **{}**
+Sunset: **{}**""".format(
                 input_str,
                 response_api["main"]["temp"],
                 response_api["main"]["temp_min"],
