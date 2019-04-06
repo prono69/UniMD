@@ -1,7 +1,7 @@
 """Default Permission in Telegram 5.0.1
 Available Commands: .lock <option>, .unlock <option>, .locks
 API Options: msg, media, sticker, gif, gamee, ainline, gpoll, adduser, cpin, changeinfo
-DB Options: url, bots, forward"""
+DB Options: url, bots, forward, commands"""
 
 from telethon import events, functions, types
 from sql_helpers.locks_sql import update_lock, is_locked, get_locks
@@ -16,7 +16,7 @@ async def _(event):
         return
     input_str = event.pattern_match.group("target")
     peer_id = event.chat_id
-    if input_str in (("url", "bots", "forward")):
+    if input_str in (("url", "bots", "forward", "commands")):
         update_lock(peer_id, input_str, True)
         await event.edit(
             "Locked {}".format(input_str)
@@ -88,7 +88,7 @@ async def _(event):
         return
     input_str = event.pattern_match.group(1)
     peer_id = event.chat_id
-    if input_str in (("url", "bots", "forward")):
+    if input_str in (("url", "bots", "forward", "commands")):
         update_lock(peer_id, input_str, False)
         await event.edit(
             "UnLocked {}".format(input_str)
@@ -109,38 +109,10 @@ async def _(event):
         res = "There are no DataBase locks in this chat"
     else:
         res = "Following are the DataBase locks in this chat: \n"
-<<<<<<< HEAD
-<<<<<<< HEAD
-        res += "👉 `url`: `{}`\n".format(current_locks.url)
-        res += "👉 `forward`: `{}`\n".format(current_locks.forward)
-        res += "👉 `bots`: `{}`\n".format(current_locks.bots)
-=======
-=======
->>>>>>> parent of 9c46abd... Revert "IMprove locks"
         res += "👉 `url`: `{}`\n".format(current_db_locks.url)
         res += "👉 `forward`: `{}`\n".format(current_db_locks.forward)
         res += "👉 `bots`: `{}`\n".format(current_db_locks.bots)
         res += "👉 `commands`: `{}`\n".format(current_db_locks.commands)
-<<<<<<< HEAD
-    current_chat = await event.get_chat()
-    try:
-        current_api_locks = current_chat.default_banned_rights
-    except AttributeError as e:
-        logger.info(str(e))
-    else:
-        res += "\nFollowing are the API locks in this chat: \n"
-        res += "👉 `msg`: `{}`\n".format(current_api_locks.send_messages)
-        res += "👉 `media`: `{}`\n".format(current_api_locks.send_media)
-        res += "👉 `sticker`: `{}`\n".format(current_api_locks.send_stickers)
-        res += "👉 `gif`: `{}`\n".format(current_api_locks.send_gifs)
-        res += "👉 `gamee`: `{}`\n".format(current_api_locks.send_games)
-        res += "👉 `ainline`: `{}`\n".format(current_api_locks.send_inline)
-        res += "👉 `gpoll`: `{}`\n".format(current_api_locks.send_polls)
-        res += "👉 `adduser`: `{}`\n".format(current_api_locks.invite_users)
-        res += "👉 `cpin`: `{}`\n".format(current_api_locks.pin_messages)
-        res += "👉 `changeinfo`: `{}`\n".format(current_api_locks.change_info)
->>>>>>> parent of 1132ac6... Revert "Fix locks in PM"
-=======
     current_api_locks = (await event.get_chat()).default_banned_rights
     res += "\nFollowing are the API locks in this chat: \n"
     res += "👉 `msg`: `{}`\n".format(current_api_locks.send_messages)
@@ -153,7 +125,6 @@ async def _(event):
     res += "👉 `adduser`: `{}`\n".format(current_api_locks.invite_users)
     res += "👉 `cpin`: `{}`\n".format(current_api_locks.pin_messages)
     res += "👉 `changeinfo`: `{}`\n".format(current_api_locks.change_info)
->>>>>>> parent of 9c46abd... Revert "IMprove locks"
     await event.edit(res)
 
 
@@ -185,6 +156,21 @@ async def check_incoming_messages(event):
                     "I don't seem to have ADMIN permission here. \n`{}`".format(str(e))
                 )
                 update_lock(peer_id, "url", False)
+    if is_locked(peer_id, "commands"):
+        entities = event.message.entities
+        is_command = False
+        if entities:
+            for entity in entities:
+                if isinstance(entity, types.MessageEntityBotCommand):
+                    is_command = True
+        if is_command:
+            try:
+                await event.delete()
+            except Exception as e:
+                await event.reply(
+                    "I don't seem to have ADMIN permission here. \n`{}`".format(str(e))
+                )
+                update_lock(peer_id, "commands", False)
 
 
 @borg.on(events.ChatAction())  # pylint:disable=E0602
