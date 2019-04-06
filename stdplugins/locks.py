@@ -106,9 +106,33 @@ async def _(event):
         res = "There are no DataBase locks in this chat"
     else:
         res = "Following are the DataBase locks in this chat: \n"
+<<<<<<< HEAD
         res += "👉 `url`: `{}`\n".format(current_locks.url)
         res += "👉 `forward`: `{}`\n".format(current_locks.forward)
         res += "👉 `bots`: `{}`\n".format(current_locks.bots)
+=======
+        res += "👉 `url`: `{}`\n".format(current_db_locks.url)
+        res += "👉 `forward`: `{}`\n".format(current_db_locks.forward)
+        res += "👉 `bots`: `{}`\n".format(current_db_locks.bots)
+        res += "👉 `commands`: `{}`\n".format(current_db_locks.commands)
+    current_chat = await event.get_chat()
+    try:
+        current_api_locks = current_chat.default_banned_rights
+    except AttributeError as e:
+        logger.info(str(e))
+    else:
+        res += "\nFollowing are the API locks in this chat: \n"
+        res += "👉 `msg`: `{}`\n".format(current_api_locks.send_messages)
+        res += "👉 `media`: `{}`\n".format(current_api_locks.send_media)
+        res += "👉 `sticker`: `{}`\n".format(current_api_locks.send_stickers)
+        res += "👉 `gif`: `{}`\n".format(current_api_locks.send_gifs)
+        res += "👉 `gamee`: `{}`\n".format(current_api_locks.send_games)
+        res += "👉 `ainline`: `{}`\n".format(current_api_locks.send_inline)
+        res += "👉 `gpoll`: `{}`\n".format(current_api_locks.send_polls)
+        res += "👉 `adduser`: `{}`\n".format(current_api_locks.invite_users)
+        res += "👉 `cpin`: `{}`\n".format(current_api_locks.pin_messages)
+        res += "👉 `changeinfo`: `{}`\n".format(current_api_locks.change_info)
+>>>>>>> parent of 1132ac6... Revert "Fix locks in PM"
     await event.edit(res)
 
 
