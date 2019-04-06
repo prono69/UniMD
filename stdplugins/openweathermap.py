@@ -15,7 +15,7 @@ async def _(event):
     response_api = requests.get(sample_url.format(input_str, Config.OPEN_WEATHER_MAP_APPID)).json()
     if response_api["cod"] == 200:
         await event.edit(
-            """*{}*
+            """**{}**
 {}°С temperature from {} to {}°С, wind {}m/s.clouds {}%, {}hpa
 Sunrise: {}
 Sunset: {}""".format(
