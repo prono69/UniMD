@@ -71,15 +71,15 @@ async def _(event):
             borg.storage.afk_time = datetime.datetime.now()  # pylint:disable=E0602
         borg.storage.USER_AFK.update({"yes": reason})  # pylint:disable=E0602
         if reason:
-            await event.edit(f"Set AFK mode to True, and Reason is {reason}")
+            await event.edit(f"Telefon başında değilim, Sebep: {reason}")
         else:
-            await event.edit(f"Set AFK mode to True")
+            await event.edit(f"Telefondan uzak modu aktif")
         await asyncio.sleep(5)
         await event.delete()
         try:
             await borg.send_message(  # pylint:disable=E0602
                 Config.PRIVATE_GROUP_BOT_API_ID,  # pylint:disable=E0602
-                f"Set AFK mode to True, and Reason is {reason}"
+                f"Telefon başında değilim, Sebep: {reason}"
             )
         except Exception as e:  # pylint:disable=C0103,W0703
             logger.warn(str(e))  # pylint:disable=E0602
@@ -113,7 +113,7 @@ async def on_afk(event):
             time %= 60
             seconds = time
             if days == 1:
-                afk_since = "**Yesterday**"
+                afk_since = "**Dün**"
             elif days > 1:
                 if days > 6:
                     date = now + \
@@ -124,16 +124,16 @@ async def on_afk(event):
                     wday = now + datetime.timedelta(days=-days)
                     afk_since = wday.strftime('%A')
             elif hours > 1:
-                afk_since = f"`{int(hours)}h{int(minutes)}m` **ago**"
+                afk_since = f"`{int(hours)}h{int(minutes)}m` **önce**"
             elif minutes > 0:
-                afk_since = f"`{int(minutes)}m{int(seconds)}s` **ago**"
+                afk_since = f"`{int(minutes)}m{int(seconds)}s` **önce**"
             else:
-                afk_since = f"`{int(seconds)}s` **ago**"
+                afk_since = f"`{int(seconds)}s` **önce**"
         msg = None
-        message_to_reply = f"I'm afk since {afk_since} " + \
-            f"and I will be back soon\n__Reason:__ {reason}" \
+        message_to_reply = f" {afk_since} süreden beri yokum " + \
+            f"yakında geri döneceğim.\n__Sebep:__ {reason}" \
             if reason \
-            else f"I'm afk since {afk_since} and I will be back soon."
+            else f"{afk_since} süreden beri yokum yakında geri döneceğim."
         msg = await event.reply(message_to_reply)
         await asyncio.sleep(5)
         if event.chat_id in borg.storage.last_afk_message:  # pylint:disable=E0602
