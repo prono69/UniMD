@@ -93,7 +93,7 @@ async def on_afk(event):
     if event.fwd_from:
         return
     borg.storage.recvd_messages[event.chat_id] = event.message
-    afk_since = "**a while ago**"
+    afk_since = "** **"
     current_message_text = event.message.message.lower()
     if "afk" in current_message_text:
         # userbot's should not reply to other userbot's
