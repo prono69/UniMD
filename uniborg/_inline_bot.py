@@ -2,9 +2,10 @@
 # -*- coding: utf-8 -*-
 # (c) Shrimadhav U K
 import re
-from telethon import events, custom
-from uniborg.util import admin_cmd
 
+from telethon import custom, events
+from uniborg.util import admin_cmd
+from math import ceil
 
 @borg.on(admin_cmd(  # pylint:disable=E0602
     r"ib (.[^ ]*) (.*)"
