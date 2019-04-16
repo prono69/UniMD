@@ -5,7 +5,7 @@
 import math
 import os
 import time
-
+import re
 from telethon import events
 from telethon.tl.functions.messages import GetPeerDialogsRequest
 
@@ -15,7 +15,7 @@ if ENV:
     from sample_config import Config
 else:
     if os.path.exists("config.py"):
-        from config import Development as Config
+        from sample_config import Development as Config
 
 
 
