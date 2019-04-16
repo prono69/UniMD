@@ -24,10 +24,10 @@ import requests
 import io
 import telethon
 from telethon import events
-from uniborg.util import progress
+from uniborg.util import progress, admin_cmd
 
 
-@borg.on(events.NewMessage(pattern=r"\.remove\.bg ?(.*)", outgoing=True))
+@borg.on(admin_cmd("remove\.bg ?(.*)"))
 async def _(event):
     HELP_STR = "`.remove.bg` as reply to a media, or give a link as an argument to this command"
     if event.fwd_from:

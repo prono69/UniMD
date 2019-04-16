@@ -3,11 +3,19 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import math
-import re
+import os
 import time
 
 from telethon import events
 from telethon.tl.functions.messages import GetPeerDialogsRequest
+
+# the secret configuration specific things
+ENV = bool(os.environ.get("ENV", False))
+if ENV:
+    from sample_config import Config
+else:
+    if os.path.exists("config.py"):
+        from config import Development as Config
 
 
 
@@ -15,7 +23,10 @@ def admin_cmd(pattern):
     """
     TODO: wrapper for the custom plugins in stdplugins
     """
-    return events.NewMessage(outgoing=True, pattern=re.compile(pattern))
+    return events.NewMessage(
+        outgoing=True,
+        pattern=re.compile(Config.COMMAND_HAND_LER + pattern)
+    )
 
 
 async def is_read(borg, entity, message, is_out=None):

@@ -18,7 +18,8 @@ from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from telethon import events
 from telethon.tl.types import DocumentAttributeVideo
-from uniborg.util import progress
+from uniborg.util import progress, admin_cmd
+
 
 thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
 
@@ -33,7 +34,7 @@ def get_lst_of_files(input_directory, output_lst):
     return output_lst
 
 
-@borg.on(events.NewMessage(pattern=r"\.uploadir (.*)", outgoing=True))
+@borg.on(admin_cmd("uploadir (.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -117,7 +118,7 @@ async def _(event):
         await event.edit("404: Directory Not Found")
 
 
-@borg.on(events.NewMessage(pattern=r"\.upload (.*)", outgoing=True))
+@borg.on(admin_cmd("upload (.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -162,7 +163,7 @@ def get_video_thumb(file, output=None, width=90):
         return output
 
 
-@borg.on(events.NewMessage(pattern=r"\.uploadasstream (.*)", outgoing=True))
+@borg.on(admin_cmd("uploadasstream (.*)"))
 async def _(event):
     if event.fwd_from:
         return
