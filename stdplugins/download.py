@@ -14,7 +14,6 @@ from telethon import events
 from telethon.tl.types import DocumentAttributeVideo
 from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
 
-
 @borg.on(admin_cmd("download ?(.*)"))
 async def _(event):
     if event.fwd_from:
@@ -32,7 +31,7 @@ async def _(event):
                 reply_message,
                 Config.TMP_DOWNLOAD_DIRECTORY,
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(d, t, event, c_time, "trying to download")
+                 progress(d, t, event, c_time, "trying to download")
             )
         except Exception as e:  # pylint:disable=C0103,W0703
             await event.edit(str(e))
