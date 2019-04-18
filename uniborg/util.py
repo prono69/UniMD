@@ -24,8 +24,6 @@ def admin_cmd(pattern=None, allow_sudo=False, **args):
         args["pattern"] = re.compile(Config.COMMAND_HAND_LER + pattern)
     if allow_sudo:
         args["from_users"] = list(Config.SUDO_USERS)
-    else:
-        args["outgoing"] = True
     return events.NewMessage(**args)
 
 
