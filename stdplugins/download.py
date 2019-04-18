@@ -33,7 +33,8 @@ async def _(event):
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
                  progress(d, t, event, c_time, "trying to download")
             )
-        except Exception as e:  # pylint:disable=C0103,W0703
+        )    
+        except Exception as e:  #pylint:disable=C0103,W0703
             await event.edit(str(e))
         else:
             end = datetime.now()
