@@ -8,7 +8,7 @@ from sql_helpers.locks_sql import update_lock, is_locked, get_locks
 from uniborg.util import admin_cmd
 
 
-@borg.on(admin_cmd("lock( (?P<target>\S+)|$)"))
+@borg.on(admin_cmd(r"\.lock( (?P<target>\S+)|$)"))
 async def _(event):
      # Space weirdness in regex required because argument is optional and other
      # commands start with ".lock"
@@ -82,7 +82,7 @@ async def _(event):
             )
 
 
-@borg.on(admin_cmd("unlock ?(.*)"))
+@borg.on(admin_cmd(r"\.unlock ?(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -99,7 +99,7 @@ async def _(event):
         )
 
 
-@borg.on(admin_cmd("lcks"))
+@borg.on(admin_cmd(r"\.locks"))
 async def _(event):
     if event.fwd_from:
         return
@@ -113,36 +113,24 @@ async def _(event):
         res += "👉 `forward`: `{}`\n".format(current_db_locks.forward)
         res += "👉 `bots`: `{}`\n".format(current_db_locks.bots)
         res += "👉 `commands`: `{}`\n".format(current_db_locks.commands)
-    current_chat = await event.get_chat()
-    try:
-        current_api_locks = current_chat.default_banned_rights
-    except AttributeError as e:
-        logger.info(str(e))
-    else:
-        res += "\nFollowing are the API locks in this chat: \n"
-        res += "👉 `msg`: `{}`\n".format(current_api_locks.send_messages)
-        res += "👉 `media`: `{}`\n".format(current_api_locks.send_media)
-        res += "👉 `sticker`: `{}`\n".format(current_api_locks.send_stickers)
-        res += "👉 `gif`: `{}`\n".format(current_api_locks.send_gifs)
-        res += "👉 `gamee`: `{}`\n".format(current_api_locks.send_games)
-        res += "👉 `ainline`: `{}`\n".format(current_api_locks.send_inline)
-        res += "👉 `gpoll`: `{}`\n".format(current_api_locks.send_polls)
-        res += "👉 `adduser`: `{}`\n".format(current_api_locks.invite_users)
-        res += "👉 `cpin`: `{}`\n".format(current_api_locks.pin_messages)
-        res += "👉 `changeinfo`: `{}`\n".format(current_api_locks.change_info)
+    current_api_locks = (await event.get_chat()).default_banned_rights
+    res += "\nFollowing are the API locks in this chat: \n"
+    res += "👉 `msg`: `{}`\n".format(current_api_locks.send_messages)
+    res += "👉 `media`: `{}`\n".format(current_api_locks.send_media)
+    res += "👉 `sticker`: `{}`\n".format(current_api_locks.send_stickers)
+    res += "👉 `gif`: `{}`\n".format(current_api_locks.send_gifs)
+    res += "👉 `gamee`: `{}`\n".format(current_api_locks.send_games)
+    res += "👉 `ainline`: `{}`\n".format(current_api_locks.send_inline)
+    res += "👉 `gpoll`: `{}`\n".format(current_api_locks.send_polls)
+    res += "👉 `adduser`: `{}`\n".format(current_api_locks.invite_users)
+    res += "👉 `cpin`: `{}`\n".format(current_api_locks.pin_messages)
+    res += "👉 `changeinfo`: `{}`\n".format(current_api_locks.change_info)
     await event.edit(res)
 
 
 @borg.on(events.MessageEdited())  # pylint:disable=E0602
 @borg.on(events.NewMessage())  # pylint:disable=E0602
 async def check_incoming_messages(event):
-    # result = await borg(functions.channels.GetParticipantRequest(
-    #     channel=event.chat_id,
-    #     user_id=event.message.from_id
-    # ))
-    # if not event.is_private and isinstance(result.participant, (types.ChannelParticipantCreator, types.ChannelParticipantAdmin)):
-    #     # locks should not be affected for admins of the group
-    #     return False
     peer_id = event.chat_id
     if is_locked(peer_id, "forward"):
         if event.fwd_from:
@@ -187,13 +175,6 @@ async def check_incoming_messages(event):
 
 @borg.on(events.ChatAction())  # pylint:disable=E0602
 async def _(event):
-    # result = await borg(functions.channels.GetParticipantRequest(
-    #     channel=event.chat_id,
-    #     user_id=event.action_message.from_id
-    # ))
-    # if not event.is_private and not isinstance(result.participant, (types.ChannelParticipantCreator, types.ChannelParticipantAdmin)):
-    #     # locks should not be affected for admins of the group
-    #     return False
     # check for "lock" "bots"
     if is_locked(event.chat_id, "bots"):
         # bots are limited Telegram accounts,
@@ -222,7 +203,7 @@ async def _(event):
                         )
                         update_lock(event.chat_id, "bots", False)
                         break
-            if Config.G_BAN_LOGGER_GROUP != -100123456789 and is_ban_able:
+            if is_ban_able:
                 ban_reason_msg = await event.reply(
                     "!warn [user](tg://user?id={}) Please Do Not Add BOTs to this chat.".format(users_added_by)
                 )
