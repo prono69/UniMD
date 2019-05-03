@@ -136,6 +136,7 @@ async def _(event):
 @borg.on(events.MessageEdited())  # pylint:disable=E0602
 @borg.on(events.NewMessage())  # pylint:disable=E0602
 async def check_incoming_messages(event):
+    # TODO: exempt admins from locks
     peer_id = event.chat_id
     if is_locked(peer_id, "forward"):
         if event.fwd_from:
@@ -180,6 +181,7 @@ async def check_incoming_messages(event):
 
 @borg.on(events.ChatAction())  # pylint:disable=E0602
 async def _(event):
+    # TODO: exempt admins from locks
     # check for "lock" "bots"
     if is_locked(event.chat_id, "bots"):
         # bots are limited Telegram accounts,
