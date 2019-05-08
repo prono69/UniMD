@@ -18,3 +18,4 @@ urbandict
 wikipedia
 youtube-dl
 pyrogram
+telethon
