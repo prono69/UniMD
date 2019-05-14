@@ -10,7 +10,7 @@ import subprocess
 
 import pyrogram
 
-from helper_funcs.display_progress import humanbytes, progress_for_pyrogram
+
 # the Strings used for this "thing"
 from translation import Translation
 
