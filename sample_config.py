@@ -67,8 +67,6 @@ class Config(object):
     # foloowing plugins won't work on Heroku,
     # because of their ephemeral file system
     NO_LOAD = [
-        "fwd",
-        "telegraph",
         "afk",
         "gban"
     ]
