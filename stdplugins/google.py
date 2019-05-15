@@ -31,7 +31,7 @@ async def _(event):
         output_str += " 👉🏻  [{}]({}) \n\n".format(text, url)
     end = datetime.now()
     ms = (end - start).seconds
-    await event.edit("searched Google for {} in {} seconds. \n{}".format(input_str, ms, output_str), link_preview=False)
+    await event.edit("searched Google for `{}` in {} seconds. \n{}".format(input_str, ms, output_str), link_preview=False)
     await asyncio.sleep(5)
     await event.edit("Google: {}\n{}".format(input_str, output_str), link_preview=False)
 
@@ -67,7 +67,7 @@ async def _(event):
         os.remove(each_file)
     end = datetime.now()
     ms = (end - start).seconds
-    await event.edit("searched Google for {} in {} seconds.".format(input_str, ms), link_preview=False)
+    await event.edit("searched Google for `{}` in {} seconds.".format(input_str, ms), link_preview=False)
     await asyncio.sleep(5)
     await event.delete()
 
