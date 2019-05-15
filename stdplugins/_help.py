@@ -13,10 +13,10 @@ async def _(event):
     else:
         s_help_string = "Module Not Loaded"
     help_string = """@UniBorg
-Python `{}`
-Telethon `{}`
+**Python** {}
+**Telethon** {}
 
-UserBot Forked from `https://github.com/expectocode/uniborg`""".format(
+**UserBot Forked from** https://github.com/expectocode/uniborg""".format(
         sys.version,
         __version__
     )
