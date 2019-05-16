@@ -11,4 +11,5 @@ async def _(event):
     await event.edit("Pong!")
     end = datetime.now()
     ms = (end - start).microseconds / 1000
+    event.send_sticker(message.chat.id, 'CAADBAAD1QIAAlAYNw2Pr-ymr7r8TgI')
     await event.edit("Pong!\n`{}`".format(ms))
