@@ -17,5 +17,4 @@ telegraph
 urbandict
 wikipedia
 youtube-dl
-pyrogram
-telethon
+git+https://github.com/ahupp/python-magic
