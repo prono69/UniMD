@@ -11,5 +11,4 @@ async def _(event):
     await event.edit("Pong!")
     end = datetime.now()
     ms = (end - start).microseconds / 1000
-    await borg.send_sticker(event.chat_id, 'CAADBAAD1QIAAlAYNw2Pr-ymr7r8TgI')
     await event.edit("Pong!\n`{}`".format(ms))
