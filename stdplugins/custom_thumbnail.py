@@ -76,18 +76,36 @@ def generate_custom_thumbnail(bot, update):
         )
 
 
-@borg.on_message(pyrogram.Filters.photo)
+@pyrogram.Client.on_message(pyrogram.Filters.photo)
 def save_photo(bot, update):
+    #TRChatBase(update.from_user.id, update.text, "save_photo")
+    #if str(update.from_user.id) in Config.BANNED_USERS:
+        #bot.send_message(
+            #chat_id=update.chat.id,
+            #text=Translation.ABUSIVE_USERS,
+            #reply_to_message_id=update.message_id,
+            #disable_web_page_preview=True,
+            #parse_mode=pyrogram.ParseMode.HTML
+        #)
+        #return
+    #if update.media_group_id is not None:
+        #if str(update.from_user.id) not in Config.SUPER7X_DLBOT_USERS:
+            #bot.send_message(
+                #chat_id=update.chat.id,
+                #text=Translation.NOT_AUTH_USER_TEXT,
+                #reply_to_message_id=update.message_id
+            #)
+            #return
         # album is sent
-        download_location = Config.DOWNLOAD_LOCATION + "/" + str(update.from_user.id) + "/" + str(update.media_group_id) + "/"
+    download_location = Config.DOWNLOAD_LOCATION + "/" + str(update.from_user.id) + "/" + str(update.media_group_id) + "/"
         # create download directory, if not exist
-if not os.path.isdir(download_location):
+    if not os.path.isdir(download_location):
         os.makedirs(download_location)
         bot.download_media(
             message=update,
             file_name=download_location
         )
-else:
+    else:
         # received single photo
         download_location = Config.DOWNLOAD_LOCATION + "/" + str(update.from_user.id) + ".jpg"
         bot.download_media(
