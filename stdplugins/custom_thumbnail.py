@@ -87,7 +87,7 @@ if not os.path.isdir(download_location):
             message=update,
             file_name=download_location
         )
-    else:
+else:
         # received single photo
         download_location = Config.DOWNLOAD_LOCATION + "/" + str(update.from_user.id) + ".jpg"
         bot.download_media(
