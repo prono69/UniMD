@@ -28,7 +28,7 @@ logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
 
 
-@borg.on_message(pyrogram.Filters.command(["generatecustomthumbnail"]))
+@borg.on_message(admin_cmd("generatecustomthumbnail (.*)"))
 def generate_custom_thumbnail(bot, update):
     if update.reply_to_message is not None:
         reply_message = update.reply_to_message
