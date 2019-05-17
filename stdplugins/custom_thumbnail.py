@@ -81,8 +81,8 @@ def save_photo(bot, update):
         # album is sent
         download_location = Config.DOWNLOAD_LOCATION + "/" + str(update.from_user.id) + "/" + str(update.media_group_id) + "/"
         # create download directory, if not exist
-        if not os.path.isdir(download_location):
-            os.makedirs(download_location)
+if not os.path.isdir(download_location):
+        os.makedirs(download_location)
         bot.download_media(
             message=update,
             file_name=download_location
