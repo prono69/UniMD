@@ -13,12 +13,8 @@ from telethon.tl.functions.account import UpdateProfileRequest
 DEL_TIME_OUT = 5
 
 #from sys import setrecursionlimit
-ENV = bool(os.environ.get("ENV", False))
-if ENV:
-    from sample_config import Config
-else:
-    if os.path.exists("sample_config.py"):
-        from sample_config import Development as Config
+from sample_config import Config
+from sample_config import Development as Config
 
 from sample_config import (DEFAULT_BIO, HELPER, LOGGER, LOGGER_GROUP,
                      SPOTIFY_BIO_PREFIX, SPOTIFY_PASS, SPOTIFY_USERNAME, bot)
