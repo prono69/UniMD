@@ -103,11 +103,13 @@ URL: {}
 File Name: {}
 File Size: {}
 Downloaded: {}
+Speed: {}
 ETA: {}""".format(
     url,
     file_name,
     humanbytes(total_length),
     humanbytes(downloaded),
+    speed,
     time_formatter(estimated_total_time)
 )
                         if current_message != display_message:
