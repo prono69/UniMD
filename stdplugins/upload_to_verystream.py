@@ -19,7 +19,7 @@ from uniborg.util import admin_cmd, progress
 async def _(event):
     if event.fwd_from:
         return
-    mone = await event.reply("Processing ...")
+    mone = await event.edit("Processing ...")
     if Config.VERY_STREAM_LOGIN is None or Config.VERY_STREAM_KEY is None:
         await mone.edit("This module requires API key from https://verystream.com. Aborting!")
         return False
