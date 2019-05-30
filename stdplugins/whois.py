@@ -23,6 +23,11 @@ async def _(event):
         max_id=0,
         limit=80
     ))
+    replied_user_profile_photos_count = "NaN"
+    try:
+        replied_user_profile_photos_count = replied_user_profile_photos.count
+    except AttributeError as e:
+        pass
     user_id = replied_user.user.id
     # some people have weird HTML in their names
     first_name = html.escape(replied_user.user.first_name)
@@ -56,7 +61,7 @@ Groups in Common: {}
         first_name,
         user_bio,
         dc_id,
-        replied_user_profile_photos.count,
+        replied_user_profile_photos_count,
         replied_user.user.restricted,
         replied_user.user.verified,
         replied_user.user.bot,
