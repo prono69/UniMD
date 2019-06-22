@@ -4,13 +4,15 @@ usage = .dict word
 By : - @Zero_cool7870
 
 """
-from telethon import events
 import asyncio
+import json
 import os
 import sys
-import json
-from bs4 import BeautifulSoup as bs
+
 import requests
+from bs4 import BeautifulSoup as bs
+from telethon import events
+
 
 @borg.on(events.NewMessage(pattern=r"\.dict", outgoing=True))
 async def meme(event):
@@ -19,7 +21,7 @@ async def meme(event):
 	word = event.text
 	word = word[6:]
 	await event.edit("**Processing...**")
-	res = requests.get("https://googledictionaryapi.eu-gb.mybluemix.net/?define="+word+"&lang=tr")
+	res = requests.get("https://googledictionaryapi.eu-gb.mybluemix.net/?define="+word)
 	#json_string = json.dumps(res.text)
 	try:
 		data = json.loads(res.text)
