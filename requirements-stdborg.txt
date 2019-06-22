@@ -21,5 +21,6 @@ urbandict
 wikipedia
 youtube-dl
 lxml
+dropbox
 git+https://github.com/LonamiWebs/Telethon
 git+https://github.com/ahupp/python-magic
