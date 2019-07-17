@@ -154,6 +154,10 @@
     "G_DRIVE_CLIENT_SECRET": {
       "description": "Get your credentials from https://da.gd/so63O",
       "required": false
+    },
+    "TELE_GRAM_2FA_CODE": {
+      "description": "Your Telegram 2FA code as a string",
+      "required": false
     }
   },
   "addons": [{
