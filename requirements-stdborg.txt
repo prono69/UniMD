@@ -4,6 +4,7 @@ beautifulsoup4
 cfscrape
 cryptg
 emoji
+mtranslate
 googletrans
 google_images_download
 gsearch

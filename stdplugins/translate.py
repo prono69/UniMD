@@ -1,14 +1,13 @@
-""" Google Translate
+""" Google Google Translate
 Available Commands:
 .tr LanguageCode as reply to a message
-.tr LangaugeCode | text to translate"""
-
-import emoji
-from googletrans import Translator
+.tr LangaugeCode | text to sepak"""
+from mtranslate import translate
+from telethon import events
 from uniborg.util import admin_cmd
 
 
-@borg.on(admin_cmd("tr ?(.*)"))
+@borg.on(admin_cmd("tr (.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -16,25 +15,23 @@ async def _(event):
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         text = previous_message.message
-        lan = input_str or "en"
+        lan = input_str
     elif "|" in input_str:
         lan, text = input_str.split("|")
     else:
-        await event.edit("`.tr LanguageCode` as reply to a message")
+        await event.edit("Invalid Syntax. Module stopping.")
         return
-    text = emoji.demojize(text.strip())
+    text = text.strip()
     lan = lan.strip()
-    translator = Translator()
     try:
-        translated = translator.translate(text, dest=lan)
-        after_tr_text = translated.text
-        # TODO: emojify the :
-        # either here, or before translation
-        output_str = """**Translated** from {} to {}
+        translated_text = translate(text, lan)
+        output_str = """**SOURCE**
+{}
+**TRANSLATED** to {}
 {}""".format(
-            translated.src,
+            text,
             lan,
-            after_tr_text
+            translated_text
         )
         await event.edit(output_str)
     except Exception as exc:
