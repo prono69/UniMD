@@ -143,6 +143,13 @@ async def on_afk(event):
             if reason \
             else f"I'm afk since {afk_since} and I will be back soon."
         msg = await event.reply(message_to_reply)
+        borg.storage.last_afk_message[event.chat_id] += 1
+        if event.chat_id in borg.storage.last_afk_message:
+            await borg.storage.last_afk_message[event.chat_id].delete()
+        borg.storage.last_afk_message[event.chat_id] = msg
+
+
+        
         #if event.chat_id in borg.storage.last_afk_message:  # pylint:disable=E0602
             #await borg.storage.last_afk_message[event.chat_id].delete()  # pylint:disable=E0602
         #borg.storage.last_afk_message[event.chat_id] = msg  # pylint:disable=E0602
