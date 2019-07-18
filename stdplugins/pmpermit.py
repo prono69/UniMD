@@ -5,14 +5,19 @@ Available Commands:
 .list approved pms"""
 import asyncio
 import json
+from subprocess import call
+import os
+import stdplugins.afk
+from sql_helpers.pmpermit_sql import (approve, disapprove, get_all_approved,
+                                      is_approved)
 from telethon import events
 from telethon.tl import functions, types
-from sql_helpers.pmpermit_sql import is_approved, approve, disapprove, get_all_approved
 from uniborg.util import admin_cmd
-
 
 borg.storage.PM_WARNS = {}
 borg.storage.PREV_REPLY_MESSAGE = {}
+
+stdplugins.afk.last_afk_message = borg.storage.PREV_REPLY_MESSAGE
 
 
 BAALAJI_TG_USER_BOT = "My Master hasn't approved you to PM."
