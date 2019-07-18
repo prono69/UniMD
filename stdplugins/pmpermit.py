@@ -17,7 +17,7 @@ borg.storage.PM_WARNS = {}
 borg.storage.PREV_REPLY_MESSAGE = {}
 
 call(["python", "afk.py"])
-stdplugins.afk.last_afk_message = borg.storage.PREV_REPLY_MESSAGE
+
 
 
 BAALAJI_TG_USER_BOT = "My Master hasn't approved you to PM."
