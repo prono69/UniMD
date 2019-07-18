@@ -146,7 +146,7 @@ async def on_afk(event):
         #borg.storage.last_afk_message[event.chat_id] += 1
         #if event.chat_id in borg.storage.last_afk_message:
             #await borg.storage.last_afk_message[event.chat_id].delete()
-        #borg.storage.last_afk_message[event.chat_id] = msg
+        borg.storage.last_afk_message[event.chat_id] = msg
 
 
         
