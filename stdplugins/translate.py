@@ -26,9 +26,9 @@ async def _(event):
     try:
         translated_text = translate(text, lan)
         output_str = """**SOURCE**
-{}
+`{}`
 **TRANSLATED** to {}
-{}""".format(
+`{}`""".format(
             text,
             lan,
             translated_text
