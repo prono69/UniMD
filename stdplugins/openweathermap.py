@@ -22,6 +22,7 @@ async def _(event):
         sun_set_time = int(response_api["sys"]["sunset"]) + country_time_zone
         await event.edit(
             """**{}**
+            
 **Temperature**: {}°С
 **Min**: {}°С
 **Max**: {}°С
