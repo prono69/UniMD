@@ -99,7 +99,7 @@ async def on_afk(event):
                 afk_since = f"`{int(seconds)}s` **ago**"
         msg = None
         message_to_reply = f"`I'm currently away from keyboard since` {afk_since} " + \
-            f"`And I will be right back soon to check your USELESS messages`.\n__Reason:__ {reason}" \
+            f"`And I will be right back soon`.\n__Reason:__ {reason}" \
             if reason \
             else f"I'm currently away from keyboard since {afk_since}. Meanwhile, you can spam admins here with Noods in PM.(◕‿◕)  Until I come back to check your USELESS messages. "
         msg = await event.reply(message_to_reply)
