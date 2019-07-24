@@ -4,7 +4,7 @@ from telethon import events
 from telethon.tl.types import ChannelParticipantsAdmins, ChannelParticipantAdmin, ChannelParticipantCreator
 from uniborg.util import admin_cmd
 
-@borg(outgoing=True, pattern="^.userslist ?(.*)")
+@borg.on(events.NewMessage(pattern=r"\.userlist ?(.*)", outgoing=True))
 async def get_users(show):
     """ For .userslist command, list all of the users of the chat. """
     if not show.text[0].isalpha() and show.text[0] not in ("/", "#", "@", "!"):
