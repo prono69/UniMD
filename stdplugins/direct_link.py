@@ -357,11 +357,3 @@ def useragent():
     return user_agent.text
 
 
-CMD_HELP.update({
-    "direct": ".direct <url>\n"
-              "Usage: Reply to or paste supported link\n"
-              "Generates direct download link from supported URL(s)\n"
-              "Supported websites:\n"
-              "`Google Drive - MEGA.nz - Cloud Mail - Yandex.Disk - AFH - "
-              "ZippyShare - MediaFire - SourceForge - OSDN - GitHub`"
-})
