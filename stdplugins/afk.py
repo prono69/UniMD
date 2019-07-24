@@ -100,7 +100,7 @@ async def on_afk(event):
             else:
                 afk_since = f"`{int(seconds)}s` **ago**"
         msg = None
-        message_to_reply = f"`Şu anda burada değilim. " + \
+        message_to_reply = f"`Şu anda burada değilim.` " + \
             f"`Yakında mesajına döneceğim`.\n__Sebebi:__ {reason}" \
             if reason \
             else f"I'm currently away from keyboard since {afk_since}. Meanwhile, you can spam admins here with Noods in PM.(◕‿◕)  Until I come back to check your USELESS messages. "
