@@ -2,8 +2,10 @@
 Syntax: .afk REASON"""
 import asyncio
 import datetime
+
 from telethon import events
 from telethon.tl import functions, types
+
 borg.storage.USER_AFK = {}  # pylint:disable=E0602
 borg.storage.afk_time = None  # pylint:disable=E0602
 borg.storage.last_afk_message = {}  # pylint:disable=E0602
