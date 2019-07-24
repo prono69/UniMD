@@ -7,6 +7,7 @@ Syntax: .eval PythonCode"""
 from telethon import events, errors, functions, types
 import inspect
 import traceback
+import asyncio
 import sys
 import io
 from uniborg.util import admin_cmd
