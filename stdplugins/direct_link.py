@@ -5,19 +5,22 @@
 #
 """ Userbot module containing various sites direct links generators"""
 
-from os import popen
-import re
-import urllib.parse
-import json
-from random import choice
-import requests
-from bs4 import BeautifulSoup
-from humanize import naturalsize
-from telethon import events
-from uniborg.util import admin_cmd
 import asyncio
 import datetime
+import json
+import re
+import urllib.parse
+from os import popen
+from random import choice
+
+import requests
+from bs4 import BeautifulSoup
+
+from humanize import naturalsize
+from telethon import events
 from telethon.tl import functions, types
+from uniborg.util import admin_cmd
+
 
 @borg.on(outgoing=True, pattern=r"^.direct(?: |$)([\s\S]*)")
 async def direct_link_generator(request):
