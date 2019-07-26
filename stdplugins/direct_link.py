@@ -15,7 +15,9 @@ from bs4 import BeautifulSoup
 from humanize import naturalsize
 from telethon import events
 from uniborg.util import admin_cmd
-
+import asyncio
+import datetime
+from telethon.tl import functions, types
 
 @borg.on(outgoing=True, pattern=r"^.direct(?: |$)([\s\S]*)")
 async def direct_link_generator(request):
