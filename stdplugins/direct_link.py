@@ -15,7 +15,7 @@ from bs4 import BeautifulSoup
 from humanize import naturalsize
 from telethon import events
 
-@borg.on(admin_cmd("calendar (.*)"))
+@borg.on(admin_cmd("direct (.*)"))
 async def direct_link_generator(request):
     """ direct links generator """
     if not request.text[0].isalpha(
