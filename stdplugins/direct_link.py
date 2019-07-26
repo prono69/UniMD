@@ -187,7 +187,7 @@ def cm_ru(url: str) -> str:
     Using https://github.com/JrMasterModelBuilder/cmrudl.py"""
     reply = ''
     try:
-        link = re.findall(r'\bhttps?://.*cloud\.mail\.ru\S+', url)[0]
+        link = re.findall(r'\bhttps?:.*cloud\.mail\.ru\S+', url)[0]
     except IndexError:
         reply = "`No cloud.mail.ru links found`\n"
         return reply
