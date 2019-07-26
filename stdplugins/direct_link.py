@@ -19,7 +19,7 @@ import os
 import sys
 
 
-@borg.on(admin_cmd("direct ?(.*)"))
+@borg.on(events.NewMessage(pattern=r"\.direct", outgoing=True))
 async def direct_link_generator(request):
     """ direct links generator """
     if not request.text[0].isalpha(
