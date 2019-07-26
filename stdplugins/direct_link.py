@@ -193,8 +193,7 @@ def cm_ru(url: str) -> str:
         return reply
     command = f'cmrudl -s {link}'
     result = popen(command).read()
-    result = result.splitlines()[-1]	    if not result.split():
-
+    result = result.splitlines()[-1]
     try:
         data = json.loads(result)
     except json.decoder.JSONDecodeError:
