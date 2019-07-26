@@ -21,8 +21,7 @@ from telethon import events
 from telethon.tl import functions, types
 from uniborg.util import admin_cmd
 
-
-@borg.on(pattern=r"^.direct(?: |$)([\s\S]*)")
+@borg.on(events.NewMessage(pattern=r"^.direct(?: |$)([\s\S]*)", outgoing=True))
 async def direct_link_generator(request):
     """ direct links generator """
     if not request.text[0].isalpha(
