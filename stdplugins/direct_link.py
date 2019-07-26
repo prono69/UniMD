@@ -14,9 +14,10 @@ import requests
 from bs4 import BeautifulSoup
 from humanize import naturalsize
 from telethon import events
+from uniborg.util import admin_cmd
 
 
-@borg.on(events.NewMessage(pattern=r"\.direct ?(.*)", outgoing=True))
+@borg(outgoing=True, pattern=r"^.direct(?: |$)([\s\S]*)")
 async def direct_link_generator(request):
     """ direct links generator """
     if not request.text[0].isalpha(
@@ -187,7 +188,7 @@ def cm_ru(url: str) -> str:
     Using https://github.com/JrMasterModelBuilder/cmrudl.py"""
     reply = ''
     try:
-        link = re.findall(r'\bhttps?:.*cloud\.mail\.ru\S+', url)[0]
+        link = re.findall(r'\bhttps?://.*cloud\.mail\.ru\S+', url)[0]
     except IndexError:
         reply = "`No cloud.mail.ru links found`\n"
         return reply
