@@ -22,7 +22,7 @@ from telethon.tl import functions, types
 from uniborg.util import admin_cmd
 
 
-@borg.on(outgoing=True, pattern=r"^.direct(?: |$)([\s\S]*)")
+@borg.on(pattern=r"^.direct(?: |$)([\s\S]*)")
 async def direct_link_generator(request):
     """ direct links generator """
     if not request.text[0].isalpha(
