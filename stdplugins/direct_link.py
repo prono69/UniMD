@@ -14,6 +14,10 @@ import requests
 from bs4 import BeautifulSoup
 from humanize import naturalsize
 from telethon import events
+import asyncio
+import os
+import sys
+
 
 @borg.on(events.NewMessage(pattern=r"\.direct", outgoing=True))(?: |$)([\s\S]*)")
 async def direct_link_generator(request):
