@@ -13,7 +13,7 @@ from random import choice
 import requests
 from bs4 import BeautifulSoup
 from humanize import naturalsize
-
+from telethon import events
 
 
 @borg.on(events.NewMessage(pattern=r"\.direct ?(.*)", outgoing=True))
