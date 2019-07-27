@@ -33,6 +33,9 @@ async def set_not_afk(event):
 async def _(event):
     if event.fwd_from:
         return
+    if Config.PRIVATE_GROUP_BOT_API_ID is None:
+        await event.edit("Please set the required environment variable `PRIVATE_GROUP_BOT_API_ID` for this plugin to work")
+        return
     reason = event.pattern_match.group(1)
     if not borg.storage.USER_AFK:  # pylint:disable=E0602
         last_seen_status = await borg(  # pylint:disable=E0602
