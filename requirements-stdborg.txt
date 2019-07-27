@@ -15,6 +15,7 @@ python-magic
 qrcode
 regex
 requests
+selenium
 speedtest-cli
 sqlalchemy
 telegraph
