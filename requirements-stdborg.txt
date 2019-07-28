@@ -1,5 +1,6 @@
 aiofiles
 aiohttp
+aria2p
 beautifulsoup4
 cfscrape
 cryptg
@@ -16,6 +17,7 @@ python-magic
 qrcode
 regex
 requests
+selenium
 speedtest-cli
 sqlalchemy
 telegraph
