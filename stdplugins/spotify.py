@@ -9,7 +9,7 @@ from requests import get
 from telethon.tl.functions.account import UpdateProfileRequest
 
 from sample_config import Config
-from uniborg.event import register
+
 
 # =================== CONSTANT ===================
 SPO_BIO_ENABLED = "```Spotify Current Music to Bio enabled.```"
