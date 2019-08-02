@@ -118,6 +118,13 @@ class Config(object):
     # taken from https://github.com/jaskaranSM/UniBorg/blob/9072e3580cc6c98d46f30e41edbe73ffc9d850d3/sample_config.py#L104-L106
     GOOGLE_CHROME_DRIVER = os.environ.get("GOOGLE_CHROME_DRIVER", None)
     GOOGLE_CHROME_BIN = os.environ.get("GOOGLE_CHROME_BIN", None)
+    # spotify stuff
+    DEFAULT_BIO = os.environ.get("DEFAULT_BIO",None)
+    SPOTIFY_BIO_PREFIX = os.environ.get("SPOTIFY_BIO_PREFIX",None)
+    SPOTIFY_PASS = os.environ.get("SPOTIFY_PASS",None)
+    SPOTIFY_USERNAME = os.environ.get("SPOTIFY_USERNAME",None)
+    
+
 
 
 class Production(Config):
