@@ -103,8 +103,7 @@ async def dirtyfix():
     await sleep(4)
     await update_spotify_info()
 
-
-@borg(outgoing=True, pattern="^.enablespotify$")
+@borg.on(events.NewMessage(pattern=r"\.enablespotify ?(.*)", outgoing=True))
 async def set_biostgraph(setstbio):
     setrecursionlimit(700000)
     if not SPOTIFYCHECK:
@@ -115,8 +114,7 @@ async def set_biostgraph(setstbio):
     else:
         await setstbio.edit(SPO_BIO_RUNNING)
 
-
-@borg(outgoing=True, pattern="^.disablespotify$")
+@borg.on(events.NewMessage(pattern=r"\.disablespotify ?(.*)", outgoing=True))
 async def set_biodgraph(setdbio):
     global SPOTIFYCHECK
     global RUNNING
