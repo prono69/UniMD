@@ -64,7 +64,7 @@ async def update_spotify_info():
                 oldartist = artist
                 environ["oldsong"] = song
                 spobio = BIOPREFIX + " 🎧: " + artist + " - " + song
-                await bot(UpdateProfileRequest(about=spobio))
+                await borg(UpdateProfileRequest(about=spobio))
                 environ["errorcheck"] = "0"
         except KeyError:
             errorcheck = environ.get("errorcheck", None)
@@ -72,16 +72,16 @@ async def update_spotify_info():
                 await update_token()
             elif errorcheck == 1:
                 SPOTIFYCHECK = False
-                await bot(UpdateProfileRequest(about=Config.DEFAULT_BIO))
+                await borg(UpdateProfileRequest(about=Config.DEFAULT_BIO))
                 print(ERROR_MSG)
                 if LOGGER:
-                    await bot.send_message(
+                    await borg.send_message(
                         LOGGER_GROUP,
                         ERROR_MSG)
         except JSONDecodeError:
             OLDEXCEPT = True
             await sleep(6)
-            await bot(UpdateProfileRequest(about=Config.DEFAULT_BIO))
+            await borg(UpdateProfileRequest(about=Config.DEFAULT_BIO))
         except TypeError:
             await dirtyfix()
         SPOTIFYCHECK = False
@@ -121,6 +121,6 @@ async def set_biodgraph(setdbio):
     global RUNNING
     SPOTIFYCHECK = False
     RUNNING = False
-    await bot(UpdateProfileRequest(about=Config.DEFAULT_BIO))
+    await borg(UpdateProfileRequest(about=Config.DEFAULT_BIO))
     await setdbio.edit(SPO_BIO_DISABLED)
 
