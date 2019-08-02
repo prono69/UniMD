@@ -32,3 +32,4 @@ oauth2client
 httplib2
 humanize
 asyncio
+spotify_token
