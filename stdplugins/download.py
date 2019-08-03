@@ -3,6 +3,7 @@ Syntax:
 .download
 .download url | file.name to download files from a Public Link"""
 
+import aiohttp
 import asyncio
 import math
 import os
@@ -13,11 +14,12 @@ from telethon import events
 from telethon.tl.types import DocumentAttributeVideo
 from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
 
-@borg.on(admin_cmd("download ?(.*)"))
+
+@borg.on(admin_cmd(pattern="download ?(.*)", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
-    await event.edit("`Processing ...`")
+    mone = await event.reply("Processing ...")
     input_str = event.pattern_match.group(1)
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
@@ -30,15 +32,15 @@ async def _(event):
                 reply_message,
                 Config.TMP_DOWNLOAD_DIRECTORY,
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                 progress(d, t, event, c_time, "`trying to download`")
+                    progress(d, t, mone, c_time, "trying to download")
+                )
             )
-        )    
-        except Exception as e:  #pylint:disable=C0103,W0703
-            await event.edit(str(e))
+        except Exception as e:  # pylint:disable=C0103,W0703
+            await mone.edit(str(e))
         else:
             end = datetime.now()
             ms = (end - start).seconds
-            await event.edit("Downloaded to `{}` in {} seconds.".format(downloaded_file_name, ms))
+            await mone.edit("Downloaded to `{}` in {} seconds.".format(downloaded_file_name, ms))
     elif input_str:
         start = datetime.now()
         url = input_str
@@ -82,6 +84,6 @@ async def _(event):
         if downloader.isSuccessful():
             await mone.edit("Downloaded to `{}` in {} seconds.".format(downloaded_file_name, ms))
         else:
-            await event.edit("Incorrect URL\n {}".format(input_str))
+            await mone.edit("Incorrect URL\n {}".format(input_str))
     else:
         await mone.edit("Reply to a message to download to my local server.")
