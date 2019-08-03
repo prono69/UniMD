@@ -19,17 +19,17 @@ from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
 async def _(event):
     if event.fwd_from:
         return
-    mone = await event.edit("Processing ...")
+    mone = await event.reply("Processing ...")
     input_str = event.pattern_match.group(1)
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
-    if event.edit_to_msg_id:
+    if event.reply_to_msg_id:
         start = datetime.now()
-        edit_message = await event.get_edit_message()
+        reply_message = await event.get_reply_message()
         try:
             c_time = time.time()
             downloaded_file_name = await borg.download_media(
-                edit_message,
+                reply_message,
                 Config.TMP_DOWNLOAD_DIRECTORY,
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
                     progress(d, t, mone, c_time, "trying to download")
