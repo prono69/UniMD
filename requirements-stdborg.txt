@@ -12,6 +12,7 @@ gtts
 hachoir
 Pillow
 psycopg2
+pySmartDL
 python-magic
 qrcode
 regex
