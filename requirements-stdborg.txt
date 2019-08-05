@@ -34,3 +34,15 @@ httplib2
 humanize
 asyncio
 spotify_token
+#
+aiohttp
+requests
+youtube-dl
+pyrogram
+git+git://github.com/google/chatbase-python.git
+https://github.com/pyrogram/pyrogram/archive/asyncio.zip
+Pillow
+hachoir
+numpy
+beautifulsoup4
+pydrive
