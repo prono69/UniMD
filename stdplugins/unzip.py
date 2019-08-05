@@ -4,14 +4,15 @@
 
 # the logging things
 import logging
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
-
 import os
 import shutil
 import subprocess
 import time
+import pyrogram
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+
 
 # the secret configuration specific things
 if bool(os.environ.get("WEBHOOK", False)):
@@ -20,36 +21,26 @@ else:
     from sample_config import Config
 
 # the Strings used for this "thing"
-from translation import Translation
-
-import pyrogram
-logging.getLogger("pyrogram").setLevel(logging.WARNING)
-
-from helper_funcs.chat_base import TRChatBase
-from helper_funcs.display_progress import progress_for_pyrogram, humanbytes
 
 
-@pyrogram.Client.on_message(pyrogram.Filters.command(["unzip"]))
+
+
+
+@borg.on(admin_cmd(pattern="unzip ?(.*)", allow_sudo=True))
 async def unzip(bot, update):
-    TRChatBase(update.from_user.id, update.text, "unzip")
-    if str(update.from_user.id) not in Config.SUPER7X_DLBOT_USERS:
-        await bot.send_message(
-            chat_id=update.chat.id,
-            text=Translation.NOT_AUTH_USER_TEXT,
-            reply_to_message_id=update.message_id
+    await bot.send_message(
+        chat_id=update.chat.id,
+        reply_to_message_id=update.message_id
         )
-        return
+    return
     saved_file_path = Config.DOWNLOAD_LOCATION + \
         "/" + str(update.from_user.id) + ".unzip.zip"
     if os.path.exists(saved_file_path):
         os.remove(saved_file_path)
     reply_message = update.reply_to_message
-    if ((reply_message is not None) and
-        (reply_message.document is not None) and
-        (reply_message.document.file_name.endswith(Translation.UNZIP_SUPPORTED_EXTENSIONS))):
+    if ((reply_message is not None) and (reply_message.document is not None)):
         a = await bot.send_message(
             chat_id=update.chat.id,
-            text=Translation.DOWNLOAD_START,
             reply_to_message_id=update.message_id
         )
         c_time = time.time()
@@ -57,8 +48,7 @@ async def unzip(bot, update):
             await bot.download_media(
                 message=reply_message,
                 file_name=saved_file_path,
-                progress=progress_for_pyrogram,
-                progress_args=(Translation.DOWNLOAD_START, a.message_id, update.chat.id, c_time)
+                progress_args=( a.message_id, update.chat.id, c_time)
             )
         except (ValueError) as e:
             await bot.edit_message_text(
@@ -69,7 +59,6 @@ async def unzip(bot, update):
         else:
             await bot.edit_message_text(
                 chat_id=update.chat.id,
-                text=Translation.SAVED_RECVD_DOC_FILE,
                 message_id=a.message_id
             )
             extract_dir_path = Config.DOWNLOAD_LOCATION + \
@@ -78,7 +67,6 @@ async def unzip(bot, update):
                 os.makedirs(extract_dir_path)
             await bot.edit_message_text(
                 chat_id=update.chat.id,
-                text=Translation.EXTRACT_ZIP_INTRO_THREE,
                 message_id=a.message_id
             )
             try:
@@ -101,7 +89,6 @@ async def unzip(bot, update):
                     pass
                 await bot.edit_message_text(
                     chat_id=update.chat.id,
-                    text=Translation.EXTRACT_ZIP_ERRS_OCCURED,
                     disable_web_page_preview=True,
                     parse_mode="html",
                     message_id=a.message_id
@@ -137,13 +124,11 @@ async def unzip(bot, update):
                 reply_markup = pyrogram.InlineKeyboardMarkup(inline_keyboard)
                 await bot.edit_message_text(
                     chat_id=update.chat.id,
-                    text=Translation.EXTRACT_ZIP_STEP_TWO,
                     message_id=a.message_id,
                     reply_markup=reply_markup,
                 )
     else:
         await bot.send_message(
             chat_id=update.chat.id,
-            text=Translation.EXTRACT_ZIP_INTRO_ONE,
             reply_to_message_id=update.message_id
         )
