@@ -123,11 +123,6 @@ class Config(object):
     SPOTIFY_BIO_PREFIX = os.environ.get("SPOTIFY_BIO_PREFIX",None)
     SPOTIFY_PASS = os.environ.get("SPOTIFY_PASS",None)
     SPOTIFY_USERNAME = os.environ.get("SPOTIFY_USERNAME",None)
-    ###
-    CHAT_BASE_TOKEN = os.environ.get("CHAT_BASE_TOKEN", "")
-    SUPER_DLBOT_USERS = os.environ.get("SUPER_DLBOT_USERS","")
-    SUPER3X_DLBOT_USERS = os.environ.get("SUPER3X_DLBOT_USERS","")
-    SUPER7X_DLBOT_USERS = os.environ.get("SUPER7X_DLBOT_USERS","")
 
 
 
