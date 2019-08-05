@@ -168,7 +168,7 @@ async def _(event):
             )
         )
         end = datetime.now()
-        # os.remove(input_str)
+        os.remove(input_str)
         ms = (end - start).seconds
         await mone.edit("Uploaded in {} seconds.".format(ms))
     else:
