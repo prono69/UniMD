@@ -65,9 +65,6 @@ async def _(event):
         else:
             await mone.edit("Incorrect URL\n {}".format(input_str))
     else:
-<<<<<<< HEAD
-        await mone.edit("Reply to a message to download to my local server.")
-=======
         await mone.edit("Reply to a message to download to my local server.")
 
 
@@ -120,4 +117,3 @@ ETA: {}""".format(
                         logger.info(str(e))
                         pass
         return await response.release()
->>>>>>> parent of 58ed5f1... Fix download.py: Use pySmartDL
