@@ -9,6 +9,9 @@ import shutil
 import subprocess
 import time
 import pyrogram
+from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
+from telethon import events
+from telethon.tl.types import DocumentAttributeVideo
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
