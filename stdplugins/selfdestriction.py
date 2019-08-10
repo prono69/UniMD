@@ -8,7 +8,7 @@ import os
 import subprocess
 import sys
 from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
-
+from sample_config import Config
 @borg.on(admin_cmd(pattern="^.sd"))
 async def selfdestruct(destroy):
     """ For .sd command, make seflf-destructable messages. """
@@ -21,6 +21,6 @@ async def selfdestruct(destroy):
         smsg = await destroy.client.send_message(destroy.chat_id, text)
         await sleep(counter)
         await smsg.delete()
-        if config.PRIVATE_GROUP_BOT_API_ID:
-            await destroy.client.send_message(config.PRIVATE_GROUP_BOT_API_ID,
+        if Config.PRIVATE_GROUP_BOT_API_ID:
+            await destroy.client.send_message(Config.PRIVATE_GROUP_BOT_API_ID,
                                               "sd query done successfully")
