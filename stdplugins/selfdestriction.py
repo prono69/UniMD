@@ -20,6 +20,6 @@ async def selfdestruct(destroy):
         smsg = await destroy.client.send_message(destroy.chat_id, text)
         await sleep(counter)
         await smsg.delete()
-        if PRIVATE_GROUP_BOT_API_ID:
-            await destroy.client.send_message(PRIVATE_GROUP_BOT_API_ID,
+        if config.PRIVATE_GROUP_BOT_API_ID:
+            await destroy.client.send_message(config.PRIVATE_GROUP_BOT_API_ID,
                                               "sd query done successfully")
