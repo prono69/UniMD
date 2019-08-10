@@ -1,6 +1,5 @@
 from asyncio import sleep
 from telethon.errors import rpcbaseerrors
-from sample_config import PRIVATE_GROUP_BOT_API_ID
 from telethon import events
 import asyncio
 import os
