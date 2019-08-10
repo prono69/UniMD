@@ -9,7 +9,7 @@ import subprocess
 import sys
 from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
 
-@borg(outgoing=True, pattern="^.sd")
+@borg.on(admin_cmd(pattern="^.sd"))
 async def selfdestruct(destroy):
     """ For .sd command, make seflf-destructable messages. """
     if not destroy.text[0].isalpha() and destroy.text[0] not in (
