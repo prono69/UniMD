@@ -1,6 +1,8 @@
 from asyncio import sleep
 from telethon.errors import rpcbaseerrors
 from telethon import events
+from telethon.tl import functions, types
+from uniborg.util import admin_cmd
 import asyncio
 import os
 import subprocess
