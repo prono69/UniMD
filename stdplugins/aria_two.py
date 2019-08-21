@@ -30,7 +30,7 @@ aria2 = aria2p.API(
 	)
 
 
-@borg.on(events.NewMessage(pattern=r"\.addmagnet", outgoing=True))
+@borg.on(events.NewMessage(pattern=r"\.magnet", outgoing=True))
 async def magnet_download(event):
 	if event.fwd_from:
 		return   
@@ -95,7 +95,7 @@ async def check_metadata(gid):
 	print("Changing "+gid+" to "+new_gid[0])
 	return new_gid	
 
-@borg.on(events.NewMessage(pattern=r"\.addtorrent", outgoing=True))
+@borg.on(events.NewMessage(pattern=r"\.tor", outgoing=True))
 async def torrent_download(event):
 	if event.fwd_from:
 		return
