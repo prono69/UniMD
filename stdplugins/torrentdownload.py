@@ -6,10 +6,7 @@ from uniborg.util import admin_cmd
 
 
 qbittorrent_port = 6800
-qb = Client(
-    host="http://localhost",
-    port=qbittorrent_port
-)
+qb = Client("http://localhost")
 
 qb.login('admin', 'your-secret-password')
 # not required when 'Bypass from localhost' setting is active.
