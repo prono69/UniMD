@@ -8,8 +8,7 @@ from uniborg.util import admin_cmd
 qbittorrent_port = 6800
 qb = Client(
     host="http://localhost",
-    port=qbittorrent_port,
-    secret=""
+    port=qbittorrent_port
 )
 
 qb.login('admin', 'your-secret-password')
