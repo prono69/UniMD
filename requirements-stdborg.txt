@@ -35,4 +35,3 @@ httplib2
 humanize
 asyncio
 spotify_token
-python-qbittorrent
