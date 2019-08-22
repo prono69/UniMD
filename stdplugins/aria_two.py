@@ -167,6 +167,7 @@ async def show_all(event):
                 allow_cache=False,
                 caption="`Output is huge. Sending as a file...`"
             )
+<<<<<<< HEAD
             await event.delete()
 
 
@@ -206,3 +207,6 @@ async def check_progress_for_dl(gid, event):
     complete = file.is_complete
     if complete:
         await event.edit(f"File Downloaded Successfully:`{file.name}`")
+=======
+            await event.delete()
+>>>>>>> parent of 7ed2b03... Merge branch 'master' of https://github.com/c311at/UniBorg
