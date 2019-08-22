@@ -14,8 +14,8 @@ Credits: https://github.com/jaskaranSM/UniBorg/blob/b42cd70144143ce079e5fb3aed49
 """
 
 import aria2p
+from telethon import events
 import asyncio
-import io
 import os
 from uniborg.util import admin_cmd
 
@@ -84,20 +84,16 @@ async def remove_all(event):
 
 @borg.on(admin_cmd("ariaP"))
 async def pause_all(event):
-    if event.fwd_from:
-        return
-    # Pause ALL Currently Running Downloads.
-    paused = aria2.pause_all(force=True)
-    await event.edit("Output: " + str(paused))
+	if event.fwd_from:
+		return
+	paused = aria2.pause_all(force=True)	#Pause ALL Currently Running Downloads.
 
+	await event.edit("Output: "+str(paused))
 
 @borg.on(admin_cmd("ariaResume"))
 async def resume_all(event):
-    if event.fwd_from:
-        return
-    resumed = aria2.resume_all()
-    await event.edit("Output: " + str(resumed))
-
+	if event.fwd_from:
+		return
 
 @borg.on(admin_cmd("showariastatus"))
 async def show_all(event):
