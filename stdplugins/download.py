@@ -11,6 +11,7 @@ from datetime import datetime
 from telethon import events
 from telethon.tl.types import DocumentAttributeVideo
 from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
+from pySmartDL import SmartDL 
 
 
 @borg.on(admin_cmd(pattern="download ?(.*)", allow_sudo=True))

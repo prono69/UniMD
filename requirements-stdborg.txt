@@ -20,7 +20,6 @@ qrcode
 regex
 requests
 selenium
-SmartDL
 speedtest-cli
 sqlalchemy
 telegraph
