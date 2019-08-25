@@ -4,11 +4,10 @@ API Options: msg, media, sticker, gif, gamee, ainline, gpoll, adduser, cpin, cha
 DB Options: bots, commands, email, forward, url"""
 
 from telethon import events, functions, types
-from sql_helpers.locks_sql import update_lock, is_locked, get_locks
 from uniborg.util import admin_cmd
 
 
-@borg.on(admin_cmd("lock( (?P<target>\S+)|$)"))
+@borg.on(admin_cmd(pattern="lock( (?P<target>\S+)|$)"))
 async def _(event):
      # Space weirdness in regex required because argument is optional and other
      # commands start with ".lock"
@@ -17,6 +16,12 @@ async def _(event):
     input_str = event.pattern_match.group("target")
     peer_id = event.chat_id
     if input_str in (("bots", "commands", "email", "forward", "url")):
+        try:
+            from sql_helpers.locks_sql import update_lock
+        except Exception as e:
+            logger.info("DB_URI is not configured.")
+            logger.info(str(e))
+            return False
         update_lock(peer_id, input_str, True)
         await event.edit(
             "Locked {}".format(input_str)
@@ -82,10 +87,16 @@ async def _(event):
             )
 
 
-@borg.on(admin_cmd("unlock ?(.*)"))
+@borg.on(admin_cmd(pattern="unlock ?(.*)"))
 async def _(event):
     if event.fwd_from:
         return
+    try:
+        from sql_helpers.locks_sql import update_lock
+    except Exception as e:
+        logger.info("DB_URI is not configured.")
+        logger.info(str(e))
+        return False
     input_str = event.pattern_match.group(1)
     peer_id = event.chat_id
     if input_str in (("bots", "commands", "email", "forward", "url")):
@@ -99,10 +110,16 @@ async def _(event):
         )
 
 
-@borg.on(admin_cmd("locks"))
+@borg.on(admin_cmd(pattern="curenabledlocks"))
 async def _(event):
     if event.fwd_from:
         return
+    try:
+        from sql_helpers.locks_sql import get_locks
+    except Exception as e:
+        logger.info("DB_URI is not configured.")
+        logger.info(str(e))
+        return False
     res = ""
     current_db_locks = get_locks(event.chat_id)
     if not current_db_locks:
@@ -137,6 +154,12 @@ async def _(event):
 @borg.on(events.MessageEdited())  # pylint:disable=E0602
 @borg.on(events.NewMessage())  # pylint:disable=E0602
 async def check_incoming_messages(event):
+    try:
+        from sql_helpers.locks_sql import update_lock, is_locked
+    except Exception as e:
+        logger.info("DB_URI is not configured.")
+        logger.info(str(e))
+        return False
     # TODO: exempt admins from locks
     peer_id = event.chat_id
     if is_locked(peer_id, "commands"):
@@ -197,6 +220,12 @@ async def check_incoming_messages(event):
 
 @borg.on(events.ChatAction())  # pylint:disable=E0602
 async def _(event):
+    try:
+        from sql_helpers.locks_sql import update_lock, is_locked
+    except Exception as e:
+        logger.info("DB_URI is not configured.")
+        logger.info(str(e))
+        return False
     # TODO: exempt admins from locks
     # check for "lock" "bots"
     if is_locked(event.chat_id, "bots"):

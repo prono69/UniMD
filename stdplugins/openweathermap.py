@@ -6,7 +6,8 @@ import time
 from datetime import tzinfo, datetime
 from uniborg.util import admin_cmd
 
-@borg.on(admin_cmd("weather (.*)"))
+
+@borg.on(admin_cmd(pattern="weather (.*)"))
 async def _(event):
     if event.fwd_from:
         return

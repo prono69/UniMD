@@ -35,7 +35,7 @@ def get_lst_of_files(input_directory, output_lst):
     return output_lst
 
 
-@borg.on(admin_cmd("uploadir (.*)"))
+@borg.on(admin_cmd(pattern="uploadir (.*)"))
 async def _(event):
     if event.fwd_from:
         return
