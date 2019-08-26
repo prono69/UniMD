@@ -8,6 +8,7 @@ Syntax:
 # Licensed under MIT License
 
 import asyncio
+import math
 import os
 import time
 from datetime import datetime
@@ -115,7 +116,7 @@ async def _(event):
     input_str = event.pattern_match.group(1)
     if input_str:
         G_DRIVE_F_PARENT_ID = input_str
-        await mone.edit("Custom Folder ID set successfully. The next uploads will upload to {G_DRIVE_F_PARENT_ID} till `.gdriveclear`")
+        await mone.edit(f"Custom Folder ID set successfully. The next uploads will upload to {G_DRIVE_F_PARENT_ID} till `.gdriveclear`")
         await event.delete()
     else:
         await mone.edit("Send `.gdrivesp https://drive.google.com/drive/u/X/folders/Y` to set the folder to upload new files to")
@@ -327,7 +328,10 @@ async def DoTeskWithDir(http, input_directory, event, parent_id):
 
 
 async def gdrive_search(http, search_query):
-    query = "'{}' in parents and (title contains '{}')".format(G_DRIVE_F_PARENT_ID, search_query)
+    if G_DRIVE_F_PARENT_ID is not None:
+        query = "'{}' in parents and (title contains '{}')".format(G_DRIVE_F_PARENT_ID, search_query)
+    else:
+        query = "title contains '{}'".format(search_query)
     drive_service = build("drive", "v2", http=http, cache_discovery=False)
     page_token = None
     msg = f"<b>G-Drive Search Query</b>: <code>{search_query}</code>\n\n<b>Results</b>\n"
@@ -343,9 +347,9 @@ async def gdrive_search(http, search_query):
                 file_title = file.get("title")
                 file_id = file.get("id")
                 if file.get("mimeType") == "application/vnd.google-apps.folder":
-                    msg += f"🗃️ <a href='https://drive.google.com/drive/folders/{file_id}'>{file_title}</a>"
+                    msg += f"🗃️ <a href='https://drive.google.com/drive/folders/{file_id}'>{file_title}</a> \n"
                 else:
-                    msg += f"👉 <a href='https://drive.google.com/uc?id={file_id}&export=download'>{file_title}</a>"
+                    msg += f"👉 <a href='https://drive.google.com/uc?id={file_id}&export=download'>{file_title}</a> \n"
             page_token = response.get("nextPageToken", None)
             if page_token is None:
                 break
