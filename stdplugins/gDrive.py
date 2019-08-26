@@ -8,12 +8,13 @@ Syntax:
 # Licensed under MIT License
 
 import asyncio
+import json
 import math
 import os
 import time
 from datetime import datetime
 from telethon import events
-from uniborg.util import admin_cmd, progress
+from uniborg.util import admin_cmd, progress, humanbytes
 #
 from mimetypes import guess_type
 from apiclient.discovery import build
@@ -36,6 +37,8 @@ OAUTH_SCOPE = "https://www.googleapis.com/auth/drive.file"
 REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob"
 # global variable to set Folder ID to upload to
 G_DRIVE_F_PARENT_ID = None
+# global variable to indicate mimeType of directories in gDrive
+G_DRIVE_DIR_MIME_TYPE = "application/vnd.google-apps.folder"
 
 
 @borg.on(admin_cmd(pattern="ugdrive ?(.*)", allow_sudo=True))
@@ -163,6 +166,38 @@ async def _(event):
         await mone.edit(f"[Here is your Google Drive link]({dir_link})")
     else:
         await mone.edit(f"directory {input_str} does not seem to exist")
+
+
+@borg.on(admin_cmd(pattern="drive (delete|get) ?(.*)", allow_sudo=True))
+async def _(event):
+    if event.fwd_from:
+        return
+    mone = await event.reply("Processing ...")
+    if CLIENT_ID is None or CLIENT_SECRET is None:
+        await mone.edit("This module requires credentials from https://da.gd/so63O. Aborting!")
+        return
+    if Config.PRIVATE_GROUP_BOT_API_ID is None:
+        await event.edit("Please set the required environment variable `PRIVATE_GROUP_BOT_API_ID` for this plugin to work")
+        return
+    t_reqd_comd = event.pattern_match.group(1)
+    input_str = event.pattern_match.group(2).strip()
+    # TODO: remove redundant code
+    #
+    if Config.G_DRIVE_AUTH_TOKEN_DATA is not None:
+        with open(G_DRIVE_TOKEN_FILE, "w") as t_file:
+            t_file.write(Config.G_DRIVE_AUTH_TOKEN_DATA)
+    # Check if token file exists, if not create it by requesting authorization code
+    storage = None
+    if not os.path.isfile(G_DRIVE_TOKEN_FILE):
+        storage = await create_token_file(G_DRIVE_TOKEN_FILE, event)
+    http = authorize(G_DRIVE_TOKEN_FILE, storage)
+    # Authorize, get file parameters, upload file and print out result URL for download
+    drive_service = build("drive", "v2", http=http, cache_discovery=False)
+    if t_reqd_comd == "delete":
+        response_from_svc = await gdrive_delete(drive_service, input_str)
+    elif t_reqd_comd == "get":
+        response_from_svc = await gdrive_list_file_md(drive_service, input_str)
+    await mone.edit(response_from_svc)
 
 
 @borg.on(admin_cmd(pattern="drive search ?(.*)", allow_sudo=True))
@@ -297,7 +332,7 @@ async def create_directory(http, directory_name, parent_id):
     }
     file_metadata = {
         "title": directory_name,
-        "mimeType": "application/vnd.google-apps.folder"
+        "mimeType": G_DRIVE_DIR_MIME_TYPE
     }
     if parent_id is not None:
         file_metadata["parents"] = [{"id": parent_id}]
@@ -327,6 +362,38 @@ async def DoTeskWithDir(http, input_directory, event, parent_id):
     return r_p_id
 
 
+async def gdrive_delete(service, file_id):
+    try:
+        service.files().delete(fileId=file_id).execute()
+        return f"successfully deleted {file_id} from my gDrive."
+    except Exception as e:
+        return str(e)
+
+
+async def gdrive_list_file_md(service, file_id):
+    try:
+        file = service.files().get(fileId=file_id).execute()
+        # logger.info(file)
+        file_meta_data = {}
+        file_meta_data["title"] = file["title"]
+        mimeType = file["mimeType"]
+        file_meta_data["createdDate"] = file["createdDate"]
+        if mimeType == G_DRIVE_DIR_MIME_TYPE:
+            # is a dir.
+            file_meta_data["mimeType"] = "directory"
+            file_meta_data["previewURL"] = file["alternateLink"]
+        else:
+            # is a file.
+            file_meta_data["mimeType"] = file["mimeType"]
+            file_meta_data["md5Checksum"] = file["md5Checksum"]
+            file_meta_data["fileSize"] = str(humanbytes(int(file["fileSize"])))
+            file_meta_data["quotaBytesUsed"] = str(humanbytes(int(file["quotaBytesUsed"])))
+            file_meta_data["previewURL"] = file["downloadUrl"]
+        return json.dumps(file_meta_data, sort_keys=True, indent=4)
+    except Exception as e:
+        return str(e)
+
+
 async def gdrive_search(http, search_query):
     if G_DRIVE_F_PARENT_ID is not None:
         query = "'{}' in parents and (title contains '{}')".format(G_DRIVE_F_PARENT_ID, search_query)
@@ -346,10 +413,12 @@ async def gdrive_search(http, search_query):
             for file in response.get("items",[]):
                 file_title = file.get("title")
                 file_id = file.get("id")
-                if file.get("mimeType") == "application/vnd.google-apps.folder":
-                    msg += f"🗃️ <a href='https://drive.google.com/drive/folders/{file_id}'>{file_title}</a> \n"
+                if file.get("mimeType") == G_DRIVE_DIR_MIME_TYPE:
+                    msg += f"🗃️ <a href='https://drive.google.com/drive/folders/{file_id}'>{file_title}</a>"
+                    msg += f" <code>{file_id}</code>\n"
                 else:
-                    msg += f"👉 <a href='https://drive.google.com/uc?id={file_id}&export=download'>{file_title}</a> \n"
+                    msg += f"👉 <a href='https://drive.google.com/uc?id={file_id}&export=download'>{file_title}</a>"
+                    msg += f" <code>{file_id}</code>\n"
             page_token = response.get("nextPageToken", None)
             if page_token is None:
                 break
