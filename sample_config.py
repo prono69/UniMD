@@ -72,7 +72,6 @@ class Config(object):
     # foloowing plugins won't work on Heroku,
     # because of their ephemeral file system
     NO_LOAD = [
-        "afk",
         "gban"
     ]
     # Get your own API key from https://www.remove.bg/ or
