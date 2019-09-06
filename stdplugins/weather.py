@@ -23,14 +23,13 @@ async def _(event):
         sun_rise_time = int(response_api["sys"]["sunrise"]) + country_time_zone
         sun_set_time = int(response_api["sys"]["sunset"]) + country_time_zone
         await event.edit(
-            """**{}**
-            
+            """{}
 **Temperature**: {}°С
-**Min**: {}°С
-**Max**: {}°С
+    __minimium__: {}°С
+    __maximum__ : {}°С
 **Humidity**: {}%
-**Wind**: {}m/s
-**Clouds**: {}hpa
+**wind**: {}m/s
+clouds: {}hpa
 **Sunrise**: {} {}
 **Sunset**: {} {}""".format(
                 input_str,
@@ -67,4 +66,3 @@ async def _(event):
                 file=out_file
             )
     await event.edit(input_str)
-
