@@ -122,7 +122,7 @@ class Config(object):
     SPOTIFY_PASS = os.environ.get("SPOTIFY_PASS",None)
     SPOTIFY_USERNAME = os.environ.get("SPOTIFY_USERNAME",None)
     GDRIVE_FOLDER_ID = os.environ.get("GDRIVE_FOLDER_ID", None)
-
+    LYDIA_API = os.environ.get("LYDIA_API", None)
 
 class Production(Config):
     LOGGER = False
