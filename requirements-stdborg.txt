@@ -32,3 +32,4 @@ httplib2
 humanize
 asyncio
 spotify_token
+telethon
