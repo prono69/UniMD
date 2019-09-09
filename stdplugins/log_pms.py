@@ -5,8 +5,8 @@ from telethon import events
 from telethon.tl import functions, types
 from uniborg.util import admin_cmd
 
-
-borg.storage.NO_PM_LOG_USERS = []
+global NO_PM_LOG_USERS
+NO_PM_LOG_USERS = []
 
 
 @borg.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
