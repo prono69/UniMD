@@ -24,10 +24,10 @@ async def _(event):
             i = i + 1
             msgs.append(message)
             if len(msgs) == 100:
-                await borg.delete_messages(event.chat_id, msgs)
+                await borg.delete_messages(event.chat_id, msgs, revoke=True)
                 msgs = []
         if len(msgs) <= 100:
-            await borg.delete_messages(event.chat_id, msgs)
+            await borg.delete_messages(event.chat_id, msgs, revoke=True)
             msgs = []
             await event.delete()
         else:
