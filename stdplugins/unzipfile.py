@@ -42,20 +42,19 @@ async def _(event):
             ms = (end - start).seconds
             await mone.edit("Downloaded to `{}` in {} seconds.".format(downloaded_file_name, ms))
 
-        unzipped = unzip(downloaded_file_name,extracted)
-        thumb = thumb_image_path
-        await borg.send_file(
-                        event.chat_id,
-                        unzipped,
-                        caption="unzipped",
-                        force_document=True,
-                        allow_cache=False,
-                        reply_to=event.message.id,
-                        thumb=thumb,
-                        # progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                        #     progress(d, t, event, c_time, "trying to upload")
-                        # )
-                    )
+        zipfile.extract(downloaded_file_name,path=extracted)
+        for x in range(len(zipfile.extract(downloaded_file_name,path=extracted))):
+            await borg.send_file(
+                            event.chat_id,
+                            extracted,
+                            caption="unzipped",
+                            force_document=True,
+                            allow_cache=False,
+                            reply_to=event.message.id,
+                            # progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                            #     progress(d, t, event, c_time, "trying to upload")
+                            # )
+                        )
 
 def unzip(source_filename, dest_dir):
     with zipfile.ZipFile(source_filename) as zf:
