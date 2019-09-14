@@ -51,12 +51,16 @@ async def _(event):
         filename = os.path.splitext(filename)[0]
         filename = filename + "/"
         unzipped = extracted + filename
+        path = unzipped
+        files = []
         await event.edit("Unzipping now")
-        for x in unzipped:
-            x = f"{extracted}{filename}"
+        for  r, d, f in os.walk(path):
+            for file in f:
+                files.append(os.path.join(r,file))
+        for f in files:
             await borg.send_file(
                             event.chat_id,
-                            open(x , 'rb'),
+                            f,
                             caption="unzipped @By_Azade",
                             # progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
                             #     progress(d, t, event, c_time, "trying to upload")
