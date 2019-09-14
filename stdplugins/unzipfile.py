@@ -13,7 +13,7 @@ from datetime import datetime
 from pySmartDL import SmartDL
 from zipfile import ZipFile
 
-extracted = Config.TMP_DOWNLOAD_DIRECTORY + "/extracted/"
+extracted = Config.TMP_DOWNLOAD_DIRECTORY + "extracted/"
 thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
 
 @borg.on(admin_cmd(pattern=("unzip")))
