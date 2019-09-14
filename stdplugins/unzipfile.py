@@ -52,8 +52,8 @@ async def _(event):
         filename = filename + "/"
         unzipped = extracted + filename
         await event.edit("Unzipping now")
-        with zipfile.ZipFile(downloaded_file_name, 'r') as zip_ref:
-            x = zip_ref.extractall(extracted)
+        with ZipFile(downloaded_file_name, 'r') as zip:
+            x = zip.extractall(extracted)
             await borg.send_file(
                             event.chat_id,
                             x,
