@@ -74,8 +74,7 @@ async def _(event):
                             force_document=True,
                             supports_streaming=False,
                             allow_cache=False,
-                            reply_to=event.message.id,
-                            thumb=None
+                            reply_to=event.message.id
                             # progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
                             #     progress(d, t, event, c_time, "trying to upload")
                             # )
