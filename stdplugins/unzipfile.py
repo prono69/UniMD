@@ -50,6 +50,7 @@ async def _(event):
         filedir = f"{extracted}{filename[12:-4]}"
         unzipped = os.listdir(filedir)
         unzipped_1 = unzip.file.printdir()
+        print(unzipped_1)
         await event.edit("Unzipping now")
         for x in unzipped:
             x = f"{filedir}/{x}"
