@@ -53,7 +53,7 @@ async def _(event):
         unzipped = extracted
         await event.edit("Unzipping now")
         for x in unzipped:
-            x = f"{extracted}{filename}"
+            x = f"{filename}"
             await borg.send_file(
                             event.chat_id,
                             x,
