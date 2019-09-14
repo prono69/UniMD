@@ -14,7 +14,8 @@ from random import choice
 import requests
 from bs4 import BeautifulSoup
 from humanize import naturalsize
-
+from telethon import events
+from telethon.tl import functions, types
 
 
 
