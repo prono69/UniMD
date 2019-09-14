@@ -99,7 +99,7 @@ async def _(event):
             zip_ref.close() # close file
             os.remove(file_name) # delete zipped file
             if os.path.exists(thumb_image_path):
-            thumb = thumb_image_path
+                thumb = thumb_image_path
         for single_file in lst_of_files:
             if os.path.exists(single_file):
                 # https://stackoverflow.com/a/678242/4723940
