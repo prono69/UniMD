@@ -47,6 +47,9 @@ async def _(event):
         unzip = zipfile.ZipFile(downloaded_file_name,'r')
         unzip.extractall(path=extracted)
         filename = downloaded_file_name
+        filename = os.path.basename(filename)
+        filename = os.path.splitext(filename)[0]
+        filename = filename + "/"
         unzipped = extracted
         await event.edit("Unzipping now")
         for x in unzipped:
