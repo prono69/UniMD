@@ -52,11 +52,12 @@ async def _(event):
         #filename = filename + "/"
         unzipped = extracted + filename
         files = []
-        path = unzipped
+        pathh = unzipped
         await event.edit("Unzipping now")
-        for  r, d, f in os.walk(unzipped):
+        for  r, d, f in os.walk(pathh):
             for file in f:
-                    files.append(os.path.join(r,file))
+                files.append(os.path.join(r, file))
+                print(f)
         print(files)
         print("-----")
         print(unzipped)
@@ -64,7 +65,7 @@ async def _(event):
         print(filename)
         print("-----")
         print(downloaded_file_name)
-        for f in unzipped:
+        for f in files:
             await borg.send_file(
                             event.chat_id,
                             f,
