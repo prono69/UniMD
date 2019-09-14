@@ -45,7 +45,7 @@ async def _(event):
         unzip = zipfile.ZipFile(downloaded_file_name,'r')
         unzip.extractall(extracted)
         filename = downloaded_file_name
-        filedir = f"{extracted}/{filename[:-4]}"
+        filedir = f"{extracted}{filename[12:-4]}"
         unzipped = os.listdir(filedir)
         for x in unzipped:
             x = f"{filedir}/{x}"
