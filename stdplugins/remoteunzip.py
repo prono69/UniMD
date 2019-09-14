@@ -15,7 +15,7 @@ import re
 
 filedir = f"{Config.TMP_DOWNLOAD_DIRECTORY}extracted/"
 
-@borg.on(admin_cmd(pattern=("runzip")),outgoing=True)
+@borg.on(events.NewMessage(pattern=("runzip")),outgoing=True)
 async def _(event):
     """ remote link to unzip archive """
     await event.edit("`Processing...`")
