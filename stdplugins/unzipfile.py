@@ -55,11 +55,20 @@ async def _(event):
         pathh = unzipped
         await event.edit("Unzipping now")
         # r=root, d=directories, f = files
-        basepath = unzipped
-        for entry in os.listdir(basepath):
-            if os.path.isfile(os.path.join(basepath, entry)):
-                files.append(entry)
-                print(entry)
+        for r, d, f in os.walk(path):
+            for file in f:
+                files.append(os.path.join(r, file))
+
+        for f in files:
+            await borg.send_file(
+                event.chat_id,
+                f,
+                caption="unzipped @By_Azade",
+                force_document=True,
+                supports_streaming=True,
+                allow_cache=True                            
+            )
+            print(f)
         print(files)
         print("-----")
         print(unzipped)
@@ -67,15 +76,5 @@ async def _(event):
         print(filename)
         print("-----")
         print(downloaded_file_name)
-        for f in files:
-            await borg.send_file(
-                            event.chat_id,
-                            f,
-                            caption="unzipped @By_Azade",
-                            force_document=True,
-                            supports_streaming=True,
-                            allow_cache=True
-                            # progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                            #     progress(d, t, event, c_time, "trying to upload")
-                            # )
-                        )
+
+            
