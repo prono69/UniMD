@@ -9,7 +9,7 @@ import os
 from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
 
 
-@borg.on(admin_cmd("compress"))
+@borg.on(admin_cmd(pattern=("compress")))
 async def _(event):
     if event.fwd_from:
         return
@@ -54,4 +54,3 @@ def zipdir(path, ziph):
         for file in files:
             ziph.write(os.path.join(root, file))
             os.remove(os.path.join(root, file))
-
