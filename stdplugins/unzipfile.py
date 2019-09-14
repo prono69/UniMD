@@ -72,15 +72,15 @@ async def _(event):
             await mone.edit(str(e))
     
 
-    working_directory = Config.TMP_DOWNLOAD_DIRECTORY
-    os.chdir(working_directory)
+    # working_directory = Config.TMP_DOWNLOAD_DIRECTORY
+    # os.chdir(working_directory)
 
 
-    for file in os.listdir(working_directory):   # get the list of files
+    for file in os.listdir(directory_name):   # get the list of files
         if zipfile.is_zipfile(file): # if it is a zipfile, extract it
             with zipfile.ZipFile(file) as item: # treat the file as a zip
                 item.extractall()  # extract it in the working directory
-                await borg.send_file(event.chat_id,working_directory + ".zip",caption="Zipped By @By_Azade",force_document=True,allow_cache=False,reply_to=event.message.id,)
+                await borg.send_file(event.chat_id,directory_name + ".zip",caption="Zipped By @By_Azade",force_document=True,allow_cache=False,reply_to=event.message.id,)
     await event.edit("DONE!!!")
     await asyncio.sleep(7)
     await event.delete()
