@@ -58,6 +58,3 @@ async def _(event):
                             #     progress(d, t, event, c_time, "trying to upload")
                             # )
                         )
-def unzip(source_filename, dest_dir):
-    with zipfile.ZipFile(source_filename) as zf:
-        zf.extractall(dest_dir)
