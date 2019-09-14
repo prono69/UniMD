@@ -1,10 +1,12 @@
 # Copyright (C) 2019 The Raphielscape Company LLC.
 #
-# Licensed under the Raphielscape Public License, Version 1.c (the "License");
+# Licensed under the Raphielscape Public License, Version 1.b (the "License");
 # you may not use this file except in compliance with the License.
 #
 """ Userbot module containing various sites direct links generators"""
 
+import asyncio
+import datetime
 import json
 import re
 import urllib.parse
@@ -13,13 +15,13 @@ from random import choice
 
 import requests
 from bs4 import BeautifulSoup
+
 from humanize import naturalsize
 from telethon import events
 from telethon.tl import functions, types
+from uniborg.util import admin_cmd
 
-
-
-@borg(events.NewMessage(pattern=r"\.direct ?(.*)"))
+@borg.on(events.NewMessage(pattern=r"^.direct(?: |$)([\s\S]*)", outgoing=True))
 async def direct_link_generator(request):
     """ direct links generator """
     await request.edit("`Processing...`")
