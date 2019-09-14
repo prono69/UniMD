@@ -49,8 +49,9 @@ async def _(event):
         filename = downloaded_file_name
         filedir = f"{extracted}{filename[12:-4]}"
         unzipped_1 = unzip.infolist()
-        unzipped = os.listdir(filedir)
         print(unzipped_1)
+        unzipped = os.listdir(filedir)
+        
         await event.edit("Unzipping now")
         for x in unzipped:
             x = f"{filedir}/{x}"
