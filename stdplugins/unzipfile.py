@@ -44,7 +44,7 @@ async def _(event):
 
         unzip = zipfile.ZipFile(downloaded_file_name,'r')
         unzip.extractall()
-        for x in range(len(zipfile.namelist(downloaded_file_name))):
+        for x in range(len(zipfile.ZipFile.namelist(downloaded_file_name))):
             await borg.send_file(
                             event.chat_id,
                             extracted,
