@@ -11,6 +11,7 @@ from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
 import time
 from datetime import datetime
 from pySmartDL import SmartDL
+from zipfile import ZipFile
 
 
 @borg.on(admin_cmd(pattern=("unzip")))
