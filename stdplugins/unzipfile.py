@@ -42,7 +42,7 @@ async def _(event):
             ms = (end - start).seconds
             await mone.edit("Downloaded to `{}` in {} seconds.".format(downloaded_file_name, ms))
 
-        unzip = zipfile(downloaded_file_name,'r')
+        unzip = zipfile.ZipFile(downloaded_file_name,'r')
         unzip.extractall()
         for x in range(len(zipfile.namelist(downloaded_file_name))):
             await borg.send_file(
