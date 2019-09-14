@@ -229,7 +229,7 @@ async def on_new_channel_message(event):
         the_message += "#MessageActionChatAddUser\n\n"
         # the_message += f"[User](tg://user?id={added_by_user}): `{added_by_user}`\n"
         the_message += f"[Private Link](https://t.me/c/{channel_id}/{message_id})\n"
-        await event.client.send_message(
+        await borg.send_message(
             entity=Config.PM_LOGGR_BOT_API_ID,
             message=the_message,
             # reply_to=,
@@ -263,7 +263,7 @@ async def do_pm_permit_action(chat_id, event):
     if PM_WARNS[chat_id] == Config.MAX_FLOOD_IN_P_M_s:
         r = await event.reply(UNIBORG_USER_BOT_WARN_ZERO)
         await asyncio.sleep(3)
-        await borg(functions.contacts.BlockRequest(chat_id))
+        await event.client(functions.contacts.BlockRequest(chat_id))
         if chat_id in PREV_REPLY_MESSAGE:
             await PREV_REPLY_MESSAGE[chat_id].delete()
         PREV_REPLY_MESSAGE[chat_id] = r
