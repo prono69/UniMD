@@ -1,4 +1,6 @@
-""" command: .compress """
+""" command: .unzip
+coded by @By_Azade
+"""
 
 import asyncio
 import os
@@ -47,6 +49,7 @@ async def _(event):
         filename = downloaded_file_name
         filedir = f"{extracted}{filename[12:-4]}"
         unzipped = os.listdir(filedir)
+        unzipped_1 = unzip.file.printdir()
         await event.edit("Unzipping now")
         for x in unzipped:
             x = f"{filedir}/{x}"
