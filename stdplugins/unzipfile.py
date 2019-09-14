@@ -46,10 +46,14 @@ async def _(event):
 
         with zipfile.ZipFile(downloaded_file_name, 'r') as zip_ref:
             zip_ref.extractall(path=extracted)
+            filename = downloaded_file_name
+            filename = os.path.basename(filename)
+            filename = os.path.splitext(filename)[0]
+            unzipped = extracted + filename
             await event.edit("Unzipping now")
             await borg.send_file(
                 event.chat_id,
-                extracted,
+                unzipped,
                 caption="unzipped @By_Azade",
                 force_document=True,
                 supports_streaming=True,
