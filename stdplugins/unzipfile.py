@@ -39,10 +39,11 @@ async def _(event):
             await event.edit(downloaded_file_name)
         except Exception as e:  # pylint:disable=C0103,W0703
             await mone.edit(str(e))
-    zf = ZipFile(downloaded_file_name, 'r')
+    dir_name = un_zipFiles(directory_name)
+    zf = ZipFile(dir_name, 'r')
     zf.extractall(Config.TMP_DOWNLOAD_DIRECTORY)
     zf.close()
-    await unzipdir()
+    await unzipdir(event)
     await event.edit("DONE!!!")
     await asyncio.sleep(7)
     await event.delete()
@@ -70,7 +71,19 @@ def get_lst_of_files(input_directory, output_lst):
         output_lst.append(current_file_name)
     return output_lst
 
-async def unzipdir(path,unziph,event):
+
+def un_zipFiles(path):
+    files=os.listdir(path)
+    for file in files:
+        if file.endswith('.zip'):
+            filePath=path+'/'+file
+            zip_file = zipfile.ZipFile(filePath)
+            for names in zip_file.namelist():
+                zip_file.extract(names,path)
+            zip_file.close() 
+
+
+async def unzipdir(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
