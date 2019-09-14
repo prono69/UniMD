@@ -21,7 +21,6 @@ async def _(event):
     if event.fwd_from:
         return
     mone = await event.edit("Processing ...")
-    input_str = event.pattern_match.group(1)
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
     if event.reply_to_msg_id:
