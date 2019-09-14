@@ -19,7 +19,7 @@ from telethon.tl import functions, types
 
 
 
-@borg(events.NewMessage(pattern=r"^.direct(?: |$)([\s\S]*)"),outgoing=True)
+@borg(events.NewMessage(pattern=r"^.direct(?: |$)([\s\S]*)"))
 async def direct_link_generator(request):
     """ direct links generator """
     await request.edit("`Processing...`")
