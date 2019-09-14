@@ -67,7 +67,7 @@ async def _(event):
             await borg.send_file(
                             event.chat_id,
                             f,
-                            caption="unzipped @By_Azade",
+                            caption="unzipped @By_Azade"
                             # progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
                             #     progress(d, t, event, c_time, "trying to upload")
                             # )
