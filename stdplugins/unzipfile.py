@@ -63,7 +63,7 @@ async def _(event):
         print(filename)
         print("-----")
         print(downloaded_file_name)
-        for f in files:
+        for f in unzipped:
             await borg.send_file(
                             event.chat_id,
                             f,
