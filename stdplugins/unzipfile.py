@@ -55,9 +55,9 @@ async def _(event):
         pathh = unzipped
         await event.edit("Unzipping now")
 
-        for r, d, f in os.walk(unzipped):
+        for f in unzipped:
             for file in f:
-                files.append(os.path.join(r, file))
+                files.append(f)
 
         print(files)
         print("-----")
