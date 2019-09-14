@@ -50,16 +50,30 @@ async def _(event):
     if event.fwd_from:
         return
     if not event.is_reply:
-        await event.edit("Reply to a file to unzip it.")
+        await event.edit("Reply to a file to compress it.")
         return
     mone = await event.edit("Processing ...")
+    if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
+        os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
+    if event.reply_to_msg_id:
+        reply_message = await event.get_reply_message()
+        try:
+            c_time = time.time()
+            downloaded_file_name = await borg.download_media(
+                reply_message,
+                Config.TMP_DOWNLOAD_DIRECTORY,
+                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                    progress(d, t, mone, c_time, "trying to download")
+                )
+            )
+            directory_name = downloaded_file_name
+            await event.edit(downloaded_file_name)
+        except Exception as e:  # pylint:disable=C0103,W0703
+            await mone.edit(str(e))
+    
 
     working_directory = Config.TMP_DOWNLOAD_DIRECTORY
     os.chdir(working_directory)
-    
-
-
-
 
 
     for file in os.listdir(working_directory):   # get the list of files
