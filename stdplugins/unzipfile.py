@@ -53,29 +53,20 @@ async def _(event):
         await event.edit("Reply to a file to unzip it.")
         return
     mone = await event.edit("Processing ...")
-    if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
-        os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
-    if event.reply_to_msg_id:
-        reply_message = await event.get_reply_message()
-        try:
-            c_time = time.time()
-            working_directory = Config.TMP_DOWNLOAD_DIRECTORY
+
+    working_directory = Config.TMP_DOWNLOAD_DIRECTORY
     os.chdir(working_directory)
+    
+
+
+
+
+
     for file in os.listdir(working_directory):   # get the list of files
         if zipfile.is_zipfile(file): # if it is a zipfile, extract it
             with zipfile.ZipFile(file) as item: # treat the file as a zip
                 item.extractall()  # extract it in the working directory
-                downloaded_file_name = await borg.download_media(
-                reply_message,
-                Config.TMP_DOWNLOAD_DIRECTORY,
-                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(d, t, mone, c_time, "trying to unzip")
-                )
-            )
-                directory_name = downloaded_file_name
-                await borg.send_file(event.chat_id,directory_name + ".zip",caption="Zipped By @By_Azade",force_document=True,allow_cache=False,reply_to=event.message.id,)
-            directory_name = downloaded_file_name
-            await event.edit(downloaded_file_name)
+                await borg.send_file(event.chat_id,working_directory + ".zip",caption="Zipped By @By_Azade",force_document=True,allow_cache=False,reply_to=event.message.id,)
     await event.edit("DONE!!!")
     await asyncio.sleep(7)
     await event.delete()
