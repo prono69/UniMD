@@ -46,7 +46,7 @@ async def _(event):
         unzip.extractall(extracted)
         unzipped = os.listdir(extracted)
         for x in unzipped:
-            x = f"{Config.TMP_DOWNLOAD_DIRECTORY}/{x}"
+            x = f"{Config.TMP_DOWNLOAD_DIRECTORY}{x}"
             await borg.send_file(
                             event.chat_id,
                             x,
