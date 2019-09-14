@@ -33,3 +33,4 @@ humanize
 asyncio
 spotify_token
 lxml
+remotezip
