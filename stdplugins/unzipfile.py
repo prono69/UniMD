@@ -57,6 +57,7 @@ async def _(event):
         for  r, d, f in os.walk(path):
             for file in f:
                 files.append(os.path.join(r,file))
+        print(files)
         for f in files:
             await borg.send_file(
                             event.chat_id,
