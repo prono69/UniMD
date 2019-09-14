@@ -49,7 +49,6 @@ from zipfile import ZipFile
 async def _(event):
     if event.fwd_from:
         return
-    input_str = event.pattern_match.group(1)
     if os.path.exists(input_str):
         start = datetime.now()
         # await event.edit("Processing ...")
