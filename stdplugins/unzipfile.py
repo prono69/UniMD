@@ -44,54 +44,30 @@ async def _(event):
             ms = (end - start).seconds
             await mone.edit("Downloaded to `{}` in {} seconds.".format(downloaded_file_name, ms))
 
-        with zipfile.ZipFile(downloaded_file_name, 'r') as zip_ref:
-            zip_ref.extractall(path=extracted)
-            filename = downloaded_file_name
-            filename = os.path.basename(filename)
-            filename = os.path.splitext(filename)[0]
-            unzipped = extracted + filename
-            await event.edit("Unzipping now")
-            files = []
-            # r=root, d=directories, f = files
-            for r, d, f in os.walk(unzipped):
-                for file in f:
-                    files.append(os.path.join(r, file))
-
-            for f in files:
-                print(f)
-                await borg.send_file(
-                    event.chat_id,
-                    unzipped,
-                    caption="unzipped @By_Azade",
-                    force_document=True,
-                    supports_streaming=True,
-                    allow_cache=True                            
-                )
-
-        # unzip = zipfile.ZipFile(downloaded_file_name,'r')
-        # unzip.extractall(path=extracted)
-        # filename = downloaded_file_name
-        # filename = os.path.basename(filename)
-        # filename = os.path.splitext(filename)[0]
-        # unzipped = extracted + filename
-        # files = []
-        # pathh = unzipped
-        # await event.edit("Unzipping now")
+        unzip = zipfile.ZipFile(downloaded_file_name,'r')
+        unzip.extractall(path=extracted)
+        filename = downloaded_file_name
+        filename = os.path.basename(filename)
+        filename = os.path.splitext(filename)[0]
+        unzipped = extracted + filename
+        files = []
+        pathh = unzipped
+        await event.edit("Unzipping now")
         # r=root, d=directories, f = files
-        # for r, d, f in os.walk(pathh):
-        #     for file in f:
-        #         files.append(os.path.join(r, file))
-        #         print(files)
+        for r, d, f in os.walk(pathh):
+            for file in f:
+                files.append(os.path.join(r, file))
+                print(files)
 
-        # for f in files:
-        #     await borg.send_file(
-        #         event.chat_id,
-        #         f,
-        #         caption="unzipped @By_Azade",
-        #         force_document=True,
-        #         supports_streaming=True,
-        #         allow_cache=True                            
-        #     )
+        for f in files:
+            await borg.send_file(
+                event.chat_id,
+                f,
+                caption="unzipped @By_Azade",
+                force_document=True,
+                supports_streaming=True,
+                allow_cache=True                            
+            )
             
         print(files)
         print("-----")
