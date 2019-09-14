@@ -28,7 +28,6 @@ async def _(event):
     if event.reply_to_msg_id:
         start = datetime.now()
         reply_message = await event.get_reply_message()
-        filedir = f"{Config.TMP_DOWNLOAD_DIRECTORY}extracted/"
         try:
             c_time = time.time()
             downloaded_file_name = await borg.download_media(
@@ -45,8 +44,16 @@ async def _(event):
             ms = (end - start).seconds
             await mone.edit("Downloaded to `{}` in {} seconds.".format(downloaded_file_name, ms))
 
-        with zipfile.ZipFile(downloaded_file_name, 'r') as zip_ref:
-            x = zip_ref.extractall(filedir)
+        unzip = zipfile.ZipFile(downloaded_file_name,'r')
+        unzip.extractall(extracted)
+        filename = downloaded_file_name
+        filedir = f"{extracted}{filename[12:-4]}"
+        unzipped_1 = unzip.infolist()
+        print(unzipped_1)
+        unzipped = os.listdir(filedir)
+        await event.edit("Unzipping now")
+        for x in unzipped:
+            x = f"{filedir}/{x}"
             await borg.send_file(
                             event.chat_id,
                             x,
