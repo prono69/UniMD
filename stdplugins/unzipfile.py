@@ -73,8 +73,8 @@ async def _(event):
                             f,
                             caption="unzipped @By_Azade",
                             force_document=True,
-                            supports_streaming=False,
-                            allow_cache=False
+                            supports_streaming=True,
+                            allow_cache=True
                             # progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
                             #     progress(d, t, event, c_time, "trying to upload")
                             # )
