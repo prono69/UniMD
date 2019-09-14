@@ -52,29 +52,13 @@ async def _(event):
         filename = filename + "/"
         unzipped = extracted + filename
         await event.edit("Unzipping now")
-        with ZipFile(downloaded_file_name, 'r') as zip:
-            x = zip.extractall(extracted)
+        for x in unzipped:
+            x = f"{extracted}{filename}"
             await borg.send_file(
                             event.chat_id,
-                            x,
+                            open(x , 'rb'),
                             caption="unzipped @By_Azade",
                             # progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
                             #     progress(d, t, event, c_time, "trying to upload")
                             # )
                         )
-
-
-
-
-
-
-
-
-
-        #for x in unzipped:
-            #x = f"{extracted}{filename}"
-            #await borg.send_file(
-                            #event.chat_id,
-                            #x,
-                            #caption="unzipped @By_Azade",
-                        #)
