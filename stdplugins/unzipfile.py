@@ -14,7 +14,7 @@ from pySmartDL import SmartDL
 from zipfile import ZipFile
 
 extracted = Config.TMP_DOWNLOAD_DIRECTORY + "extracted/"
-thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
+
 
 @borg.on(admin_cmd(pattern=("unzip")))
 async def _(event):
@@ -44,7 +44,8 @@ async def _(event):
 
         unzip = zipfile.ZipFile(downloaded_file_name,'r')
         unzip.extractall(extracted)
-        for x in range(len(os.listdir(extracted))):
+        unzipped = os.listdir(extracted)
+        for x in unzipped:
             await borg.send_file(
                             event.chat_id,
                             extracted,
