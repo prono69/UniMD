@@ -58,6 +58,7 @@ async def _(event):
         for r, d, f in os.walk(pathh):
             for file in f:
                 files.append(os.path.join(r, file))
+                print(files)
 
         for f in files:
             await borg.send_file(
@@ -68,7 +69,7 @@ async def _(event):
                 supports_streaming=True,
                 allow_cache=True                            
             )
-            print(f)
+            
         print(files)
         print("-----")
         print(unzipped)
