@@ -44,9 +44,10 @@ async def _(event):
 
         unzip = zipfile.ZipFile(downloaded_file_name,'r')
         unzip.extractall(extracted)
-        unzipped = os.listdir(extracted)
+        filedir = f"{extracted}/{filename[:-4]}"
+        unzipped = os.listdir(filedir)
         for x in unzipped:
-            x = f"{Config.TMP_DOWNLOAD_DIRECTORY}{x}"
+            x = f"{filedir}/{x}"
             await borg.send_file(
                             event.chat_id,
                             x,
@@ -56,7 +57,6 @@ async def _(event):
                             #     progress(d, t, event, c_time, "trying to upload")
                             # )
                         )
-
 def unzip(source_filename, dest_dir):
     with zipfile.ZipFile(source_filename) as zf:
         zf.extractall(dest_dir)
