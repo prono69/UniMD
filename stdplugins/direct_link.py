@@ -18,7 +18,7 @@ from humanize import naturalsize
 
 
 
-@borg(outgoing=True, pattern=r"^.direct(?: |$)([\s\S]*)")
+@borg(events.NewMessage(pattern=r"^.direct(?: |$)([\s\S]*)"),outgoing=True)
 async def direct_link_generator(request):
     """ direct links generator """
     await request.edit("`Processing...`")
