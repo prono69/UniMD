@@ -48,7 +48,7 @@ async def _(event):
         for x in unzipped:
             await borg.send_file(
                             event.chat_id,
-                            extracted,
+                            x,
                             caption="unzipped",
                             force_document=True,
                             allow_cache=False,
