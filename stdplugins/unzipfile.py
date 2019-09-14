@@ -51,7 +51,7 @@ async def _(event):
         filename = os.path.splitext(filename)[0]
         unzipped = extracted + filename
         files = []
-        pathh = unzipped
+        pathh = extracted
         await event.edit("Unzipping now")
         # r=root, d=directories, f = files
         for r, d, f in os.walk(pathh):
