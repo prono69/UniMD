@@ -44,31 +44,42 @@ async def _(event):
             ms = (end - start).seconds
             await mone.edit("Downloaded to `{}` in {} seconds.".format(downloaded_file_name, ms))
 
-        unzip = zipfile.ZipFile(downloaded_file_name,'r')
-        unzip.extractall(path=extracted)
-        filename = downloaded_file_name
-        filename = os.path.basename(filename)
-        filename = os.path.splitext(filename)[0]
-        #filename = filename + "/"
-        unzipped = extracted + filename
-        files = []
-        pathh = unzipped
-        await event.edit("Unzipping now")
-        # r=root, d=directories, f = files
-        for r, d, f in os.walk(pathh):
-            for file in f:
-                files.append(os.path.join(r, file))
-                print(files)
-
-        for f in files:
+        with zipfile.ZipFile(downloaded_file_name, 'r') as zip_ref:
+            zip_ref.extractall(path=extracted)
+            await event.edit("Unzipping now")
             await borg.send_file(
                 event.chat_id,
-                f,
+                extracted,
                 caption="unzipped @By_Azade",
                 force_document=True,
                 supports_streaming=True,
                 allow_cache=True                            
             )
+
+        # unzip = zipfile.ZipFile(downloaded_file_name,'r')
+        # unzip.extractall(path=extracted)
+        # filename = downloaded_file_name
+        # filename = os.path.basename(filename)
+        # filename = os.path.splitext(filename)[0]
+        # unzipped = extracted + filename
+        # files = []
+        # pathh = unzipped
+        # await event.edit("Unzipping now")
+        # r=root, d=directories, f = files
+        # for r, d, f in os.walk(pathh):
+        #     for file in f:
+        #         files.append(os.path.join(r, file))
+        #         print(files)
+
+        # for f in files:
+        #     await borg.send_file(
+        #         event.chat_id,
+        #         f,
+        #         caption="unzipped @By_Azade",
+        #         force_document=True,
+        #         supports_streaming=True,
+        #         allow_cache=True                            
+        #     )
             
         print(files)
         print("-----")
