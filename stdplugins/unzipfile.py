@@ -45,7 +45,7 @@ async def _(event):
             await mone.edit("Downloaded to `{}` in {} seconds.".format(downloaded_file_name, ms))
 
         unzip = zipfile.ZipFile(downloaded_file_name,'r')
-        unzip.extractall(extracted)
+        unzip.extractall(path=extracted)
         filename = downloaded_file_name
         filedir = f"{extracted}{filename[12:-4]}"
         unzipped = extracted
