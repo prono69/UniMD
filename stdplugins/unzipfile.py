@@ -49,7 +49,7 @@ async def _(event):
         filename = downloaded_file_name
         filename = os.path.basename(filename)
         filename = os.path.splitext(filename)[0]
-        filename = filename + "/"
+        #filename = filename + "/"
         unzipped = extracted + filename
         files = []
         await event.edit("Unzipping now")
