@@ -36,7 +36,7 @@ async def _(event):
     else:
         with RemoteZip(links) as zip:
             zip.extractall(filedir)
-            x = zip_ref.extractall(filedir)
+            x = zip.extractall(filedir)
             await borg.send_file(
                             event.chat_id,
                             x,
