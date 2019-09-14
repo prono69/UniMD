@@ -51,14 +51,22 @@ async def _(event):
             filename = os.path.splitext(filename)[0]
             unzipped = extracted + filename
             await event.edit("Unzipping now")
-            await borg.send_file(
-                event.chat_id,
-                unzipped,
-                caption="unzipped @By_Azade",
-                force_document=True,
-                supports_streaming=True,
-                allow_cache=True                            
-            )
+            files = []
+            # r=root, d=directories, f = files
+            for r, d, f in os.walk(unzipped):
+                for file in f:
+                    files.append(os.path.join(r, file))
+
+            for f in files:
+                print(f)
+                await borg.send_file(
+                    event.chat_id,
+                    unzipped,
+                    caption="unzipped @By_Azade",
+                    force_document=True,
+                    supports_streaming=True,
+                    allow_cache=True                            
+                )
 
         # unzip = zipfile.ZipFile(downloaded_file_name,'r')
         # unzip.extractall(path=extracted)
