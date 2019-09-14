@@ -48,8 +48,8 @@ async def _(event):
         unzip.extractall(extracted)
         filename = downloaded_file_name
         filedir = f"{extracted}{filename[12:-4]}"
-        unzipped = os.listdir(filedir)
         unzipped_1 = unzip.file.printdir()
+        unzipped = os.listdir(filedir)
         print(unzipped_1)
         await event.edit("Unzipping now")
         for x in unzipped:
