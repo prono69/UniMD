@@ -14,20 +14,18 @@ from pySmartDL import SmartDL
 from zipfile import ZipFile
 
 extracted = Config.TMP_DOWNLOAD_DIRECTORY + "/extracted/"
+thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
 
 @borg.on(admin_cmd(pattern=("unzip")))
 async def _(event):
     if event.fwd_from:
         return
-    if not event.is_reply:
-        await event.edit("Reply to a file to unzip it.")
-        return
     mone = await event.edit("Processing ...")
+    input_str = event.pattern_match.group(1)
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
-    if not os.path.isdir(extracted):
-        os.makedirs(extracted)
     if event.reply_to_msg_id:
+        start = datetime.now()
         reply_message = await event.get_reply_message()
         try:
             c_time = time.time()
@@ -38,20 +36,27 @@ async def _(event):
                     progress(d, t, mone, c_time, "trying to download")
                 )
             )
-            directory_name = downloaded_file_name
-            unzipfile = unzip(downloaded_file_name,extracted)
-            print(unzip())
-            await event.edit(downloaded_file_name)
         except Exception as e:  # pylint:disable=C0103,W0703
             await mone.edit(str(e))
-    
+        else:
+            end = datetime.now()
+            ms = (end - start).seconds
+            await mone.edit("Downloaded to `{}` in {} seconds.".format(downloaded_file_name, ms))
 
-
-
-
-    await event.edit("DONE!!!")
-    await asyncio.sleep(7)
-    await event.delete()
+        unzipped = unzip(downloaded_file_name,extracted)
+        thumb = thumb_image_path
+        await borg.send_file(
+                        event.chat_id,
+                        unzipped,
+                        caption="unzipped",
+                        force_document=True,
+                        allow_cache=False,
+                        reply_to=event.message.id,
+                        thumb=thumb,
+                        # progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                        #     progress(d, t, event, c_time, "trying to upload")
+                        # )
+                    )
 
 def unzip(source_filename, dest_dir):
     with zipfile.ZipFile(source_filename) as zf:
