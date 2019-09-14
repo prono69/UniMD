@@ -39,7 +39,7 @@ async def _(event):
             await event.edit(downloaded_file_name)
         except Exception as e:  # pylint:disable=C0103,W0703
             await mone.edit(str(e))
-    zf = ZipFile(Config.TMP_DOWNLOAD_DIRECTORY, 'r')
+    zf = ZipFile(downloaded_file_name, 'r')
     zf.extractall(Config.TMP_DOWNLOAD_DIRECTORY)
     zf.close()
     await unzipdir()
