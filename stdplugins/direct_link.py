@@ -18,8 +18,7 @@ from humanize import naturalsize
 
 
 
-@register(outgoing=True, pattern=r"^.direct(?: |$)([\s\S]*)")
-@errors_handler
+@borg(outgoing=True, pattern=r"^.direct(?: |$)([\s\S]*)")
 async def direct_link_generator(request):
     """ direct links generator """
     await request.edit("`Processing...`")
