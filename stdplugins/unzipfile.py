@@ -50,7 +50,7 @@ async def _(event):
         filename = os.path.basename(filename)
         filename = os.path.splitext(filename)[0]
         filename = filename + "/"
-        unzipped = extracted
+        unzipped = filename
         await event.edit("Unzipping now")
         for x in unzipped:
             x = f"{filename}"
