@@ -35,12 +35,12 @@ async def _(event):
                     progress(d, t, mone, c_time, "trying to unzip")
                 )
             )
-            # directory_name = downloaded_file_name
+            directory_name = downloaded_file_name
             await event.edit(downloaded_file_name)
         except Exception as e:  # pylint:disable=C0103,W0703
             await mone.edit(str(e))
-    zf = ZipFile(directory_name, 'r')
-    zf.extractall(directory_name)
+    zf = ZipFile(Config.TMP_DOWNLOAD_DIRECTORY, 'r')
+    zf.extractall(Config.TMP_DOWNLOAD_DIRECTORY)
     zf.close()
     await unzipdir()
     await event.edit("DONE!!!")
