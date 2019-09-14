@@ -70,17 +70,23 @@ async def _(event):
             await event.edit(downloaded_file_name)
         except Exception as e:  # pylint:disable=C0103,W0703
             await mone.edit(str(e))
-    
+
+    folder = Config.TMP_DOWNLOAD_DIRECTORY
+    extension = ".zip"
+    for item in os.listdir(folder):
+        if item.endswith(extension):
+            zipfile.ZipFile.extractall(item)
+            await borg.send_file(event.chat_id,zipfile.ZipFile.extractall(item),caption="UNZipped By @By_Azade",force_document=True,allow_cache=False,reply_to=event.message.id,)
 
     # working_directory = Config.TMP_DOWNLOAD_DIRECTORY
     # os.chdir(working_directory)
 
 
-    for file in os.listdir(directory_name):   # get the list of files
-        if zipfile.is_zipfile(file): # if it is a zipfile, extract it
-            with zipfile.ZipFile(file) as item: # treat the file as a zip
-                item.extractall()  # extract it in the working directory
-                await borg.send_file(event.chat_id,directory_name + ".zip",caption="Zipped By @By_Azade",force_document=True,allow_cache=False,reply_to=event.message.id,)
+    # for file in os.listdir(Config.TMP_DOWNLOAD_DIRECTORY):   # get the list of files
+        # if zipfile.is_zipfile(file): # if it is a zipfile, extract it
+            # with zipfile.ZipFile(file) as item: # treat the file as a zip
+                # item.extractall()  # extract it in the working directory
+                # await borg.send_file(event.chat_id,directory_name + ".zip",caption="Zipped By @By_Azade",force_document=True,allow_cache=False,reply_to=event.message.id,)
     await event.edit("DONE!!!")
     await asyncio.sleep(7)
     await event.delete()
