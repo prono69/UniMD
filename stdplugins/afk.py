@@ -4,7 +4,7 @@ import asyncio
 import datetime
 from telethon import events
 from telethon.tl import functions, types
-from uniborg import Uniborg as borg
+
 from sample_config import Config
 
 

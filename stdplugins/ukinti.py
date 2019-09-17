@@ -13,7 +13,7 @@ from telethon.tl.types import (ChannelParticipantsKicked, ChatBannedRights,
                                UserStatusEmpty, UserStatusLastMonth,
                                UserStatusLastWeek, UserStatusOffline,
                                UserStatusOnline, UserStatusRecently)
-from uniborg import Uniborg as borg
+
 from uniborg.util import admin_cmd
 
 from sample_config import Config

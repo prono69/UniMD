@@ -6,7 +6,7 @@ import asyncio
 
 import telethon.utils
 from telethon import events
-from uniborg import Uniborg as borg
+
 from uniborg import util
 
 

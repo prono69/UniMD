@@ -11,7 +11,7 @@ import sys
 # General Public License, v.3.0. If a copy of the GPL was not distributed with this
 # file, You can obtain one at https://www.gnu.org/licenses/gpl-3.0.en.html
 from telethon import events
-from uniborg import Uniborg as borg
+
 from uniborg.util import admin_cmd
 
 

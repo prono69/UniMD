@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup
 
 import telethon
 from telethon import events
-from uniborg import Uniborg as borg
+
 
 
 @borg.on(events.NewMessage(pattern=r"\.yify recents", outgoing=True))

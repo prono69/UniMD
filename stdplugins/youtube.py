@@ -12,7 +12,7 @@ from datetime import datetime
 
 import youtube_dl
 from telethon import events
-from uniborg import Uniborg as borg
+
 
 from sample_config import Config
 

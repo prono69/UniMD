@@ -13,7 +13,7 @@ import asyncio
 import io
 import os
 from uniborg.util import admin_cmd
-from uniborg import Uniborg as borg
+
 from sample_config import Config
 
 

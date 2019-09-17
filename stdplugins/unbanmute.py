@@ -6,7 +6,7 @@ from datetime import datetime
 from telethon.tl.functions.channels import EditBannedRequest
 from telethon.tl.types import ChatBannedRights
 from uniborg.util import admin_cmd
-from uniborg import Uniborg as borg
+
 
 
 unbanned_rights = ChatBannedRights(

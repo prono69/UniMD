@@ -8,7 +8,7 @@ from datetime import datetime
 
 from bs4 import BeautifulSoup
 from telethon import events
-from uniborg import Uniborg as borg
+
 from uniborg.util import admin_cmd
 
 import qrcode

@@ -6,7 +6,7 @@ import os
 import time
 from datetime import datetime
 
-from uniborg import Uniborg as borg
+
 from uniborg.util import admin_cmd, progress
 
 from hachoir.metadata import extractMetadata

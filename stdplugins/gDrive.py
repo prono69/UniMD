@@ -17,7 +17,7 @@ from datetime import datetime
 from mimetypes import guess_type
 
 from telethon import events
-from uniborg import Uniborg as borg
+
 from uniborg.util import admin_cmd, humanbytes, progress
 
 import httplib2

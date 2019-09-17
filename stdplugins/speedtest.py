@@ -5,7 +5,7 @@ import io
 from datetime import datetime
 
 from telethon import events
-from uniborg import Uniborg as borg
+
 from uniborg.util import admin_cmd
 
 import speedtest

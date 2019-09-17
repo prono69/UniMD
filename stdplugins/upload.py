@@ -16,7 +16,7 @@ from datetime import datetime
 import requests
 from telethon import events
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
-from uniborg import Uniborg as borg
+
 from uniborg.util import admin_cmd, progress
 
 from hachoir.metadata import extractMetadata

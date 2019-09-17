@@ -10,7 +10,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from uniborg import Uniborg as borg
+
 from uniborg.util import admin_cmd
 
 from google_images_download import google_images_download

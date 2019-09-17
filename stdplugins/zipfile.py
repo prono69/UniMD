@@ -5,7 +5,7 @@ import zipfile
 
 from pySmartDL import SmartDL
 from telethon import events
-from uniborg import Uniborg as borg
+
 from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
 
 from sample_config import Config

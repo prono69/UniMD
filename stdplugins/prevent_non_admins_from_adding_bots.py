@@ -4,7 +4,7 @@
 from telethon import events
 from telethon.tl.functions.channels import EditBannedRequest
 from telethon.tl.types import ChatBannedRights
-from uniborg import Uniborg as borg
+
 
 from sample_config import Config
 

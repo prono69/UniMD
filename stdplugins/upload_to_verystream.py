@@ -13,7 +13,7 @@ import aiofiles
 import aiohttp
 import magic
 import requests
-from uniborg import Uniborg as borg
+
 from uniborg.util import admin_cmd, progress
 
 from sample_config import Config

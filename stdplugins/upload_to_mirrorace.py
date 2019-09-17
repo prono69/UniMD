@@ -9,7 +9,7 @@ from datetime import datetime
 
 import aiohttp
 import requests
-from uniborg import Uniborg as borg
+
 from uniborg.util import admin_cmd, progress
 
 ENV = bool(os.environ.get("ENV", False))
