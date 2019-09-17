@@ -8,7 +8,7 @@ import os
 import subprocess
 from datetime import datetime
 
-from uniborg import UniBorg as borg
+from uniborg import Uniborg as borg
 from uniborg.util import admin_cmd
 
 from gtts import gTTS

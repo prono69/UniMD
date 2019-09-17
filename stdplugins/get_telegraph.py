@@ -11,7 +11,7 @@ import telethon
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 import uniborg
 from telethon import events
-from uniborg import UniBorg as borg
+from uniborg import Uniborg as borg
 
 current_date_time = "./../DOWNLOADS/"
 @borg.on(events.NewMessage(pattern=r".telegraph media", outgoing=True))

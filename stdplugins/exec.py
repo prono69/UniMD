@@ -12,7 +12,7 @@ import time
 from telethon import events
 from telethon.errors import (MessageEmptyError, MessageNotModifiedError,
                              MessageTooLongError)
-from uniborg import UniBorg as borg
+from uniborg import Uniborg as borg
 from uniborg.util import admin_cmd
 
 from sample_config import Config

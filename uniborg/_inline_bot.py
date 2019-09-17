@@ -7,7 +7,7 @@ import re
 from math import ceil
 
 from telethon import custom, events
-from uniborg import UniBorg as borg
+from uniborg import Uniborg as borg
 from uniborg.util import admin_cmd, humanbytes
 
 from sample_config import Config

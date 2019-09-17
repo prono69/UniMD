@@ -3,7 +3,7 @@ Syntax: .json"""
 import io
 
 from telethon import events
-from uniborg import UniBorg as borg
+from uniborg import Uniborg as borg
 from uniborg.util import admin_cmd
 
 from sample_config import Config

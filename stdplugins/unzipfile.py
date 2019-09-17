@@ -13,7 +13,7 @@ from zipfile import ZipFile
 from pySmartDL import SmartDL
 from telethon import events
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
-from uniborg import UniBorg as borg
+from uniborg import Uniborg as borg
 from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
 
 from hachoir.metadata import extractMetadata

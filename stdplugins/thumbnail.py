@@ -9,7 +9,7 @@ import subprocess
 
 from PIL import Image
 from telethon import events
-from uniborg import UniBorg as borg
+from uniborg import Uniborg as borg
 from uniborg.util import admin_cmd
 
 from hachoir.metadata import extractMetadata

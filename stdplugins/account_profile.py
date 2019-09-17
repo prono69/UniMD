@@ -7,7 +7,7 @@ import uniborg
 from telethon import events
 from telethon.tl import functions
 from uniborg.util import admin_cmd
-from uniborg import UniBorg as borg
+from uniborg import Uniborg as borg
 from sample_config import Config
 
 

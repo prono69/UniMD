@@ -3,7 +3,7 @@ Syntax: .meaning <word>"""
 
 import requests
 from telethon import events
-from uniborg import UniBorg as borg
+from uniborg import Uniborg as borg
 from uniborg.util import admin_cmd
 
 

@@ -4,7 +4,7 @@ from collections import defaultdict, deque
 import regex
 from telethon import events, utils
 from telethon.tl import functions, types
-from uniborg import UniBorg as borg
+from uniborg import Uniborg as borg
 
 from sample_config import Config
 

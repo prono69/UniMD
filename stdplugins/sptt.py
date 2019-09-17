@@ -5,7 +5,7 @@ from datetime import datetime
 
 import requests
 from telethon import events
-from uniborg import UniBorg as borg
+from uniborg import Uniborg as borg
 
 from sample_config import Config
 

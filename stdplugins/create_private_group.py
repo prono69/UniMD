@@ -3,7 +3,7 @@ Available Commands:
 .create (b|g) GroupName"""
 from telethon.tl import functions, types
 from uniborg import util
-from uniborg import UniBorg as borg
+from uniborg import Uniborg as borg
 
 
 @borg.on(util.admin_cmd(pattern="create (b|g|c) (.*)"))  # pylint:disable=E0602

@@ -6,7 +6,7 @@ from io import BytesIO
 from telethon import types
 from telethon.errors import PhotoInvalidDimensionsError
 from telethon.tl.functions.messages import SendMediaRequest
-from uniborg import UniBorg as borg
+from uniborg import Uniborg as borg
 from uniborg import util
 
 

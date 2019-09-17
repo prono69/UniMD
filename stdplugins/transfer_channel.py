@@ -5,7 +5,7 @@ Available Commands:
 import telethon.password as pwd_mod
 # https://t.me/TelethonChat/140200
 from telethon.tl import functions, types
-from uniborg import UniBorg as borg
+from uniborg import Uniborg as borg
 from uniborg import util
 
 from sample_config import Config

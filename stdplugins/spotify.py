@@ -8,7 +8,7 @@ from requests import get
 from telethon import events
 from telethon.tl import functions, types
 from telethon.tl.functions.account import UpdateProfileRequest
-from uniborg import UniBorg as borg
+from uniborg import Uniborg as borg
 
 import spotify_token as st
 from sample_config import Config
