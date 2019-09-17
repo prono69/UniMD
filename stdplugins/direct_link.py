@@ -15,11 +15,12 @@ from random import choice
 
 import requests
 from bs4 import BeautifulSoup
-
-from humanize import naturalsize
 from telethon import events
 from telethon.tl import functions, types
 from uniborg.util import admin_cmd
+
+from humanize import naturalsize
+
 
 @borg.on(events.NewMessage(pattern=r"^.direct(?: |$)([\s\S]*)", outgoing=True))
 async def direct_link_generator(request):

@@ -2,13 +2,13 @@
 # (c) https://t.me/TelethonChat/37677
 
 import os
+
 import telethon
 import telethon.sync
 from telethon import TelegramClient, events
-from telethon.tl import types, functions
-import os
-from config import Development as Config
+from telethon.tl import functions, types
 
+from sample_config import Config, Development
 
 # https://t.me/TelethonChat/13265
 client = TelegramClient(input("Enter your username: @"), Config.APP_ID, Config.API_HASH).start()
