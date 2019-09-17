@@ -4,9 +4,9 @@
 
 import asyncio
 
-from telethon import events
 import telethon.utils
-
+from telethon import events
+from uniborg import UniBorg as borg
 from uniborg import util
 
 

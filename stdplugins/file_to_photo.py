@@ -3,11 +3,11 @@ Reply to a file with .f to send it as a photo
 """
 from io import BytesIO
 
-from uniborg import util
-
 from telethon import types
 from telethon.errors import PhotoInvalidDimensionsError
 from telethon.tl.functions.messages import SendMediaRequest
+from uniborg import UniBorg as borg
+from uniborg import util
 
 
 @borg.on(util.admin_cmd(pattern="f  (.*)"))
@@ -40,4 +40,3 @@ async def on_file_to_photo(event):
         ))
     except PhotoInvalidDimensionsError:
         return
-

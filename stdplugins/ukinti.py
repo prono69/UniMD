@@ -3,13 +3,20 @@ Available Commands:
 .unbanall
 .kick option
 Available Options: d, y, m, w, o, q, r """
-from telethon import events
-from datetime import datetime, timedelta
-from telethon.tl.types import UserStatusEmpty, UserStatusLastMonth, UserStatusLastWeek, UserStatusOffline, UserStatusOnline, UserStatusRecently, ChannelParticipantsKicked, ChatBannedRights
-from telethon.tl import functions, types
-from time import sleep
 import asyncio
+from datetime import datetime, timedelta
+from time import sleep
+
+from telethon import events
+from telethon.tl import functions, types
+from telethon.tl.types import (ChannelParticipantsKicked, ChatBannedRights,
+                               UserStatusEmpty, UserStatusLastMonth,
+                               UserStatusLastWeek, UserStatusOffline,
+                               UserStatusOnline, UserStatusRecently)
+from uniborg import UniBorg as borg
 from uniborg.util import admin_cmd
+
+from sample_config import Config
 
 
 @borg.on(admin_cmd(pattern="unbanall ?(.*)"))

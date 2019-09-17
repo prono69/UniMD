@@ -5,6 +5,7 @@ import asyncio
 from datetime import datetime
 from telethon.tl.types import User, Chat, Channel
 from uniborg.util import admin_cmd
+from uniborg import UniBorg as borg
 
 
 @borg.on(admin_cmd(pattern="count"))

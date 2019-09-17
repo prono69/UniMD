@@ -5,16 +5,19 @@ Syntax:
 By @Ck_ATR"""
 
 import asyncio
-import time
-from datetime import datetime
-from hachoir.metadata import extractMetadata
-from hachoir.parser import createParser
 import math
 import os
+import time
+from datetime import datetime
+
 from pySmartDL import SmartDL
 from telethon.tl.types import DocumentAttributeVideo
-from uniborg.util import progress, humanbytes, time_formatter, admin_cmd
+from uniborg import UniBorg as borg
+from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
 
+from hachoir.metadata import extractMetadata
+from hachoir.parser import createParser
+from sample_config import Config
 
 thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
 
@@ -92,7 +95,7 @@ async def _(event):
         else:
             await event.edit("File Not Found {}".format(input_str))
     else:
-        await mone.edit("Incorrect URL\n {}".format(input_str))
+        await event.edit("Incorrect URL\n {}".format(input_str))
 
 
 @borg.on(admin_cmd(pattern="rnupload (.*)"))

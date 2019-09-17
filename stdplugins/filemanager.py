@@ -9,6 +9,8 @@ from telethon.errors import MessageEmptyError, MessageTooLongError, MessageNotMo
 import io
 import asyncio
 import time
+from uniborg import UniBorg as borg
+from sample_config import Config
 
 @borg.on(events.NewMessage(pattern=r"\.lslocal", outgoing=True))
 async def _(event):

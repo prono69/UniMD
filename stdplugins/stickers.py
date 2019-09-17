@@ -3,30 +3,30 @@ Available Commands:
 .kangsticker [Optional Emoji]
 .packinfo
 .getsticker"""
-from telethon import events
-from io import BytesIO
-from PIL import Image
 import asyncio
 import datetime
-from collections import defaultdict
 import math
 import os
-import requests
 import zipfile
-from telethon.errors.rpcerrorlist import StickersetInvalidError
+from collections import defaultdict
+from io import BytesIO
+
+import requests
+from PIL import Image
+from telethon import events
 from telethon.errors import MessageNotModifiedError
+from telethon.errors.rpcerrorlist import StickersetInvalidError
 from telethon.tl.functions.account import UpdateNotifySettingsRequest
 from telethon.tl.functions.messages import GetStickerSetRequest
-from telethon.tl.types import (
-    DocumentAttributeFilename,
-    DocumentAttributeSticker,
-    InputMediaUploadedDocument,
-    InputPeerNotifySettings,
-    InputStickerSetID,
-    InputStickerSetShortName,
-    MessageMediaPhoto
-)
+from telethon.tl.types import (DocumentAttributeFilename,
+                               DocumentAttributeSticker,
+                               InputMediaUploadedDocument,
+                               InputPeerNotifySettings, InputStickerSetID,
+                               InputStickerSetShortName, MessageMediaPhoto)
+from uniborg import UniBorg as borg
 from uniborg.util import admin_cmd
+
+from sample_config import Config
 
 
 @borg.on(admin_cmd(pattern="kangsticker ?(.*)"))

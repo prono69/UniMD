@@ -4,6 +4,8 @@ import asyncio
 from telethon import events
 from telethon.tl import functions, types
 from uniborg.util import admin_cmd
+from uniborg import UniBorg as borg
+from sample_config import Config
 
 global NO_PM_LOG_USERS
 NO_PM_LOG_USERS = []

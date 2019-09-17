@@ -1,7 +1,8 @@
 """Get information about an user on GitHub
 Syntax: .github USERNAME"""
-from telethon import events
 import requests
+from telethon import events
+from uniborg import UniBorg as borg
 from uniborg.util import admin_cmd
 
 

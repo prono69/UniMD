@@ -2,6 +2,7 @@
 from telethon import events
 import asyncio
 from uniborg.util import admin_cmd
+from uniborg import UniBorg as borg
 
 
 @borg.on(admin_cmd(pattern="purge ?(.*)"))

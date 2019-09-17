@@ -2,14 +2,15 @@
 Syntax:
 ."""
 
-import aiohttp
 import asyncio
 import os
-import requests
 import time
 from datetime import datetime
-from uniborg.util import admin_cmd, progress
 
+import aiohttp
+import requests
+from uniborg import UniBorg as borg
+from uniborg.util import admin_cmd, progress
 
 ENV = bool(os.environ.get("ENV", False))
 if ENV:

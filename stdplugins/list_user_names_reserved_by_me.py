@@ -3,6 +3,7 @@
 
 from telethon import events, functions, types
 import asyncio
+from uniborg import UniBorg as borg
 
 
 @borg.on(events.NewMessage(pattern=r"\-listmyusernames", outgoing=True))

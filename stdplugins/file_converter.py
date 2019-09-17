@@ -5,7 +5,11 @@ import asyncio
 import os
 import time
 from datetime import datetime
+
+from uniborg import UniBorg as borg
 from uniborg.util import admin_cmd, progress
+
+from sample_config import Config
 
 
 @borg.on(admin_cmd(pattern="nfc (.*)"))  # pylint:disable=E0602
@@ -106,4 +110,3 @@ async def _(event):
             ms_two = (end_two - end).seconds
             os.remove(new_required_file_name)
             await event.edit(f"converted in {ms_two} seconds")
-

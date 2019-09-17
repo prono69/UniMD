@@ -1,11 +1,14 @@
 """Check your internet speed powered by speedtest.net
 Syntax: .speedtest
 Available Options: image, file, text"""
-from telethon import events
-from datetime import datetime
 import io
-import speedtest
+from datetime import datetime
+
+from telethon import events
+from uniborg import UniBorg as borg
 from uniborg.util import admin_cmd
+
+import speedtest
 
 
 @borg.on(admin_cmd(pattern="speedtest ?(.*)"))

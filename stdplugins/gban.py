@@ -3,9 +3,13 @@ Group Administrations bots where you are SUDO
 Available Commands:
 .gban REASON
 .ungban REASON"""
-from telethon import events
 import asyncio
+
+from telethon import events
+from uniborg import UniBorg as borg
 from uniborg.util import admin_cmd
+
+from sample_config import Config
 
 
 @borg.on(admin_cmd(pattern="gban ?(.*)"))

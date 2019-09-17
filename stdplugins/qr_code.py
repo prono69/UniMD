@@ -2,13 +2,17 @@
 Available Commands
 .getqr
 .makeqr <long text to include>"""
-from telethon import events
 import asyncio
-from datetime import datetime
 import os
-from uniborg.util import admin_cmd
-import qrcode
+from datetime import datetime
+
 from bs4 import BeautifulSoup
+from telethon import events
+from uniborg import UniBorg as borg
+from uniborg.util import admin_cmd
+
+import qrcode
+from sample_config import Config
 
 
 def progress(current, total):

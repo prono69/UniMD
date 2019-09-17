@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # (c) Shrimadhav U K
-from math import ceil
 import asyncio
 import json
 import re
-from telethon import events, custom
-from uniborg.util import admin_cmd, humanbytes
+from math import ceil
 
 from telethon import custom, events
-from uniborg.util import admin_cmd
-from math import ceil
+from uniborg import UniBorg as borg
+from uniborg.util import admin_cmd, humanbytes
+
+from sample_config import Config
+
 
 @borg.on(admin_cmd(  # pylint:disable=E0602
     pattern="ib (.[^ ]*) (.*)"

@@ -4,9 +4,12 @@ Syntax: .getime"""
 import asyncio
 import os
 from datetime import datetime
+
 from PIL import Image, ImageDraw, ImageFont
+from uniborg import UniBorg as borg
 from uniborg.util import admin_cmd
 
+from sample_config import Config
 
 FONT_FILE_TO_USE = "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf"
 

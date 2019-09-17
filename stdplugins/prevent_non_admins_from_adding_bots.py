@@ -4,7 +4,9 @@
 from telethon import events
 from telethon.tl.functions.channels import EditBannedRequest
 from telethon.tl.types import ChatBannedRights
+from uniborg import UniBorg as borg
 
+from sample_config import Config
 
 CHATS_TO_MONITOR_FOR_ADDED_BOTS = [
     # add the ID of the groups (Use .get_id command)

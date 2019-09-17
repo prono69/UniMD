@@ -16,15 +16,18 @@
 Syntax: .remove.bg https://link.to/image.extension
 Syntax: .remove.bg as reply to a media"""
 import asyncio
+import io
 import os
 import time
 from datetime import datetime
 
 import requests
-import io
 import telethon
 from telethon import events
-from uniborg.util import progress, admin_cmd
+from uniborg import UniBorg as borg
+from uniborg.util import admin_cmd, progress
+
+from sample_config import Config
 
 
 @borg.on(admin_cmd(pattern="remove\.bg ?(.*)"))

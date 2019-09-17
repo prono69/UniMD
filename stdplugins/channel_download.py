@@ -10,6 +10,7 @@ import os
 import subprocess
 import sys
 from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
+from uniborg import UniBorg as borg
 
 @borg.on(events.NewMessage(pattern=r"\.getc", outgoing=True))
 async def get_media(event):

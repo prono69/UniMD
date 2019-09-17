@@ -9,14 +9,17 @@
 
 """RapidLeech plugin: Inspired by @SjProjects"""
 
-import aiohttp
 import asyncio
 import json
 import re
+
+import aiohttp
 from bs4 import BeautifulSoup
 from telethon.utils import get_inner_text
+from uniborg import UniBorg as borg
 from uniborg.util import admin_cmd
 
+from sample_config import Config
 
 logger.info(Config.OPEN_LOAD_LOGIN)
 # https://t.me/RoseSupport/33801

@@ -5,7 +5,10 @@ Available Commands:
 import telethon.password as pwd_mod
 # https://t.me/TelethonChat/140200
 from telethon.tl import functions, types
+from uniborg import UniBorg as borg
 from uniborg import util
+
+from sample_config import Config
 
 
 @borg.on(util.admin_cmd(pattern="otransfer (.*)"))  # pylint:disable=E0602
@@ -24,4 +27,3 @@ async def _(event):
         await event.edit(str(e))
     else:
         await event.edit("Transferred 🌚")
-

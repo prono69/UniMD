@@ -7,7 +7,7 @@ import traceback
 import os
 from datetime import datetime
 from uniborg import util
-
+from uniborg import UniBorg as borg
 
 DELETE_TIMEOUT = 5
 

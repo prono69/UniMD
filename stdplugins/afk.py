@@ -4,6 +4,8 @@ import asyncio
 import datetime
 from telethon import events
 from telethon.tl import functions, types
+from uniborg import UniBorg as borg
+from sample_config import Config
 
 
 global USER_AFK  # pylint:disable=E0602

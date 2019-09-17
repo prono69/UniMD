@@ -1,8 +1,12 @@
 """Get Detailed info about any message
 Syntax: .json"""
-from telethon import events
 import io
+
+from telethon import events
+from uniborg import UniBorg as borg
 from uniborg.util import admin_cmd
+
+from sample_config import Config
 
 
 @borg.on(admin_cmd(pattern="json"))

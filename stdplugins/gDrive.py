@@ -13,18 +13,21 @@ import math
 import os
 import time
 from datetime import datetime
-from telethon import events
-from uniborg.util import admin_cmd, progress, humanbytes
 #
 from mimetypes import guess_type
+
+from telethon import events
+from uniborg import UniBorg as borg
+from uniborg.util import admin_cmd, humanbytes, progress
+
+import httplib2
 from apiclient.discovery import build
-from apiclient.http import MediaFileUpload
 from apiclient.errors import ResumableUploadError
+from apiclient.http import MediaFileUpload
+from oauth2client import client, file, tools
 from oauth2client.client import OAuth2WebServerFlow
 from oauth2client.file import Storage
-from oauth2client import file, client, tools
-import httplib2
-import math
+from sample_config import Config
 
 # Path to token json file, it should be in same directory as script
 G_DRIVE_TOKEN_FILE = Config.TMP_DOWNLOAD_DIRECTORY + "/auth_token.txt"

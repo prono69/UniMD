@@ -13,6 +13,8 @@ import asyncio
 import io
 import os
 from uniborg.util import admin_cmd
+from uniborg import UniBorg as borg
+from sample_config import Config
 
 
 EDIT_SLEEP_TIME_OUT = 15

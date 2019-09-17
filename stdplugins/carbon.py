@@ -14,6 +14,7 @@ from urllib.error import HTTPError
 from time import sleep
 import asyncio
 import os
+from sample_config import Config
 
 @borg.on(events.NewMessage(pattern=r"\.carbon", outgoing=True))
 async def carbon_api(e):

@@ -1,11 +1,15 @@
 """IX.IO pastebin like site
 Syntax: .paste"""
-from telethon import events
 import asyncio
-from datetime import datetime
 import os
+from datetime import datetime
+
 import requests
+from telethon import events
+from uniborg import UniBorg as borg
 from uniborg.util import admin_cmd
+
+from sample_config import Config
 
 
 def progress(current, total):

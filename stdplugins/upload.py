@@ -14,13 +14,14 @@ import time
 from datetime import datetime
 
 import requests
+from telethon import events
+from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
+from uniborg import UniBorg as borg
+from uniborg.util import admin_cmd, progress
+
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
-from telethon import events
-from telethon.tl.types import DocumentAttributeVideo
-from telethon.tl.types import DocumentAttributeAudio
-from uniborg.util import progress, admin_cmd
-
+from sample_config import Config
 
 thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
 

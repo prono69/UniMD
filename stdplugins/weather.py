@@ -1,11 +1,15 @@
 """Get weather data using OpenWeatherMap
 Syntax: .weather <Location> """
 
-import aiohttp
 import io
 import time
-from datetime import tzinfo, datetime
+from datetime import datetime, tzinfo
+
+import aiohttp
+from uniborg import UniBorg as borg
 from uniborg.util import admin_cmd
+
+from sample_config import Config
 
 
 @borg.on(admin_cmd(pattern="weather (.*)"))

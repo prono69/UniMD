@@ -5,13 +5,13 @@ import re
 from functools import partial
 
 from telethon import events
-from telethon.tl.functions.messages import EditMessageRequest
 from telethon.extensions.markdown import DEFAULT_URL_RE
+from telethon.tl.functions.messages import EditMessageRequest
+from telethon.tl.types import (MessageEntityBold, MessageEntityCode,
+                               MessageEntityItalic, MessageEntityPre,
+                               MessageEntityTextUrl)
 from telethon.utils import add_surrogate, del_surrogate
-from telethon.tl.types import (
-    MessageEntityBold, MessageEntityItalic, MessageEntityCode,
-    MessageEntityPre, MessageEntityTextUrl
-)
+from uniborg import UniBorg as borg
 
 
 def parse_url_match(m):

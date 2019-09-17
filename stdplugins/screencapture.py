@@ -4,9 +4,13 @@ Syntax: .screencapture <Website URL>"""
 import io
 import traceback
 from datetime import datetime
+
 from selenium import webdriver
 from telethon import events
+from uniborg import UniBorg as borg
 from uniborg.util import admin_cmd
+
+from sample_config import Config
 
 
 @borg.on(admin_cmd(pattern="screencapture (.*)"))

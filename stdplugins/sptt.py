@@ -1,9 +1,13 @@
 """Speech to Text
 Syntax: .sptt <Language Code> as reply to a speech message"""
-from telethon import events
-import requests
 import os
 from datetime import datetime
+
+import requests
+from telethon import events
+from uniborg import UniBorg as borg
+
+from sample_config import Config
 
 
 @borg.on(events.NewMessage(pattern=r"\.sptt (.*)", outgoing=True))

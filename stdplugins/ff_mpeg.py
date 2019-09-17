@@ -5,10 +5,13 @@ import io
 import os
 import time
 from datetime import datetime
-from hachoir.metadata import extractMetadata
-from hachoir.parser import createParser
+
+from uniborg import UniBorg as borg
 from uniborg.util import admin_cmd, progress
 
+from hachoir.metadata import extractMetadata
+from hachoir.parser import createParser
+from sample_config import Config
 
 FF_MPEG_DOWN_LOAD_MEDIA_PATH = "uniborg.media.ffmpeg"
 

@@ -7,18 +7,18 @@ import asyncio
 import os
 import time
 import zipfile
-
-from telethon import events
-from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
-from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
-import time
 from datetime import datetime
-from pySmartDL import SmartDL
-from hachoir.metadata import extractMetadata
-from hachoir.parser import createParser
 from zipfile import ZipFile
 
+from pySmartDL import SmartDL
+from telethon import events
+from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
+from uniborg import UniBorg as borg
+from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
 
+from hachoir.metadata import extractMetadata
+from hachoir.parser import createParser
+from sample_config import Config
 
 extracted = Config.TMP_DOWNLOAD_DIRECTORY + "extracted/"
 thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"

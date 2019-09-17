@@ -1,9 +1,12 @@
-from collections import defaultdict, deque
 import re
+from collections import defaultdict, deque
 
 import regex
 from telethon import events, utils
-from telethon.tl import types, functions
+from telethon.tl import functions, types
+from uniborg import UniBorg as borg
+
+from sample_config import Config
 
 HEADER = "「sed」\n"
 KNOWN_RE_BOTS = re.compile(

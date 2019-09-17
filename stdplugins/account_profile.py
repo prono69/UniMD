@@ -7,6 +7,8 @@ import uniborg
 from telethon import events
 from telethon.tl import functions
 from uniborg.util import admin_cmd
+from uniborg import UniBorg as borg
+from sample_config import Config
 
 
 @borg.on(admin_cmd(pattern="pbio (.*)"))  # pylint:disable=E0602

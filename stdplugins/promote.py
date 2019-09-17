@@ -5,6 +5,7 @@ from datetime import datetime
 from telethon.tl.functions.channels import EditAdminRequest
 from telethon.tl.types import ChatAdminRights
 from uniborg.util import admin_cmd
+from uniborg import UniBorg as borg
 
 
 @borg.on(admin_cmd(pattern="promote ?(.*)"))

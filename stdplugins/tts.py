@@ -7,8 +7,12 @@ import asyncio
 import os
 import subprocess
 from datetime import datetime
-from gtts import gTTS
+
+from uniborg import UniBorg as borg
 from uniborg.util import admin_cmd
+
+from gtts import gTTS
+from sample_config import Config
 
 
 @borg.on(admin_cmd(pattern="tts (.*)"))

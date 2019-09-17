@@ -7,6 +7,8 @@ import sql_helpers.no_log_pms_sql as no_log_pms_sql
 import sql_helpers.pmpermit_sql as pmpermit_sql
 from telethon import events, errors, functions, types
 from uniborg.util import admin_cmd
+from uniborg import UniBorg as borg
+from sample_config import Config
 
 
 PM_WARNS = {}

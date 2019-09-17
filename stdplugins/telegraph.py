@@ -2,12 +2,16 @@
 Available Commands:
 .telegraph media as reply to a media
 .telegraph text as reply to a large text"""
-from telethon import events
 import os
-from PIL import Image
 from datetime import datetime
-from telegraph import Telegraph, upload_file, exceptions
+
+from PIL import Image
+from telethon import events
+from uniborg import UniBorg as borg
 from uniborg.util import admin_cmd
+
+from sample_config import Config
+from telegraph import Telegraph, exceptions, upload_file
 
 telegraph = Telegraph()
 r = telegraph.create_account(short_name=Config.TELEGRAPH_SHORT_NAME)

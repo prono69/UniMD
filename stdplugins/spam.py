@@ -7,7 +7,7 @@
 from asyncio import wait
 
 from telethon import events
-
+from sample_config import Config
 
 @borg.on(events.NewMessage(pattern=r"\.spam", outgoing=True))
 async def spammer(e):
@@ -21,9 +21,9 @@ async def spammer(e):
             )
 
         await e.delete()
-        if LOGGER:
+        if Config.LOGGER:
             await e.client.send_message(
-                LOGGER_GROUP,
+                Config.LOGGER_GROUP,
                 "#SPAM \n\n"
                 "Spam was executed successfully"
                 )

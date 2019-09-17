@@ -2,9 +2,12 @@
 Available Commands:
 .tr LanguageCode as reply to a message
 .tr LangaugeCode | text to sepak"""
-from mtranslate import translate
 from telethon import events
+from uniborg import UniBorg as borg
 from uniborg.util import admin_cmd
+
+from mtranslate import translate
+from sample_config import Config
 
 
 @borg.on(admin_cmd(pattern="tr ?(.*)"))

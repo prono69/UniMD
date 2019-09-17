@@ -4,13 +4,14 @@ from json.decoder import JSONDecodeError
 from os import environ
 from sys import setrecursionlimit
 
-import spotify_token as st
 from requests import get
-from telethon.tl.functions.account import UpdateProfileRequest
 from telethon import events
 from telethon.tl import functions, types
-from sample_config import Config
+from telethon.tl.functions.account import UpdateProfileRequest
+from uniborg import UniBorg as borg
 
+import spotify_token as st
+from sample_config import Config
 
 # =================== CONSTANT ===================
 SPO_BIO_ENABLED = "```Spotify Current Music to Bio enabled.```"
@@ -74,9 +75,9 @@ async def update_spotify_info():
                 SPOTIFYCHECK = False
                 await borg(UpdateProfileRequest(about=Config.DEFAULT_BIO))
                 print(ERROR_MSG)
-                if LOGGER:
+                if Config.LOGGER:
                     await borg.send_message(
-                        LOGGER_GROUP,
+                        Config.PM_LOGGR_BOT_API_ID,
                         ERROR_MSG)
         except JSONDecodeError:
             OLDEXCEPT = True
@@ -123,4 +124,3 @@ async def set_biodgraph(setdbio):
     RUNNING = False
     await borg(UpdateProfileRequest(about=Config.DEFAULT_BIO))
     await setdbio.edit(SPO_BIO_DISABLED)
-
