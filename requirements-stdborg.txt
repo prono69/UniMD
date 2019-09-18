@@ -34,4 +34,3 @@ asyncio
 spotify_token
 lxml
 remotezip
-rarfile
