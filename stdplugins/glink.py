@@ -26,7 +26,7 @@ from mimetypes import guess_type
 import httplib2
 import subprocess
 from uniborg.util import admin_cmd, progress, humanbytes, time_formatter
-
+import ssl
 
 # Path to token json file, it should be in same directory as script
 G_DRIVE_TOKEN_FILE = Config.TMP_DOWNLOAD_DIRECTORY + "/auth_token.txt"
@@ -41,6 +41,15 @@ REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob"
 parent_id = Config.GDRIVE_FOLDER_ID
 
 
+
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    # Legacy Python that doesn't verify HTTPS certificates by default
+    pass
+else:
+    # Handle target environment that doesn't support HTTPS verification
+    ssl._create_default_https_context = _create_unverified_https_context
 
 @borg.on(admin_cmd(pattern="glink ?(.*)", allow_sudo=True))
 async def download(dryb):
