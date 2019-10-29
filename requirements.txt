@@ -1,2 +1,2 @@
-telethon==1.10.6
+telethon==1.10.7
 -r ./requirements-stdborg.txt
