@@ -8,7 +8,7 @@ import os
 import time
 import rarfile
 from datetime import datetime
-import rarfile as RarFile
+from unrar import RarFile
 from pySmartDL import SmartDL
 from telethon import events
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
