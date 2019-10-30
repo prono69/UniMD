@@ -6,7 +6,7 @@ coded by @By_Azade
 import asyncio
 import os
 import time
-import rarfile
+import rarfile as RarFile
 from datetime import datetime
 
 from pySmartDL import SmartDL
@@ -23,7 +23,7 @@ extracted = Config.TMP_DOWNLOAD_DIRECTORY + "extracted/"
 thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
 if not os.path.isdir(extracted):
     os.makedirs(extracted)
-
+rarfile.UNRAR_TOOL='/vendor/winrar'
 
 @borg.on(admin_cmd(pattern="unrar"))
 async def _(event):
