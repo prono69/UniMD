@@ -23,7 +23,7 @@ extracted = Config.TMP_DOWNLOAD_DIRECTORY + "extracted/"
 thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
 if not os.path.isdir(extracted):
     os.makedirs(extracted)
-rarfile.UNRAR_TOOL='/vendor/winrar'
+RarFile.UNRAR_TOOL='./vendor/winrar/'
 
 @borg.on(admin_cmd(pattern="unrar"))
 async def _(event):
