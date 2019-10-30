@@ -27,7 +27,7 @@ import httplib2
 import subprocess
 from uniborg.util import admin_cmd, progress, humanbytes, time_formatter
 import ssl
-
+from sample_config import Config
 # Path to token json file, it should be in same directory as script
 G_DRIVE_TOKEN_FILE = Config.TMP_DOWNLOAD_DIRECTORY + "/auth_token.txt"
 # Copy your credentials from the APIs Console
