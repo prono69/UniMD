@@ -8,7 +8,7 @@ import os
 import time
 import rarfile
 from datetime import datetime
-from unrar import RarFile
+
 from pySmartDL import SmartDL
 from telethon import events
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
@@ -50,7 +50,7 @@ async def _(event):
             end = datetime.now()
             ms = (end - start).seconds
             await mone.edit("Stored the rar to `{}` in {} seconds.".format(downloaded_file_name, ms))
-
+        
         with rarfile.RarFile(downloaded_file_name, 'r') as rar_ref:
             rar_ref.extractall(extracted)
         filename = sorted(get_lst_of_files(extracted, []))
