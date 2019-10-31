@@ -53,5 +53,5 @@ async def _(event):
             await mone.edit(str(e))
     elif input_str:
         directory_name = input_str
-        patoolib.create_archive(directory_name, directory_name)
+        patoolib.create_archive(directory_name + ".rar", directory_name)
         await event.edit("Local file compressed to `{}`".format(directory_name + ".rar"))
