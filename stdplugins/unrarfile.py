@@ -4,7 +4,7 @@ import os
 import time
 
 from datetime import datetime
-from unrardll import extract
+from unrar import RarFile
 
 from pySmartDL import SmartDL
 from telethon import events
@@ -49,7 +49,8 @@ async def _(event):
             ms = (end - start).seconds
             await mone.edit("Stored the rar to `{}` in {} seconds.".format(downloaded_file_name, ms))
 
-        extract(downloaded_file_name, extracted)
+        with rarfile.RarFile(downloaded_file_name, 'r') as rar_ref:
+            rar_ref.extractall(extracted)
         filename = sorted(get_lst_of_files(extracted, []))
         #filename = filename + "/"
         await event.edit("Unzipping now")
