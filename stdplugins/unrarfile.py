@@ -1,3 +1,7 @@
+""" command: .unrar
+coded by @By_Azade
+"""
+
 
 import asyncio
 import os
@@ -54,7 +58,7 @@ async def _(event):
         patoolib.extract_archive(downloaded_file_name, outdir=extracted)
         filename = sorted(get_lst_of_files(extracted, []))
         #filename = filename + "/"
-        await event.edit("Unzipping now")
+        await event.edit("Unraring now")
         # r=root, d=directories, f = files
         for single_file in filename:
             if os.path.exists(single_file):
@@ -89,7 +93,7 @@ async def _(event):
                     await borg.send_file(
                         event.chat_id,
                         single_file,
-                        caption=f"UnZipped `{caption_rts}`",
+                        caption=f"UnRarred `{caption_rts}`",
                         force_document=force_document,
                         supports_streaming=supports_streaming,
                         allow_cache=False,
