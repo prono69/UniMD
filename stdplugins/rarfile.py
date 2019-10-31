@@ -32,10 +32,10 @@ async def _(event):
             )
             directory_name = downloaded_file_name
             await event.edit("Finish downloading to my local")
-            patoolib.create_archive( directory_name + ".zip", directory_name)
+            patoolib.create_archive( directory_name + ".rar", directory_name)
             await borg.send_file(
                 event.chat_id,
-                directory_name + ".zip",
+                directory_name + ".rar",
                 caption="Rarred By @By_Azade",
                 force_document=True,
                 allow_cache=False,
@@ -54,4 +54,4 @@ async def _(event):
     elif input_str:
         directory_name = input_str
         patoolib.create_archive(directory_name, directory_name)
-        await event.edit("Local file compressed to `{}`".format(directory_name + ".zip"))
+        await event.edit("Local file compressed to `{}`".format(directory_name + ".rar"))
