@@ -8,7 +8,7 @@ import time
 from uniborg.util import admin_cmd
 
 
-@borg.on(admin_cmd(pattern="^.webupload ?(.+?|) --(anonfiles|transfer|filebin|anonymousfiles|megaupload|bayfiles)"))
+@borg.on(admin_cmd(pattern="webupload ?(.+?|) --(anonfiles|transfer|filebin|anonymousfiles|megaupload|bayfiles)"))
 async def _(event):
     if event.fwd_from:
         return
