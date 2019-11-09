@@ -44,11 +44,11 @@ async def _(event):
 
     me = borg.me
     userid = event.from_id
-    packname = f"{userid}'s @UniBorg Pack"
+    packname = f"@By_Azqde Pack"
     packshortname = f"Uni_Borg_{userid}"  # format: Uni_Borg_userid
 
     is_a_s = is_it_animated_sticker(reply_message)
-    file_ext_ns_ion = "@UniBorg_Sticker.png"
+    file_ext_ns_ion = "@By_Azade_Sticker.png"
     file = await borg.download_file(reply_message.media)
     uploaded_sticker = None
     if is_a_s:
