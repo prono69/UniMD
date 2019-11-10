@@ -102,6 +102,7 @@ class Config(object):
     SPOTIFY_USERNAME = os.environ.get("SPOTIFY_USERNAME",None)
     GDRIVE_FOLDER_ID = os.environ.get("GDRIVE_FOLDER_ID", None)
     LYDIA_API = os.environ.get("LYDIA_API", None)
+    DEFAULT_NAME = os.environ.get("DEFAULT_NAME",None)
     #
     # define "spam" in PMs
     MAX_FLOOD_IN_P_M_s = int(os.environ.get("MAX_FLOOD_IN_P_M_s", 3))
