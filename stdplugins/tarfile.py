@@ -33,6 +33,7 @@ async def _(event):
             directory_name = downloaded_file_name
             await event.edit("Finish downloading to my local")
             try:
+                input_directory = downloaded_file_name
                 input_directory = Config.TMP_DOWNLOAD_DIRECTORY
                 if os.path.exists(input_directory):
                     base_dir_name = os.path.basename(input_directory)
