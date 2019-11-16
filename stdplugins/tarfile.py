@@ -29,22 +29,21 @@ async def _(event):
                     progress(d, t, mone, c_time, "trying to download")
                 )
             )
+            
             directory_name = downloaded_file_name
+            tar_out = make_tarfile(downloaded_file_name,directory_name)
             await event.edit("Finish downloading to my local")
             # tarfile.TarFile(directory_name + '.tar', 'w', tarfile.ZIP_DEFLATED).write(directory_name)
-            out = tarfile.open(directory_name + 'example.tar.gz', mode='w')    
-            out.add(downloaded_file_name)
-            out.close()
             await borg.send_file(
                 event.chat_id,
-                out,
+                tar_out,
                 caption="Tar By @By_Azade",
                 force_document=True,
                 allow_cache=False,
                 reply_to=event.message.id,
             )
             try:
-                os.remove(out)
+                os.remove(tar_out)
                 os.remove(directory_name)
             except:
                     pass
@@ -56,4 +55,9 @@ async def _(event):
     elif input_str:
         directory_name = input_str
         out = tarfile.open(directory_name + 'example.tar.gz', mode='w')
-        await event.edit("Local file compressed to `{}`".format(out))
+        await event.edit("Local file compressed to `{}`".format(tar_out))
+
+        
+def make_tarfile(output_filename, source_dir):
+    with tarfile.open(output_filename, "w:gz") as tar:
+        tar.add(source_dir, arcname=os.path.basename(source_dir))
