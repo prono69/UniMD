@@ -60,24 +60,19 @@ async def _(event):
                         except:
                             pass
                         return_name = compressed_file_name
-            await borg.send_file(
-                event.chat_id,
-                directory_name + ".tar",
-                caption="TAR Created By @By_Azade",
-                force_document=True,
-                allow_cache=False,
-                reply_to=event.message.id,
-            )
-            try:
-                os.remove(directory_name + ".tar")
-                os.remove(directory_name)
-            except:
-                    pass
-            await event.edit("Task Completed")
-            await asyncio.sleep(3)
-            await event.delete()
-        except Exception as e:  # pylint:disable=C0103,W0703
-            await mone.edit(str(e))
-    elif input_str:
-        directory_name = input_str
-        return input_directory
+        await borg.send_file(
+            event.chat_id,
+            directory_name + ".tar",
+            caption="TAR Created By @By_Azade",
+            force_document=True,
+            allow_cache=False,
+            reply_to=event.message.id,
+        )
+        try:
+            os.remove(directory_name + ".tar")
+            os.remove(directory_name)
+        except:
+                pass
+        await event.edit("Task Completed")
+        await asyncio.sleep(3)
+        await event.delete()
