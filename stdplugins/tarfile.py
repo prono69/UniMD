@@ -11,7 +11,7 @@ from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
 
 
 @borg.on(admin_cmd(pattern=("tar ?(.*)")))
-async def _(event,is_zip):
+async def _(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
@@ -34,6 +34,7 @@ async def _(event,is_zip):
             # zipfile.ZipFile(directory_name + '.zip', 'w', zipfile.ZIP_DEFLATED).write(directory_name)
             # out_tar = tardir(directory_name,directory_name )
             to_upload_file = directory_name 
+            is_zip = False
             if is_zip:
                 # first check if current free space allows this
                 # ref: https://github.com/out386/aria-telegram-mirror-bot/blob/master/src/download_tools/aria-tools.ts#L194
