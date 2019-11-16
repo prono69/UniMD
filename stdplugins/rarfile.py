@@ -1,16 +1,15 @@
+
 import asyncio
 import os
 import time
-import tarfile
 
-from pySmartDL import SmartDL
-from telethon import events
-
-from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
+from datetime import datetime
 
 from sample_config import Config
 
-@borg.on(admin_cmd(pattern=("tar ?(.*)")))
+from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
+
+@borg.on(admin_cmd(pattern=("compress ?(.*)")))
 async def _(event):
     if event.fwd_from:
         return
@@ -32,20 +31,15 @@ async def _(event):
             directory_name = downloaded_file_name
             await event.edit("Finish downloading to my local")
             # zipfile.ZipFile(directory_name + '.zip', 'w', zipfile.ZIP_DEFLATED).write(directory_name)
-            out_tar = tardir(directory_name,directory_name )
+            os.system(f'rar a {Config.TMP_DOWNLOAD_DIRECTORY} {directory_name}')
             await borg.send_file(
                 event.chat_id,
-                out_tar + ".tar.gz",
-                caption="TAR By @By_Azade",
+                directory_name + ".rar",
+                caption="RAR Completed By @By_Azade",
                 force_document=True,
                 allow_cache=False,
                 reply_to=event.message.id,
             )
-            try:
-                os.remove(out_tar + ".tar.gz")
-                os.remove(out_tar)
-            except:
-                    pass
             await event.edit("Task Completed")
             await asyncio.sleep(3)
             await event.delete()
@@ -53,16 +47,8 @@ async def _(event):
             await mone.edit(str(e))
     elif input_str:
         directory_name = input_str
-        out_tar = tardir(directory_name,directory_name )
-        await event.edit("Local file compressed to `{}`".format(directory_name + ".tar.gz"))
+        os.system(f'rar a {Config.TMP_DOWNLOAD_DIRECTORY} {directory_name}')
+        await event.edit("Local file compressed to `{}`".format(directory_name + ".rar"))
 
-        
-def make_tarfile(output_filename, source_dir):
-    with tarfile.open(output_filename, "w:gz") as tar:
-        tar.add(source_dir, arcname=os.path.basename(source_dir))
 
-def tardir(path, tar_name):
-    with tarfile.open(tar_name, "w:gz") as tar_handle:
-        for root, dirs, files in os.walk(path):
-            for file in files:
-                tar_handle.add(os.path.join(root, file))
+# os.system('rar a <archive_file_path> <file_path_to_be_added_to_archive>')
