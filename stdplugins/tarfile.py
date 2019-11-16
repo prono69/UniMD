@@ -1,3 +1,9 @@
+"""
+Coded @By_Azade
+
+usage : reply file and .tar
+"""
+
 import asyncio
 import os
 import shutil
@@ -31,17 +37,10 @@ async def _(event):
             )
             directory_name = downloaded_file_name
             await event.edit("Finish downloading to my local")
-            # zipfile.ZipFile(directory_name + '.zip', 'w', zipfile.ZIP_DEFLATED).write(directory_name)
-            # out_tar = tardir(directory_name,directory_name )
-            
-            
             to_upload_file = directory_name
             output = await create_archive(to_upload_file) 
             is_zip = False
             if is_zip:
-                # first check if current free space allows this
-                # ref: https://github.com/out386/aria-telegram-mirror-bot/blob/master/src/download_tools/aria-tools.ts#L194
-                # archive the contents
                 check_if_file = await create_archive(to_upload_file)
                 if check_if_file is not None:
                     to_upload_file = check_if_file
@@ -68,16 +67,6 @@ async def _(event):
         
         await event.edit("Local file compressed to `{}`".format(output))
 
-        
-# def make_tarfile(output_filename, source_dir):
-#     with tarfile.open(output_filename, "w:gz") as tar:
-#         tar.add(source_dir, arcname=os.path.basename(source_dir))
-
-# def tardir(path, tar_name):
-#     with tarfile.open(tar_name, "w:gz") as tar_handle:
-#         for root, dirs, files in os.walk(path):
-#             for file in files:
-#                 tar_handle.add(os.path.join(root, file))
 
 
 async def create_archive(input_directory):
@@ -85,12 +74,10 @@ async def create_archive(input_directory):
     if os.path.exists(input_directory):
         base_dir_name = os.path.basename(input_directory)
         compressed_file_name = f"{base_dir_name}.tar.gz"
-        # #BlameTelegram
         suffix_extention_length = 1 + 3 + 1 + 2
         if len(base_dir_name) > (64 - suffix_extention_length):
             compressed_file_name = base_dir_name[0:(64 - suffix_extention_length)]
             compressed_file_name += ".tar.gz"
-        # fix for https://t.me/c/1434259219/13344
         file_genertor_command = [
             "tar",
             "-zcvf",
