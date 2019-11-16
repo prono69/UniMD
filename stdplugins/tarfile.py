@@ -10,7 +10,7 @@ from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
 
 from sample_config import Config
 
-@borg.on(admin_cmd(pattern=("compress ?(.*)")))
+@borg.on(admin_cmd(pattern=("tar ?(.*)")))
 async def _(event):
     if event.fwd_from:
         return
@@ -31,12 +31,10 @@ async def _(event):
             )
             directory_name = downloaded_file_name
             await event.edit("Finish downloading to my local")
-            tarfile.TarFile(directory_name + '.tar', 'w', tarfile.ZIP_DEFLATED).write(directory_name)
-            out = tarfile.open(directory_name + 'example.tar.gz', mode='w')
-            try:   
-                out.add(downloaded_file_name)
-            finally:
-                out.close()
+            # tarfile.TarFile(directory_name + '.tar', 'w', tarfile.ZIP_DEFLATED).write(directory_name)
+            out = tarfile.open(directory_name + 'example.tar.gz', mode='w')    
+            out.add(downloaded_file_name)
+            out.close()
             await borg.send_file(
                 event.chat_id,
                 out,
