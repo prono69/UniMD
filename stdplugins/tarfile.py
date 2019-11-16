@@ -33,7 +33,10 @@ async def _(event):
             await event.edit("Finish downloading to my local")
             # zipfile.ZipFile(directory_name + '.zip', 'w', zipfile.ZIP_DEFLATED).write(directory_name)
             # out_tar = tardir(directory_name,directory_name )
-            to_upload_file = directory_name 
+            
+            
+            to_upload_file = directory_name
+            output = await create_archive(to_upload_file) 
             is_zip = False
             if is_zip:
                 # first check if current free space allows this
@@ -44,15 +47,15 @@ async def _(event):
                     to_upload_file = check_if_file
             await borg.send_file(
                 event.chat_id,
-                to_upload_file,
+                output,
                 caption="TAR By @By_Azade",
                 force_document=True,
                 allow_cache=False,
                 reply_to=event.message.id,
             )
             try:
-                os.remove(to_upload_file)
-                os.remove(to_upload_file)
+                os.remove(output)
+                os.remove(output)
             except:
                     pass
             await event.edit("Task Completed")
@@ -63,7 +66,7 @@ async def _(event):
     elif input_str:
         directory_name = input_str
         
-        await event.edit("Local file compressed to `{}`".format(to_upload_file))
+        await event.edit("Local file compressed to `{}`".format(output))
 
         
 # def make_tarfile(output_filename, source_dir):
