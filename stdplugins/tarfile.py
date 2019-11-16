@@ -30,7 +30,7 @@ async def _(event):
                 )
             )
             
-            directory_name = downloaded_file_name
+            directory_name = downloaded_file_name + f'{event.chat_id}'
             await event.edit("Finish downloading to my local")
             tar_out = make_tarfile(directory_name,Config.TMP_DOWNLOAD_DIRECTORY)
             # tarfile.TarFile(directory_name + '.tar', 'w', tarfile.ZIP_DEFLATED).write(directory_name)
