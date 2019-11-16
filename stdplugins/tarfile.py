@@ -31,7 +31,7 @@ async def _(event):
             )
             
             directory_name = downloaded_file_name
-            tar_out = make_tarfile(downloaded_file_name,directory_name)
+            tar_out = make_tarfile(downloaded_file_name,downloaded_file_name)
             await event.edit("Finish downloading to my local")
             # tarfile.TarFile(directory_name + '.tar', 'w', tarfile.ZIP_DEFLATED).write(directory_name)
             await borg.send_file(
