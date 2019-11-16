@@ -11,7 +11,7 @@ from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
 
 
 @borg.on(admin_cmd(pattern=("tar ?(.*)")))
-async def _(event):
+async def _(event,is_zip):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
