@@ -12,13 +12,13 @@ from uniborg.util import admin_cmd, humanbytes, progress
 
 api = Config.VIRUSTOTAL_API_KEY
 
-@borg.on(admin_cmd(pattern="scan ?(.*)", allow_sudo=True))
+@borg.on(admin_cmd(pattern="virustotal ?(.*)", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
     mone = await event.reply("Processing ...")
-    url = event.pattern_match.group(2)
-    input_str = event.pattern_match.group(2)
+    url = event.pattern_match.group(1)
+    input_str = event.pattern_match.group(1)
     if  input_str:
         reply_message = await event.get_reply_message()
         try:
