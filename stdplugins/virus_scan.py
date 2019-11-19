@@ -34,14 +34,14 @@ async def _(event):
             pass
     
         if response:
-		try:
-			response = json.dumps(json.loads(response), sort_keys=True, indent=6)
-		except Exception as e:
-			# some sites don't return valid JSONs
-			pass
-		# assuming, the return values won't be longer than
-		# 4096 characters
-		await event.edit(response)
+            try:
+                response = json.dumps(json.loads(response), sort_keys=True, indent=6)
+            except Exception as e:
+                # some sites don't return valid JSONs
+                pass
+            # assuming, the return values won't be longer than
+            # 4096 characters
+            await event.edit(response)
 
 
 
