@@ -5,7 +5,7 @@ from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.account import UpdateNotifySettingsRequest
 from uniborg.util import admin_cmd
 
-@borg.on(admin_cmd("sg ?(.*)"))
+@borg.on(admin_cmd(pattern=("sg ?(.*)")))
 async def _(event):
     if event.fwd_from:
         return 
@@ -38,7 +38,7 @@ async def _(event):
 
 
 
-@borg.on(admin_cmd("fakemail ?(.*)"))
+@borg.on(admin_cmd(pattern=("fakemail ?(.*)")))
 async def _(event):
     if event.fwd_from:
         return 
@@ -72,7 +72,7 @@ async def _(event):
 
 
 
-@borg.on(admin_cmd("ub ?(.*)"))
+@borg.on(admin_cmd(pattern=("ub ?(.*)")))
 async def _(event):
     if event.fwd_from:
         return 
@@ -104,7 +104,7 @@ async def _(event):
 
 
 
-@borg.on(admin_cmd("gid ?(.*)"))
+@borg.on(admin_cmd(pattern=("gid ?(.*)")))
 async def _(event):
     if event.fwd_from:
         return 
