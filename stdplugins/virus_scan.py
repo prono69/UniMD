@@ -19,7 +19,7 @@ async def _(event):
     mone = await event.reply("Processing ...")
     url = event.pattern_match.group(2)
     input_str = event.pattern_match.group(2)
-    if event.pattern_match.group(2) and not input_str:
+    if  input_str:
         reply_message = await event.get_reply_message()
         try:
             params = {
