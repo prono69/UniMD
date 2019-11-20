@@ -16,15 +16,16 @@ api = Config.VIRUSTOTAL_API_KEY
 async def _(event):
     if event.fwd_from:
         return
-    mone = await event.reply("Processing ...")
-    url = event.pattern_match.group(1)
+    mone = await event.edit("Processing ...")
     input_str = event.pattern_match.group(1)
-    if  input_str:
+    url = input_str
+    if event.reply_to_msg_id:
+        start = datetime.now()
         reply_message = await event.get_reply_message()
         try:
             params = {
-                'apikey': f'{api}',
-                'url':f'{url}'
+                'apikey': str(api),
+                'url': str(url)
             }
             response = requests.post(url,data=params)
         except Exception as e:
