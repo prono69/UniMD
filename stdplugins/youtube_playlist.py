@@ -18,6 +18,7 @@ from youtube_dl.utils import (DownloadError, ContentTooShortError,
 from asyncio import sleep
 from telethon.tl.types import DocumentAttributeAudio
 from uniborg.util import admin_cmd
+from sample_config import Config
 
 async def progress(current, total, event, start, type_of_ps, file_name=None):
     """Generic progress_callback for uploads and downloads."""
@@ -185,34 +186,53 @@ async def download_video(v_url):
         await v_url.edit(f"`Preparing to upload song:`\
         \n**{ytdl_data['title']}**\
         \nby *{ytdl_data['uploader']}*")
-        await v_url.client.send_file(
-            v_url.chat_id,
-            f"{ytdl_data['id']}.mp3",
-            supports_streaming=True,
-            attributes=[
-                DocumentAttributeAudio(duration=int(ytdl_data['duration']),
-                                       title=str(ytdl_data['title']),
-                                       performer=str(ytdl_data['uploader']))
-            ],
-            progress_callback=lambda d, t: asyncio.get_event_loop(
-            ).create_task(
-                progress(d, t, v_url, c_time, "Uploading..",
-                         f"{ytdl_data['title']}.mp3")))
-        os.remove(f"{ytdl_data['id']}.mp3")
-        await v_url.delete()
+        filename = sorted(get_lst_of_files(ytdl_data, []))
+        filename = ytdl_data
+        for single_file in filename:
+            await v_url.client.send_file(
+                v_url.chat_id,
+                f"{ytdl_data['id']}.mp3",
+                supports_streaming=True,
+                attributes=[
+                    DocumentAttributeAudio(duration=int(ytdl_data['duration']),
+                                        title=str(ytdl_data['title']),
+                                        performer=str(ytdl_data['uploader']))
+                ],
+                progress_callback=lambda d, t: asyncio.get_event_loop(
+                ).create_task(
+                    progress(d, t, v_url, c_time, "Uploading..",
+                            f"{ytdl_data['title']}.mp3")))
+            os.remove(f"{ytdl_data['id']}.mp3")
+            await v_url.delete()
     elif video:
         await v_url.edit(f"`Preparing to upload video:`\
         \n**{ytdl_data['title']}**\
         \nby *{ytdl_data['uploader']}*")
-        await v_url.client.send_file(
-            v_url.chat_id,
-            f"{ytdl_data['id']}.mp4",
-            supports_streaming=True,
-            caption=ytdl_data['title'],
-            progress_callback=lambda d, t: asyncio.get_event_loop(
-            ).create_task(
-                progress(d, t, v_url, c_time, "Uploading..",
-                         f"{ytdl_data['title']}.mp4")))
-        os.remove(f"{ytdl_data['id']}.mp4")
-        await v_url.delete()
+        filename = sorted(get_lst_of_files(ytdl_data, []))
+        filename = ytdl_data
+        for single_file in filename:
+            await v_url.client.send_file(
+                v_url.chat_id,
+                f"{ytdl_data['id']}.mp4",
+                supports_streaming=True,
+                caption=ytdl_data['title'],
+                progress_callback=lambda d, t: asyncio.get_event_loop(
+                ).create_task(
+                    progress(d, t, v_url, c_time, "Uploading..",
+                            f"{ytdl_data['title']}.mp4")))
+            os.remove(f"{ytdl_data['id']}.mp4")
+            await v_url.delete()
         
+def get_lst_of_files(input_directory, output_lst):
+    filesinfolder = os.listdir(input_directory)
+    for file_name in filesinfolder:
+        current_file_name = os.path.join(input_directory, file_name)
+        if os.path.isdir(current_file_name):
+            return get_lst_of_files(current_file_name, output_lst)
+        output_lst.append(current_file_name)
+    return output_lst
+
+youtube_folder = Config.TMP_DOWNLOAD_DIRECTORY + "extracted/"
+thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
+if not os.path.isdir(youtube_folder):
+    os.makedirs(youtube_folder)
