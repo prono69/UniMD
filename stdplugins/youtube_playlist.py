@@ -87,22 +87,22 @@ async def download_video(v_url):
 
     if type == "a":
         opts = {
-            "-i",
-            "-f",
-            "mp3",
-            "--yes-playlist,"
-            f"{url}"
+            '-i',
+            '-f',
+            'mp3',
+            '--yes-playlist,'
+            f'{url}'
         }
         video = False
         song = True
 
     elif type == "v":
         opts = {
-             "-i",
-            "-f",
-            "mp4",
-            "--yes-playlist,"
-            f"{url}"
+            '-i',
+            '-f",'
+            'mp4',
+            '--yes-playlist,'
+            f'{url}'
         }
         song = False
         video = True
