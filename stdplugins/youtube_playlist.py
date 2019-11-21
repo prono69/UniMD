@@ -34,94 +34,103 @@ async def download_video(v_url):
 
     if os.path.exists(playlist_folder):
         base_dir_name = os.path.basename(playlist_folder)
-    await v_url.edit("`Preparing to download...`")
-    filename = sorted(get_lst_of_files(playlist_folder, []))
-    if type == "a":
-        ytdl_playlist_cmd = [
-                "youtube-dl",
-                "-i",
-                "-f",
-                "mp4",
-                "--yes-playlist",
-                playlist_folder,
-                f"{url}"
-            ]
-    elif type == "v":
-        ytdl_playlist_cmd = [
-                "youtube-dl",
-                "-i",
-                "-f",
-                "mp3",
-                "--yes-playlist",
-                playlist_folder,
-                f"{url}"
-            ]
-    process = await asyncio.create_subprocess_exec(
-        *ytdl_playlist_cmd,
-            # stdout must a pipe to be accessible as process.stdout
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.PIPE,
-        )
-    stdout, stderr = await process.communicate()
-    e_response = stderr.decode().strip()
-    t_response = stdout.decode().strip()
-    if os.path.exists(playlist_folder):
-        try:
-            shutil.rmtree(playlist_folder)
-        except:
-            pass
-        return_name = playlist_folder
-    return return_name
-
-
-    
-    for single_file in filename:
-        if os.path.exists(single_file):
-            caption_rts = os.path.basename(single_file)
-            force_document = True
-            supports_streaming = False
-            document_attributes = []
-            if single_file.endswith((".mp4", ".mp3", ".flac", ".webm")):
-                metadata = extractMetadata(createParser(single_file))
-                duration = 0
-                width = 0
-                height = 0
-                if metadata.has("duration"):
-                    duration = metadata.get('duration').seconds
-                if os.path.exists(thumb_image_path):
-                    metadata = extractMetadata(createParser(thumb_image_path))
-                    if metadata.has("width"):
-                        width = metadata.get("width")
-                    if metadata.has("height"):
-                        height = metadata.get("height")
-                document_attributes = [
-                    DocumentAttributeVideo(
-                        duration=duration,
-                        w=width,
-                        h=height,
-                        round_message=False,
-                        supports_streaming=True
-                    )
+        await v_url.edit("`Preparing to download...`")
+        filename = sorted(get_lst_of_files(playlist_folder, []))
+        if type == "a":
+            ytdl_playlist_cmd_video = [
+                    "youtube-dl",
+                    "-i",
+                    "-f",
+                    "mp4",
+                    "--yes-playlist",
+                    playlist_folder,
+                    f"{url}"
                 ]
+            process = await asyncio.create_subprocess_exec(
+            *ytdl_playlist_cmd_video,
+                # stdout must a pipe to be accessible as process.stdout
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE,
+            )
+            stdout, stderr = await process.communicate()
+            e_response = stderr.decode().strip()
+            t_response = stdout.decode().strip()
+        elif type == "v":
+            ytdl_playlist_cmd_mp3 = [
+                    "youtube-dl",
+                    "-i",
+                    "-f",
+                    "mp3",
+                    "--yes-playlist",
+                    playlist_folder,
+                    f"{url}"
+                ]
+            process = await asyncio.create_subprocess_exec(
+                *ytdl_playlist_cmd_mp3,
+                    # stdout must a pipe to be accessible as process.stdout
+                    stdout=asyncio.subprocess.PIPE,
+                    stderr=asyncio.subprocess.PIPE,
+                )
+            stdout, stderr = await process.communicate()
+            e_response = stderr.decode().strip()
+            t_response = stdout.decode().strip()
+        if os.path.exists(playlist_folder):
             try:
-                await v_url.send_file(
-                    v_url.event.chat_id,
-                    single_file,
-                    caption=f"`{caption_rts}`",
-                    force_document=force_document,
-                    supports_streaming=supports_streaming,
-                    allow_cache=False,
-                    reply_to=v_url.message.id,
-                    attributes=document_attributes,                   
-                )
-            except Exception as e:
-                await v_url.send_message(
-                    v_url.chat_id,
-                    "{} caused `{}`".format(caption_rts, str(e)),
-                    reply_to=v_url.message.id
-                )
-                continue
-            os.remove(single_file)
+                shutil.rmtree(playlist_folder)
+            except:
+                pass
+            return_name = playlist_folder
+        return return_name
+
+
+        
+        for single_file in filename:
+            if os.path.exists(single_file):
+                caption_rts = os.path.basename(single_file)
+                force_document = True
+                supports_streaming = False
+                document_attributes = []
+                if single_file.endswith((".mp4", ".mp3", ".flac", ".webm")):
+                    metadata = extractMetadata(createParser(single_file))
+                    duration = 0
+                    width = 0
+                    height = 0
+                    if metadata.has("duration"):
+                        duration = metadata.get('duration').seconds
+                    if os.path.exists(thumb_image_path):
+                        metadata = extractMetadata(createParser(thumb_image_path))
+                        if metadata.has("width"):
+                            width = metadata.get("width")
+                        if metadata.has("height"):
+                            height = metadata.get("height")
+                    document_attributes = [
+                        DocumentAttributeVideo(
+                            duration=duration,
+                            w=width,
+                            h=height,
+                            round_message=False,
+                            supports_streaming=True
+                        )
+                    ]
+                try:
+                    await v_url.send_file(
+                        v_url.event.chat_id,
+                        single_file,
+                        caption=f"`{caption_rts}`",
+                        force_document=force_document,
+                        supports_streaming=supports_streaming,
+                        allow_cache=False,
+                        reply_to=v_url.message.id,
+                        attributes=document_attributes,                   
+                    )
+                except Exception as e:
+                    await v_url.send_message(
+                        v_url.chat_id,
+                        "{} caused `{}`".format(caption_rts, str(e)),
+                        reply_to=v_url.message.id
+                    )
+                    continue
+                os.remove(single_file)
 
 
 
