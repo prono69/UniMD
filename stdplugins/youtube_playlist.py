@@ -29,6 +29,8 @@ async def download_video(v_url):
 
     playlist_folder = Config.TMP_DOWNLOAD_DIRECTORY + "playlist_folder/"
     thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
+    if not os.path.isdir(playlist_folder):
+        os.makedirs(playlist_folder)
 
     if os.path.exists(playlist_folder):
         base_dir_name = os.path.basename(playlist_folder)
