@@ -51,8 +51,12 @@ async def _(event):
             end = datetime.now()
             ms = (end - start).seconds
             await mone.edit("Stored the tar to `{}` in {} seconds.".format(downloaded_file_name, ms))
-        tf = tarfile.open(downloaded_file_name)
-        tf.extractall()
+        with tarfile.TarFile.open(downloaded_file_name,'r') as tar_file:
+            tar_file.extractall(path=extracted)
+        # tf = tarfile.open(downloaded_file_name)
+        # tf.extractall(path=extracted)
+        # tf.close()
+
         # with zipfile.ZipFile(downloaded_file_name, 'r') as zip_ref:
         #     zip_ref.extractall(extracted)
         filename = sorted(get_lst_of_files(extracted, []))
