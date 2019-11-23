@@ -43,7 +43,7 @@ async def _(event):
             sp = subprocess.Popen(command_to_exec, stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
             await borg.send_file(
                 event.chat_id,
-                directory_name + "..7z",
+                directory_name + ".7z",
                 caption="7z archived By @By_Azade",
                 force_document=True,
                 allow_cache=False,
