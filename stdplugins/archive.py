@@ -3,7 +3,6 @@ import os
 import shutil
 import subprocess
 import time
-import libarchive
 from pySmartDL import SmartDL
 from sample_config import Config
 from telethon import events
