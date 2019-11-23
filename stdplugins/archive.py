@@ -35,11 +35,14 @@ async def _(event):
             )
             directory_name = downloaded_file_name
             await event.edit("creating 7z archive, please wait..")
-            command_to_exec = [
-                    "7z",
-                    "a",
-                    directory_name + '.7z']
-            sp = subprocess.Popen(command_to_exec, stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
+            # command_to_exec = [
+            #         "7z",
+            #         "a",
+            #         directory_name + '.7z']
+            # sp = subprocess.Popen(command_to_exec, stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
+            zipname = directory_name + ".7z"
+            filename = directory_name
+            system = subprocess.Popen(['7z', 'a', directory_name + '.zip',directory_name])
             await borg.send_file(
                 event.chat_id,
                 directory_name + ".7z",
