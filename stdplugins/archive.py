@@ -71,7 +71,7 @@ async def _(event):
     elif input_str:
         directory_name = input_str
         
-        await event.edit("Local file compressed to `{}`".format(directory_name + ".iso))
+        await event.edit("Local file compressed to `{}`".format(directory_name + ".iso"))
 
 
 @borg.on(admin_cmd(pattern=("rar ?(.*)")))
