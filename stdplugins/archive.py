@@ -36,16 +36,9 @@ async def _(event):
             )
             directory_name = downloaded_file_name
             await event.edit("creating 7z archive, please wait..")
-            patoolib.create_archive(directory_name + '.7z',directory_name)
-            # command_to_exec = [
-            #         '7z',
-            #         'a',
-            #         directory_name + '.7z',
-            #         "*.*"
-            #         ]
-            # output = subprocess.check_output(command_to_exec, cwd = 'data').decode("utf-8")
-            # sp = subprocess.Popen(command_to_exec, stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
-            # system = subprocess.Popen(['7z', 'a', directory_name + '.7z', directory_name])
+            # patoolib.create_archive(directory_name + '.7z',directory_name)
+            patoolib.create_archive(directory_name + ".7z",(directory_name,Config.TMP_DOWNLOAD_DIRECTORY))
+            # patoolib.create_archive("/content/21.yy Avrupa (1).pdf.zip",("/content/21.yy Avrupa (1).pdf","/content/"))
             await borg.send_file(
                 event.chat_id,
                 directory_name + ".7z",
