@@ -12,9 +12,7 @@ from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
 extracted = Config.TMP_DOWNLOAD_DIRECTORY + "extracted/"
 thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
 
-def extractfiles(zipname):
-    system = subprocess.Popen(["7z", "e", zipname])
-    return(system.communicate())
+
 
 
 @borg.on(admin_cmd(pattern=("7z ?(.*)")))
@@ -38,12 +36,12 @@ async def _(event):
             )
             directory_name = downloaded_file_name
             await event.edit("creating 7z archive, please wait..")
-            await extractfiles(directory_name)
             command_to_exec = [
                     '7z',
                     'a',
                     directory_name + '.7z',
-                    directory_name,]
+                    "*.*"
+                    ]
             output = subprocess.check_output(command_to_exec, cwd = 'data').decode("utf-8")
             # sp = subprocess.Popen(command_to_exec, stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
             # system = subprocess.Popen(['7z', 'a', directory_name + '.7z', directory_name])
