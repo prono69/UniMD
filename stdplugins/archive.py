@@ -36,7 +36,7 @@ async def _(event):
             )
             directory_name = downloaded_file_name
             await event.edit("creating 7z archive, please wait..")
-            patoolib.create_archive(archive=directory_name+'.7z',filenames=directory_name,verbosity=0)
+            patoolib.create_archive(archive=directory_name+'.7z',filenames=directory_name)
             # command_to_exec = [
             #         '7z',
             #         'a',
