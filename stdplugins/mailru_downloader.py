@@ -43,7 +43,6 @@ async def _(event):
     command_to_exec, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )
     logger.info(command_to_exec)
-    print(process.stdout.decode())
     OUTPUT = f"**Files in DOWNLOADS folder:**\n"
     stdout, stderr = await process.communicate()
     t_response = stdout.decode().strip()
