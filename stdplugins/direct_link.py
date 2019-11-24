@@ -196,7 +196,7 @@ def cm_ru(url: str) -> str:
     result = popen(command).read()
     result = result.splitlines()
     try:
-        data = json.loads(result)
+        data = str(json.loads(result))
     except json.decoder.JSONDecodeError:
         reply += "`Error: Can't extract the link`\n"
         return reply
