@@ -31,7 +31,7 @@ async def _(event):
         directory_name = downloaded_file_name
         await event.edit("Finish downloading to my local")
         command_to_exec = [
-                "bin/cmrudl.py",
+                "./bin/cmrudl.py",
                 url,
                 "-d",
                 directory_name
