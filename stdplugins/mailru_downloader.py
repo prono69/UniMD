@@ -42,8 +42,10 @@ async def _(event):
     process = await asyncio.create_subprocess_shell(
     command_to_exec, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )
+    logger.info(command_to_exec)
     OUTPUT = f"**Files in DOWNLOADS folder:**\n"
     stdout, stderr = await process.communicate()
+    t_response = stdout.decode().strip()
     if len(stdout) > Config.MAX_MESSAGE_SIZE_LIMIT:
         with io.BytesIO(stdout) as out_file:
             out_file.name = "exec.txt"
@@ -55,10 +57,11 @@ async def _(event):
                 caption=OUTPUT,
                 reply_to=reply_to_id
             )
-            await event.delete()  
+            await event.delete()
+            downloaded = "./DOWNLOADS/"+f"{url}"  
             await borg.send_file(
                 event.chat_id,
-                stdout,
+                t_response,
                 force_document=True,
                 allow_cache=False,
                 caption=OUTPUT,
