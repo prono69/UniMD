@@ -48,7 +48,7 @@ async def _(event):
     stdout, stderr = await process.communicate()
     t_response = stdout.decode().strip()
     if len(stdout) > Config.MAX_MESSAGE_SIZE_LIMIT:
-        with io.BytesIO(stdout) as out_file:
+        with io.BytesIO(str.encode(stdout)) as out_file:
             out_file.name = "exec.txt"
             await borg.send_file(
                 event.chat_id,
@@ -61,7 +61,7 @@ async def _(event):
             # with open(str(out_file), encoding="utf-8") as file:
             #     x = [l.strip() for l in file]
             x = []
-            with open(out_file) as file:
+            with open(str.encode(stdout)) as file:
                 for l in file:
                     x.append(l.strip())
             output_file_name = x[1]
