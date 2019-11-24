@@ -58,8 +58,9 @@ async def _(event):
                 caption=OUTPUT,
                 reply_to=reply_to_id
             )
-            read_output_line = open(out_file,"r")
-            output_file_name = read_output_line(1)
+            with open(out_file, encoding="utf-8") as file:
+                x = [l.strip() for l in file]
+            output_file_name = x[1]
             full_file_name = "./DOWNLOADS/" + output_file_name
             await borg.send_file(
                 event.chat_id,
