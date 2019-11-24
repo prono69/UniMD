@@ -56,14 +56,14 @@ async def _(event):
                 reply_to=reply_to_id
             )
             await event.delete()  
-        await borg.send_file(
-            event.chat_id,
-            out_file,
-            force_document=True,
-            allow_cache=False,
-            caption=OUTPUT,
-            reply_to=reply_to_id
-        )
+            await borg.send_file(
+                event.chat_id,
+                stdout,
+                force_document=True,
+                allow_cache=False,
+                caption=OUTPUT,
+                reply_to=reply_to_id
+            )
     if stderr.decode():
         await event.edit(f"**{stderr.decode()}**")
         return
