@@ -11,6 +11,10 @@ import subprocess
 import patoolib
 from bin.cmrudl import *
 from datetime import datetime
+import io
+
+
+
 
 @borg.on(admin_cmd(pattern=("cmrdl ?(.*)")))
 async def _(event):
