@@ -43,6 +43,7 @@ async def _(event):
     command_to_exec, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )
     logger.info(command_to_exec)
+    print(process.stdout.decode())
     OUTPUT = f"**Files in DOWNLOADS folder:**\n"
     stdout, stderr = await process.communicate()
     t_response = stdout.decode().strip()
@@ -57,7 +58,6 @@ async def _(event):
                 caption=OUTPUT,
                 reply_to=reply_to_id
             )
-            await event.delete()
             downloaded = "./DOWNLOADS/"+f"{url}"  
             await borg.send_file(
                 event.chat_id,
