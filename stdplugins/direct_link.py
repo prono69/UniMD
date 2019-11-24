@@ -194,9 +194,9 @@ def cm_ru(url: str) -> str:
         return reply
     command = f'bin/cmrudl.py -s {link}'
     result = popen(command).read()
-    result = result.splitlines()
+    result = result.splitlines()[-1]
     try:
-        data = str(json.loads(result))
+        data = json.loads(result)
     except json.decoder.JSONDecodeError:
         reply += "`Error: Can't extract the link`\n"
         return reply
