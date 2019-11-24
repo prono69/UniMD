@@ -32,12 +32,7 @@ async def _(event):
     c_time = time.time()
     downloaded_file_name = Config.TMP_DOWNLOAD_DIRECTORY
     await event.edit("Finish downloading to my local")
-    command_to_exec = [
-            "./bin/cmrudl.py",
-            url,
-            "-d",
-            "./DOWNLOADS/"
-            ]
+    command_to_exec = f"./bin/cmrudl.py {url} -d ./DOWNLOADS/"
         # sp = subprocess.Popen(command_to_exec, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
     reply_to_id = event.message.id
     PROCESS_RUN_TIME = 100
