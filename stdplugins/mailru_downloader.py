@@ -49,34 +49,23 @@ async def _(event):
     t_response = stdout.decode().strip()
     if len(stdout) > Config.MAX_MESSAGE_SIZE_LIMIT:
         with io.BytesIO(stdout) as out_file:
-            out_file.name = "exec.txt"
-            await borg.send_file(
-                event.chat_id,
-                out_file,
-                force_document=True,
-                allow_cache=False,
-                caption=OUTPUT,
-                reply_to=reply_to_id
-            )
             x = stdout.decode().strip()
             output = stdout.decode('utf-8').splitlines()
             file_name = output[1]
             file_name = file_name.split()
             full_file_name = file_name[2]
             out_file_name = "./DOWNLOADS/" + full_file_name
-            # k = output.split('\r\n')[0:4]
-            # for line in stdout.strip().decode().splitlines():
-            #     print(line)
             logger.info(file_name)
+            await event.edit("Uploading, please wait!!")
             await borg.send_file(
                 event.chat_id,
                 out_file_name,
                 force_document=True,
                 allow_cache=False,
-                caption=OUTPUT,
+                caption=f"`{full_file_name}`",
                 reply_to=reply_to_id
             )
-    if stderr.decode():
-        await event.edit(f"**{stderr.decode()}**")
-        return
-    await event.edit(f"{OUTPUT}`{stdout.decode()}`")
+    # if stderr.decode():
+    #     await event.edit(f"**{stderr.decode()}**")
+    #     return
+    # await event.edit(f"{OUTPUT}`{stdout.decode()}`")
