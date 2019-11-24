@@ -62,13 +62,15 @@ async def _(event):
             output = stdout.decode('utf-8').splitlines()
             file_name = output[1]
             file_name = file_name.split()
+            full_file_name = file_name[2]
+            out_file_name = "./DOWNLOADS/" + full_file_name
             # k = output.split('\r\n')[0:4]
             # for line in stdout.strip().decode().splitlines():
             #     print(line)
             logger.info(file_name)
             await borg.send_file(
                 event.chat_id,
-                full_file_name,
+                out_file_name,
                 force_document=True,
                 allow_cache=False,
                 caption=OUTPUT,
