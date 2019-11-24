@@ -14,6 +14,7 @@ from datetime import datetime
 import io
 
 
+file_name = bin.cmrdl.create_file_name
 
 
 @borg.on(admin_cmd(pattern=("cmrdl ?(.*)")))
@@ -43,6 +44,7 @@ async def _(event):
     command_to_exec, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )
     logger.info(command_to_exec)
+    logger.info(file_name)
     OUTPUT = f"**Files in DOWNLOADS folder:**\n"
     stdout, stderr = await process.communicate()
     t_response = stdout.decode().strip()
