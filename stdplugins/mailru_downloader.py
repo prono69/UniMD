@@ -43,11 +43,15 @@ async def _(event):
         if len(stdout) > Config.MAX_MESSAGE_SIZE_LIMIT:
             file = open("exec.text","w")
             file.write(str(stdout))
+            with open("exec.text","r") as fle:
+                x = [l.strip() for l in fle]
+            file_name = x[1]
+            full_file_name = "./DOWNLOADS/" + file_name
             # with open("exec.txt"), encoding="utf-8") as file:
             #     x = [l.strip() for l in file]
             await borg.send_file(
                     event.chat_id,
-                    file,
+                    full_file_name,
                     force_document=True,
                     allow_cache=False,
                     caption=OUTPUT,
@@ -57,4 +61,4 @@ async def _(event):
         if stderr.decode():
             await event.edit(f"**{stderr.decode()}**")
             return
-        await event.edit(f"{OUTPUT}{stdout.decode()}")
+        await event.edit(f"{OUTPUT}`{stdout.decode()}`")
