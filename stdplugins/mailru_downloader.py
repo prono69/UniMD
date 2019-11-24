@@ -27,14 +27,14 @@ async def _(event):
     reply_message = await event.get_reply_message()
     try:
         c_time = time.time()
-        downloaded_file_name = Config.TMP_DOWNLOAD_DIRECTORY,
+        downloaded_file_name = Config.TMP_DOWNLOAD_DIRECTORY
         directory_name = downloaded_file_name
         await event.edit("Finish downloading to my local")
         command_to_exec = [
                 "./bin/cmrudl.py",
                 url,
                 "-d",
-                Config.TMP_DOWNLOAD_DIRECTORY
+                "./DOWNLOADS/"
                 ]
         sp = subprocess.Popen(command_to_exec, stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
     except Exception as e:  # pylint:disable=C0103,W0703
@@ -42,7 +42,7 @@ async def _(event):
     else:
         end = datetime.now()
         ms = (end - start).seconds
-    if os.path.exists(Config.TMP_DOWNLOAD_DIRECTORY):
-        await mone.edit("Downloaded to `{}` in {} seconds.".format(Config.TMP_DOWNLOAD_DIRECTORY, ms))
+    if os.path.exists(downloaded_file_name):
+        await mone.edit("Downloaded to `{}` in {} seconds.".format(downloaded_file_name, ms))
     else:
         await mone.edit("Incorrect URL\n {}".format(input_str))
