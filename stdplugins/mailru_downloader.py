@@ -15,7 +15,7 @@ from datetime import datetime
 
 @borg.on(admin_cmd(pattern=("cmrdl ?(.*)")))
 async def _(event):
-    url = event.pattern_match.group(2)
+    url = event.pattern_match.group(1)
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
