@@ -44,26 +44,18 @@ async def _(event):
     )
     OUTPUT = f"**Files in DOWNLOADS folder:**\n"
     stdout, stderr = await process.communicate()
-    # if len(stdout) > Config.MAX_MESSAGE_SIZE_LIMIT:
-    await borg.send_file(
-        event.chat_id,
-        stdout,
-        force_document=True,
-        caption=stdout,
-        allow_cache=False,
-        reply_to=reply_to_id
-    )
-        # with io.BytesIO(str.encode(stdout)) as out_file:
-        #     out_file.name = "exec.txt"
-        #     await borg.send_file(
-        #         event.chat_id,
-        #         out_file,
-        #         force_document=True,
-        #         allow_cache=False,
-        #         caption=OUTPUT,
-        #         reply_to=reply_to_id
-        #     )
-        #     await event.delete()  
+    if len(stdout) > Config.MAX_MESSAGE_SIZE_LIMIT:
+        with io.BytesIO(str.encode(stdout)) as out_file:
+            out_file.name = "exec.txt"
+            await borg.send_file(
+                event.chat_id,
+                out_file,
+                force_document=True,
+                allow_cache=False,
+                caption=OUTPUT,
+                reply_to=reply_to_id
+            )
+            await event.delete()  
     if stderr.decode():
         await event.edit(f"**{stderr.decode()}**")
         return
