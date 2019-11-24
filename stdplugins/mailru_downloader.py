@@ -39,6 +39,11 @@ async def _(event):
                 "./DOWNLOADS/"
                 ]
         # sp = subprocess.Popen(command_to_exec, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+        reply_to_id = event.message.id
+        PROCESS_RUN_TIME = 100
+        if event.reply_to_msg_id:
+            reply_to_id = event.reply_to_msg_id
+        start_time = time.time() + PROCESS_RUN_TIME
         process = await asyncio.create_subprocess_shell(
         command_to_exec, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
         )
@@ -53,19 +58,10 @@ async def _(event):
                     force_document=True,
                     allow_cache=False,
                     caption=OUTPUT,
-                    reply_to=event.reply_to_id
+                    reply_to=reply_to_id
                 )
                 await event.delete()
         if stderr.decode():
             await event.edit(f"**{stderr.decode()}**")
             return
         await event.edit(f"{OUTPUT}`{stdout.decode()}`")
-    # except Exception as e:  # pylint:disable=C0103,W0703
-    #     await mone.edit(str(e))
-    # else:
-    #     end = datetime.now()
-    #     ms = (end - start).seconds
-    # if os.path.exists(downloaded_file_name):
-    #     await mone.edit("Downloaded to `{}` in {} seconds.".format(downloaded_file_name, ms))
-    # else:
-    #     await mone.edit("Incorrect URL\n {}".format(input_str))
