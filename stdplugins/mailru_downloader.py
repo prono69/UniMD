@@ -11,7 +11,6 @@ import subprocess
 import patoolib
 from bin.cmrudl import *
 from datetime import datetime
-from bin.cmrudl import create_file_name
 
 @borg.on(admin_cmd(pattern=("cmrdl ?(.*)")))
 async def _(event):
@@ -20,14 +19,15 @@ async def _(event):
         return
     input_str = event.pattern_match.group(1)
     mone = await event.edit("Processing ...")
-    if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
-        os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
+    # if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
+    #     os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
     # if event.reply_to_msg_id:
     start = datetime.now()
     reply_message = await event.get_reply_message()
     try:
         c_time = time.time()
         downloaded_file_name = Config.TMP_DOWNLOAD_DIRECTORY
+        
         await event.edit("Finish downloading to my local")
         command_to_exec = [
                 "./bin/cmrudl.py",
@@ -41,7 +41,7 @@ async def _(event):
     else:
         end = datetime.now()
         ms = (end - start).seconds
-    if os.path.exists(create_file_name):
-        await mone.edit("Downloaded to `{}` in {} seconds.".format(create_file_name, ms))
+    if os.path.exists(downloaded_file_name):
+        await mone.edit("Downloaded to `{}` in {} seconds.".format(downloaded_file_name, ms))
     else:
         await mone.edit("Incorrect URL\n {}".format(input_str))
