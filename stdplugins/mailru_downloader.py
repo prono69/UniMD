@@ -27,7 +27,6 @@ async def _(event):
     try:
         c_time = time.time()
         downloaded_file_name = Config.TMP_DOWNLOAD_DIRECTORY
-        
         await event.edit("Finish downloading to my local")
         command_to_exec = [
                 "./bin/cmrudl.py",
@@ -35,13 +34,34 @@ async def _(event):
                 "-d",
                 "./DOWNLOADS/"
                 ]
-        sp = subprocess.Popen(command_to_exec, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
-    except Exception as e:  # pylint:disable=C0103,W0703
-        await mone.edit(str(e))
-    else:
-        end = datetime.now()
-        ms = (end - start).seconds
-    if os.path.exists(downloaded_file_name):
-        await mone.edit("Downloaded to `{}` in {} seconds.".format(downloaded_file_name, ms))
-    else:
-        await mone.edit("Incorrect URL\n {}".format(input_str))
+        # sp = subprocess.Popen(command_to_exec, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+        process = await asyncio.create_subprocess_shell(
+        command_to_exec, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+        )
+        OUTPUT = f"**Files in DOWNLOADS folder:**\n"
+        stdout, stderr = await process.communicate()
+        if len(stdout) > Config.MAX_MESSAGE_SIZE_LIMIT:
+            with io.BytesIO(str.encode(stdout)) as out_file:
+                out_file.name = "exec.text"
+                await borg.send_file(
+                    event.chat_id,
+                    out_file,
+                    force_document=True,
+                    allow_cache=False,
+                    caption=OUTPUT,
+                    reply_to=reply_to_id
+                )
+                await event.delete()
+        if stderr.decode():
+            await event.edit(f"**{stderr.decode()}**")
+            return
+        await event.edit(f"{OUTPUT}`{stdout.decode()}`")
+    # except Exception as e:  # pylint:disable=C0103,W0703
+    #     await mone.edit(str(e))
+    # else:
+    #     end = datetime.now()
+    #     ms = (end - start).seconds
+    # if os.path.exists(downloaded_file_name):
+    #     await mone.edit("Downloaded to `{}` in {} seconds.".format(downloaded_file_name, ms))
+    # else:
+    #     await mone.edit("Incorrect URL\n {}".format(input_str))
