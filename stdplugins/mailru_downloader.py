@@ -58,10 +58,12 @@ async def _(event):
                 caption=OUTPUT,
                 reply_to=reply_to_id
             )
-            downloaded = "./DOWNLOADS/"+f"{url}"  
+            read_output_line = open(out_file,"r")
+            output_file_name = read_output_line(1)
+            full_file_name = "./DOWNLOADS/" + output_file_name
             await borg.send_file(
                 event.chat_id,
-                t_response,
+                full_file_name,
                 force_document=True,
                 allow_cache=False,
                 caption=OUTPUT,
