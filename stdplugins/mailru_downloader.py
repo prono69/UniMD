@@ -59,8 +59,10 @@ async def _(event):
                 reply_to=reply_to_id
             )
             x = stdout.decode().strip()
-            output = stdout.decode('utf-8').strip()
+            output = stdout.decode('utf-8').splitlines()
             k = output.split('\r\n')[0:4]
+            # for line in stdout.strip().decode().splitlines():
+            #     print(line)
             logger.info(k)
             await borg.send_file(
                 event.chat_id,
