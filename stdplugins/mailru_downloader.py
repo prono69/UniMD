@@ -58,11 +58,8 @@ async def _(event):
                 caption=OUTPUT,
                 reply_to=reply_to_id
             )
-            # with open(str(out_file), encoding="utf-8") as file:
-            #     x = [l.strip() for l in file]
-            y = [x.rstrip() for x in open(out_file)]
-            output_file_name = y[1]
-            full_file_name = "./DOWNLOADS/" + output_file_name
+            x = stdout.decode()
+            logger.info(x)
             await borg.send_file(
                 event.chat_id,
                 full_file_name,
