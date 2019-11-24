@@ -42,7 +42,7 @@ async def _(event):
     else:
         end = datetime.now()
         ms = (end - start).seconds
-    if os.path.exists(downloaded_file_name):
+    if os.path.exists(Config.TMP_DOWNLOAD_DIRECTORY):
         await mone.edit("Downloaded to `{}` in {} seconds.".format(downloaded_file_name, ms))
     else:
         await mone.edit("Incorrect URL\n {}".format(input_str))
