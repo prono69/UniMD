@@ -61,7 +61,7 @@ async def _(event):
             # with open(str(out_file), encoding="utf-8") as file:
             #     x = [l.strip() for l in file]
             x = []
-            with open("exec.txt") as file:
+            with open(out_file) as file:
                 for l in file:
                     x.append(l.strip())
             output_file_name = x[1]
