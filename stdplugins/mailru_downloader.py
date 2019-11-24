@@ -35,7 +35,7 @@ async def _(event):
                 "-d",
                 "./DOWNLOADS/"
                 ]
-        sp = subprocess.Popen(command_to_exec, stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
+        sp = subprocess.Popen(command_to_exec, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
     except Exception as e:  # pylint:disable=C0103,W0703
         await mone.edit(str(e))
     else:
