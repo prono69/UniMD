@@ -24,24 +24,21 @@ async def _(event):
         return
     input_str = event.pattern_match.group(1)
     mone = await event.edit("Processing ...")
-    # if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
-    #     os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
-    # if event.reply_to_msg_id:
     start = datetime.now()
     reply_message = await event.get_reply_message()
-    
     c_time = time.time()
     downloaded_file_name = Config.TMP_DOWNLOAD_DIRECTORY
     await event.edit("Finish downloading to my local")
     command_to_exec = f"./bin/cmrudl.py {url} -d ./DOWNLOADS/"
-        # sp = subprocess.Popen(command_to_exec, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
     reply_to_id = event.message.id
     PROCESS_RUN_TIME = 100
     if event.reply_to_msg_id:
         reply_to_id = event.reply_to_msg_id
     start_time = time.time() + PROCESS_RUN_TIME
     process = await asyncio.create_subprocess_shell(
-    command_to_exec, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+        command_to_exec, 
+        stdout=asyncio.subprocess.PIPE, 
+        stderr=asyncio.subprocess.PIPE
     )
     logger.info(command_to_exec)
     OUTPUT = f"**Files in DOWNLOADS folder:**\n"
@@ -65,7 +62,4 @@ async def _(event):
                 caption=f"`{full_file_name}`",
                 reply_to=reply_to_id
             )
-    # if stderr.decode():
-    #     await event.edit(f"**{stderr.decode()}**")
-    #     return
-    # await event.edit(f"{OUTPUT}`{stdout.decode()}`")
+
