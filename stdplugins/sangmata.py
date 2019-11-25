@@ -51,6 +51,7 @@ async def _(event):
        return
     chat = "@fakemailbot"
     sender = reply_message.sender
+    command = "/generate"
     if reply_message.sender.bot:
        await event.edit("```Reply to actual users message.```")
        return
@@ -58,7 +59,7 @@ async def _(event):
     async with borg.conversation(chat) as conv:
           try:     
               response = conv.wait_event(events.NewMessage(incoming=True,from_users=177914997))
-              await borg.forward_messages(chat, reply_message)
+              await borg.forward_messages(chat, command)
               response = await response 
           except YouBlockedUserError: 
               await event.reply("```Please unblock @sangmatainfo_bot and try again```")
