@@ -38,7 +38,7 @@ async def _(event):
 
 
 
-@borg.on(admin_cmd("fakemail ?(.*)"))
+@borg.on(admin_cmd(pattern=("fakemail ?(.*)")))
 async def _(event):
     if event.fwd_from:
         return 
