@@ -37,6 +37,7 @@ async def _(event):
                     f"{url}",
                     f"{output}"
                     ]
+            logger.info(command_to_exec)
             sp = subprocess.Popen(command_to_exec, stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
             filename = sorted(get_lst_of_files(output, []))
             for single_file in filename:
@@ -92,11 +93,6 @@ async def _(event):
                         continue
                     os.remove(single_file)
             os.remove(output)
-
-
-
-
-
 
 
 def get_lst_of_files(input_directory, output_lst):
