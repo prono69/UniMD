@@ -35,4 +35,3 @@ spotify_token
 lxml
 remotezip
 patool
-MegaCrypter
