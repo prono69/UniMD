@@ -170,6 +170,14 @@ from asyncio import sleep
 from telethon.tl.types import DocumentAttributeAudio
 from uniborg.util import admin_cmd
 from sample_config import Config
+from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
+
+from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
+
+from hachoir.metadata import extractMetadata
+from hachoir.parser import createParser
+
+
 
 output_directory = Config.TMP_DOWNLOAD_DIRECTORY + "extracted/"
 thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
@@ -244,7 +252,7 @@ async def download_video(v_url):
         opts = {
             'format':'bestaudio',
             'addmetadata':True,
-            'noplaylist':True,
+            'noplaylist':False,
             'key':'FFmpegMetadata',
             'writethumbnail':True,
             'prefer_ffmpeg':True,
@@ -264,28 +272,20 @@ async def download_video(v_url):
 
     elif type == "v":
         opts = {
-            'format':
-            'best',
-            'addmetadata':
-            True,
-            'key':
-            'FFmpegMetadata',
-            'prefer_ffmpeg':
-            True,
-            'geo_bypass':
-            True,
-            'nocheckcertificate':
-            True,
+            'format':'best',
+            'addmetadata':True,
+            'noplaylist':False,
+            'key':'FFmpegMetadata',
+            'prefer_ffmpeg':True,
+            'geo_bypass':True,
+            'nocheckcertificate':True,
             'postprocessors': [{
                 'key': 'FFmpegVideoConvertor',
                 'preferedformat': 'mp4'
             }],
-            'outtmpl':
-            '%(id)s.mp4',
-            'logtostderr':
-            False,
-            'quiet':
-            True
+            'outtmpl':f'{output_directory}'+'%(id)s.mp4',
+            'logtostderr':False,
+            'quiet':True
         }
         song = False
         video = True
@@ -294,6 +294,7 @@ async def download_video(v_url):
         await v_url.edit("`Fetching data, please wait..`")
         with YoutubeDL(opts) as ytdl:
             ytdl_data = ytdl.extract_info(url)
+            filename = sorted(get_lst_of_files(output_directory, []))
     except DownloadError as DE:
         await v_url.edit(f"`{str(DE)}`")
         return
@@ -325,36 +326,155 @@ async def download_video(v_url):
         return
     c_time = time.time()
     if song:
-        await v_url.edit(f"`Preparing to upload song:`\
-        \n**{ytdl_data['title']}**\
-        \nby *{ytdl_data['uploader']}*")
-        await v_url.client.send_file(
-            v_url.chat_id,
-            f"{ytdl_data['id']}.mp3",
-            supports_streaming=True,
-            attributes=[
-                DocumentAttributeAudio(duration=int(ytdl_data['duration']),
-                                       title=str(ytdl_data['title']),
-                                       performer=str(ytdl_data['uploader']))
-            ],
-            progress_callback=lambda d, t: asyncio.get_event_loop(
-            ).create_task(
-                progress(d, t, v_url, c_time, "Uploading..",
-                         f"{ytdl_data['title']}.mp3")))
-        os.remove(f"{ytdl_data['id']}.mp3")
+        for single_file in filename:
+            if os.path.exists(single_file):
+                caption_rts = os.path.basename(single_file)
+                force_document = True
+                supports_streaming = False
+                document_attributes = []
+                if single_file.endswith((".mp4", ".mp3", ".flac", ".webm")):
+                    metadata = extractMetadata(createParser(single_file))
+                    duration = 0
+                    width = 0
+                    height = 0
+                    if metadata.has("duration"):
+                        duration = metadata.get('duration').seconds
+                    if os.path.exists(thumb_image_path):
+                        metadata = extractMetadata(createParser(thumb_image_path))
+                        if metadata.has("width"):
+                            width = metadata.get("width")
+                        if metadata.has("height"):
+                            height = metadata.get("height")
+                    document_attributes = [
+                        DocumentAttributeVideo(
+                            duration=duration,
+                            w=width,
+                            h=height,
+                            round_message=False,
+                            supports_streaming=True
+                        )
+                    ]
+                try:
+                    await borg.send_message(
+                        f"`Preparing to upload song:`\
+                        \n**{ytdl_data['title']}**\
+                        \nby *{ytdl_data['uploader']}*"
+                    )
+                    await v_url.client.send_file(
+                        v_url.chat_id,
+                        f"{ytdl_data['id']}.mp3",
+                        supports_streaming=True,
+                        attributes=[
+                            DocumentAttributeAudio(duration=int(ytdl_data['duration']),
+                            title=str(ytdl_data['title']),
+                            performer=str(ytdl_data['uploader']))
+                        ],
+                        progress_callback=lambda d, t: asyncio.get_event_loop(
+                        ).create_task(
+                            progress(d, t, v_url, c_time, "Uploading..",
+                            f"{ytdl_data['title']}.mp3")))
+                            
+                except Exception as e:
+                    await borg.send_message(
+                        event.chat_id,
+                        "{} caused `{}`".format(caption_rts, str(e)),
+                        reply_to=event.message.id
+                    )
+                    # some media were having some issues
+                    continue
+                os.remove(single_file)
+        os.remove(output_directory)
         await v_url.delete()
     elif video:
-        await v_url.edit(f"`Preparing to upload video:`\
-        \n**{ytdl_data['title']}**\
-        \nby *{ytdl_data['uploader']}*")
-        await v_url.client.send_file(
-            v_url.chat_id,
-            f"{ytdl_data['id']}.mp4",
-            supports_streaming=True,
-            caption=ytdl_data['title'],
-            progress_callback=lambda d, t: asyncio.get_event_loop(
-            ).create_task(
-                progress(d, t, v_url, c_time, "Uploading..",
-                         f"{ytdl_data['title']}.mp4")))
-        os.remove(f"{ytdl_data['id']}.mp4")
+        for single_file in filename:
+            if os.path.exists(single_file):
+                caption_rts = os.path.basename(single_file)
+                force_document = True
+                supports_streaming = False
+                document_attributes = []
+                if single_file.endswith((".mp4", ".mp3", ".flac", ".webm")):
+                    metadata = extractMetadata(createParser(single_file))
+                    duration = 0
+                    width = 0
+                    height = 0
+                    if metadata.has("duration"):
+                        duration = metadata.get('duration').seconds
+                    if os.path.exists(thumb_image_path):
+                        metadata = extractMetadata(createParser(thumb_image_path))
+                        if metadata.has("width"):
+                            width = metadata.get("width")
+                        if metadata.has("height"):
+                            height = metadata.get("height")
+                    document_attributes = [
+                        DocumentAttributeVideo(
+                            duration=duration,
+                            w=width,
+                            h=height,
+                            round_message=False,
+                            supports_streaming=True
+                        )
+                    ]
+                try:
+                    await borg.send_message(
+                        f"`Preparing to upload video:`\
+                        \n**{ytdl_data['title']}**\
+                        \nby *{ytdl_data['uploader']}*"
+                    )
+                    await v_url.client.send_file(
+                        v_url.chat_id,
+                        f"{ytdl_data['id']}.mp4",
+                        supports_streaming=True,
+                        attributes=[
+                            DocumentAttributeAudio(duration=int(ytdl_data['duration']),
+                            title=str(ytdl_data['title']),
+                            performer=str(ytdl_data['uploader']))
+                        ],
+                        progress_callback=lambda d, t: asyncio.get_event_loop(
+                        ).create_task(
+                            progress(d, t, v_url, c_time, "Uploading..",
+                            f"{ytdl_data['title']}.mp4")))
+                            
+                except Exception as e:
+                    await borg.send_message(
+                        event.chat_id,
+                        "{} caused `{}`".format(caption_rts, str(e)),
+                        reply_to=event.message.id
+                    )
+                    # some media were having some issues
+                    continue
+                os.remove(single_file)
+        os.remove(output_directory)
         await v_url.delete()
+
+
+
+
+
+
+
+
+        # await v_url.edit(f"`Preparing to upload video:`\
+        # \n**{ytdl_data['title']}**\
+        # \nby *{ytdl_data['uploader']}*")
+        # await v_url.client.send_file(
+        #     v_url.chat_id,
+        #     f"{ytdl_data['id']}.mp4",
+        #     supports_streaming=True,
+        #     caption=ytdl_data['title'],
+        #     progress_callback=lambda d, t: asyncio.get_event_loop(
+        #     ).create_task(
+        #         progress(d, t, v_url, c_time, "Uploading..",
+        #                  f"{ytdl_data['title']}.mp4")))
+        # os.remove(f"{ytdl_data['id']}.mp4")
+        # await v_url.delete()
+
+
+
+def get_lst_of_files(input_directory, output_lst):
+    filesinfolder = os.listdir(input_directory)
+    for file_name in filesinfolder:
+        current_file_name = os.path.join(input_directory, file_name)
+        if os.path.isdir(current_file_name):
+            return get_lst_of_files(current_file_name, output_lst)
+        output_lst.append(current_file_name)
+    return output_lst
