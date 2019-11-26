@@ -32,8 +32,13 @@ async def _(event):
         reply_message = await event.get_reply_message()
         c_time = time.time()
         command_to_exec = [
-                "./bin/youtubeplaylist.py",
+                "youtube-dl",
+                "-t",
+                "--extract-audio",
+                "--audio-format",
+                "mp3",
                 f"{url}",
+                "-o",
                 f"{output}"
                 ]
         sp = subprocess.Popen(command_to_exec, stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
