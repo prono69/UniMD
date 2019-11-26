@@ -355,7 +355,7 @@ async def download_video(v_url):
                         )
                     ]
                 try:
-                    await borg.send_message(
+                    await v_url.send_message(
                         f"`Preparing to upload song:`\
                         \n**{ytdl_data['title']}**\
                         \nby *{ytdl_data['uploader']}*"
@@ -375,10 +375,10 @@ async def download_video(v_url):
                             f"{ytdl_data['title']}.mp3")))
                             
                 except Exception as e:
-                    await borg.send_message(
+                    await v_url.send_message(
                         v_url.chat_id,
                         "{} caused `{}`".format(caption_rts, str(e)),
-                        reply_to=event.message.id
+                        reply_to=v_url.message.id
                     )
                     # some media were having some issues
                     continue
@@ -415,7 +415,7 @@ async def download_video(v_url):
                         )
                     ]
                 try:
-                    await borg.send_message(
+                    await v_url.send_message(
                         f"`Preparing to upload video:`\
                         \n**{ytdl_data['title']}**\
                         \nby *{ytdl_data['uploader']}*"
@@ -435,10 +435,10 @@ async def download_video(v_url):
                             f"{ytdl_data['title']}.mp4")))
                             
                 except Exception as e:
-                    await borg.send_message(
+                    await v_url.send_message(
                         v_url.chat_id,
                         "{} caused `{}`".format(caption_rts, str(e)),
-                        reply_to=event.message.id
+                        reply_to=v_url.message.id
                     )
                     # some media were having some issues
                     continue
