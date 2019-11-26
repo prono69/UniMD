@@ -207,12 +207,12 @@ async def download_video(v_url):
                             )
                         ]
                     try:
-                        ytdl_data_name = os.path.basename(single_file)
-                        print(ytdl_data_name)
+                        ytdl_data_name_audio = os.path.basename(single_file)
+                        print(ytdl_data_name_audio)
                         await v_url.client.send_file(
                             v_url.chat_id,
                             single_file,
-                            caption=f"{ytdl_data_name}",
+                            caption=f"{ytdl_data_name_audio}",
                             force_document=force_document,
                             supports_streaming=supports_streaming,
                             allow_cache=False,
@@ -220,7 +220,7 @@ async def download_video(v_url):
                             progress_callback=lambda d, t: asyncio.get_event_loop(
                                 ).create_task(
                                     progress(d, t, v_url, c_time, "Uploading..",
-                                    f"{ytdl_data_name}")))
+                                    f"{ytdl_data_name_audio}")))
                     except Exception as e:
                         await v_url.client.send_message(
                             v_url.chat_id,
@@ -259,10 +259,11 @@ async def download_video(v_url):
                             )
                         ]
                     try:
+                        ytdl_data_name_video = os.path.basename(single_file)
                         await v_url.client.send_file(
                             v_url.chat_id,
                             single_file,
-                            caption=f"{ytdl_data['title']}.mp4",
+                            caption=f"{ytdl_data_name_video}",
                             force_document=force_document,
                             supports_streaming=supports_streaming,
                             allow_cache=False,
@@ -270,7 +271,7 @@ async def download_video(v_url):
                             progress_callback=lambda d, t: asyncio.get_event_loop(
                                 ).create_task(
                                     progress(d, t, v_url, c_time, "Uploading..",
-                                    f"{ytdl_data['title']}.mp4")))
+                                    f"{ytdl_data_name_video}")))
                     except Exception as e:
                         await v_url.client.send_message(
                             v_url.chat_id,
