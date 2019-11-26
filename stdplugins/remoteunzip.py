@@ -36,7 +36,7 @@ async def _(event):
         reply = "`No links found!`"
         await event.edit(reply)
     for link in links:
-        if links.endswith("zip") in link:
+        if link.endswith("zip") in link:
             with RemoteZip(links) as zip:
                 zip.extractall(filedir)
                 x = zip.extractall(filedir)
