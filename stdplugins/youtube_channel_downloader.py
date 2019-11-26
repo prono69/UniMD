@@ -226,7 +226,7 @@ async def download_video(v_url):
                         )
                         continue
                     os.remove(single_file)
-            shutil.rmtree(out_folder)
+        shutil.rmtree(out_folder)
     if video:
         for single_file in filename:
             if os.path.exists(single_file):
@@ -276,7 +276,7 @@ async def download_video(v_url):
                         )
                         continue
                     os.remove(single_file)
-            shutil.rmtree(out_folder)
+        shutil.rmtree(out_folder)
         
 
 
