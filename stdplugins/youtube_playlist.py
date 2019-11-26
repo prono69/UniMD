@@ -365,7 +365,7 @@ async def download_video(v_url):
                         f"{ytdl_data['id']}.mp3",
                         supports_streaming=True,
                         attributes=[
-                            DocumentAttributeAudio(duration=int(ytdl_data['duration']),
+                            DocumentAttributeAudio(duration=int(ytdl_data['getduration']),
                             title=str(ytdl_data['title']),
                             performer=str(ytdl_data['uploader']))
                         ],
