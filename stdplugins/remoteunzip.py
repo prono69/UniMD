@@ -17,6 +17,8 @@ from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
 from sample_config import Config
 
 filedir = f"{Config.TMP_DOWNLOAD_DIRECTORY}extracted/"
+thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
+
 
 @borg.on(admin_cmd(pattern=("runzip ?(.*)")))
 async def _(event):

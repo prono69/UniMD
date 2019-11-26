@@ -36,8 +36,8 @@ async def _(event):
                 f"{url}",
                 f"{output}"
                 ]
-        logger.info(command_to_exec)
         sp = subprocess.Popen(command_to_exec, stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
+        logger.info(command_to_exec)
         filename = sorted(get_lst_of_files(output, []))
         for single_file in filename:
             if os.path.exists(single_file):
