@@ -27,6 +27,13 @@ from uniborg.util import admin_cmd
 from sample_config import Config
 import shutil
 
+
+
+out_folder = Config.TMP_DOWNLOAD_DIRECTORY + "youtubedl/"
+thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
+if not os.path.isdir(out_folder):
+    os.makedirs(out_folder)
+
 async def progress(current, total, event, start, type_of_ps, file_name=None):
     """Generic progress_callback for uploads and downloads."""
     now = time.time()
@@ -91,11 +98,6 @@ async def download_video(v_url):
     type = v_url.pattern_match.group(1).lower()
 
     await v_url.edit("`Preparing to download...`")
-
-    out_folder = Config.TMP_DOWNLOAD_DIRECTORY + "youtubedl/"
-    thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
-    if not os.path.isdir(out_folder):
-        os.makedirs(out_folder)
 
     if type == "a":
         opts = {
