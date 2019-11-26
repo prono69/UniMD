@@ -145,10 +145,6 @@ async def download_video(v_url):
         await v_url.edit("`Fetching playlist data, please wait..`")
         with YoutubeDL(opts) as ytdl:
             ytdl_data = ytdl.extract_info(url)
-            video_title = ytdl_data.get('title', None)
-            print(video_title)
-            audio_title = ytdl_data.get('title',None)
-            print(audio_title)
         filename = sorted(get_lst_of_files(out_folder, []))
     except DownloadError as DE:
         await v_url.edit(f"`{str(DE)}`")
@@ -211,10 +207,12 @@ async def download_video(v_url):
                             )
                         ]
                     try:
+                        ytdl_data_name = os.path.basename(single_file)
+                        print(ytdl_data_name)
                         await v_url.client.send_file(
                             v_url.chat_id,
                             single_file,
-                            caption=f"{ytdl_data['title']}.mp3",
+                            caption=f"{ytdl_data_name}",
                             force_document=force_document,
                             supports_streaming=supports_streaming,
                             allow_cache=False,
@@ -222,7 +220,7 @@ async def download_video(v_url):
                             progress_callback=lambda d, t: asyncio.get_event_loop(
                                 ).create_task(
                                     progress(d, t, v_url, c_time, "Uploading..",
-                                    f"{ytdl_data['title']}.mp3")))
+                                    f"{ytdl_data_name}")))
                     except Exception as e:
                         await v_url.client.send_message(
                             v_url.chat_id,
