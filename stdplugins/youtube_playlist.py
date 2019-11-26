@@ -169,6 +169,12 @@ from youtube_dl.utils import (DownloadError, ContentTooShortError,
 from asyncio import sleep
 from telethon.tl.types import DocumentAttributeAudio
 from uniborg.util import admin_cmd
+from sample_config import Config
+
+output_directory = Config.TMP_DOWNLOAD_DIRECTORY + "extracted/"
+thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
+if not os.path.isdir(output_directory):
+    os.makedirs(output_directory)
 
 async def progress(current, total, event, start, type_of_ps, file_name=None):
     """Generic progress_callback for uploads and downloads."""
@@ -232,18 +238,26 @@ async def download_video(v_url):
     """ For .ytdl command, download media from YouTube and many other sites. """
     url = v_url.pattern_match.group(2)
     type = v_url.pattern_match.group(1).lower()
-
     await v_url.edit("`Preparing to download...`")
 
     if type == "a":
         opts = {
-            '-citk',
-            '--max-quality',
-            'mp3',
-            '--extract-audio',
-            '--audio-format',
-            'mp3',
-            f'{url}'
+            'format':'bestaudio',
+            'addmetadata':True,
+            'noplaylist':True,
+            'key':'FFmpegMetadata',
+            'writethumbnail':True,
+            'prefer_ffmpeg':True,
+            'geo_bypass':True,
+            'nocheckcertificate':True,
+            'postprocessors': [{
+                'key': 'FFmpegExtractAudio',
+                'preferredcodec': 'mp3',
+                'preferredquality': '320',
+            }],
+            'outtmpl':f'{output_directory}'+'%(id)s.mp3',
+            'quiet':True,
+            'logtostderr':False
         }
         video = False
         song = True
