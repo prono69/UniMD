@@ -25,7 +25,7 @@ from hachoir.parser import createParser
 from telethon.tl.types import DocumentAttributeAudio
 from uniborg.util import admin_cmd
 from sample_config import Config
-
+import shutil
 
 async def progress(current, total, event, start, type_of_ps, file_name=None):
     """Generic progress_callback for uploads and downloads."""
@@ -224,7 +224,7 @@ async def download_video(v_url):
                         )
                         continue
                     os.remove(single_file)
-            os.remove(out_folder)
+            shutil.rmtree(out_folder)
     if video:
         for single_file in filename:
             if os.path.exists(single_file):
@@ -274,7 +274,7 @@ async def download_video(v_url):
                         )
                         continue
                     os.remove(single_file)
-            os.remove(out_folder)
+            shutil.rmtree(out_folder)
         
 
 
