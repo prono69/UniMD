@@ -376,7 +376,7 @@ async def download_video(v_url):
                             
                 except Exception as e:
                     await borg.send_message(
-                        event.chat_id,
+                        v_url.chat_id,
                         "{} caused `{}`".format(caption_rts, str(e)),
                         reply_to=event.message.id
                     )
@@ -436,7 +436,7 @@ async def download_video(v_url):
                             
                 except Exception as e:
                     await borg.send_message(
-                        event.chat_id,
+                        v_url.chat_id,
                         "{} caused `{}`".format(caption_rts, str(e)),
                         reply_to=event.message.id
                     )
