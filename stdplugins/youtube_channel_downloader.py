@@ -142,9 +142,13 @@ async def download_video(v_url):
         video = True
 
     try:
-        await v_url.edit("`Fetching data, please wait..`")
+        await v_url.edit("`Fetching playlist data, please wait..`")
         with YoutubeDL(opts) as ytdl:
             ytdl_data = ytdl.extract_info(url)
+            video_title = ytdl_data.get('title', None)
+            print(video_title)
+            audio_title = ytdl_data.get('title',None)
+            print(audio_title)
         filename = sorted(get_lst_of_files(out_folder, []))
     except DownloadError as DE:
         await v_url.edit(f"`{str(DE)}`")
@@ -176,7 +180,7 @@ async def download_video(v_url):
         await v_url.edit(f"{str(type(e)): {str(e)}}")
         return
     c_time = time.time()
-    await v_url.edit("`YouTube Channel Downloading Processing Now.\nPlease Wait!`")
+    await v_url.edit("`YouTube Playlist Downloading Processing Now.\nPlease Wait!`")
     if song:
         for single_file in filename:
             if os.path.exists(single_file):
