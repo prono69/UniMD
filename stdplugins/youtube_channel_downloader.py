@@ -208,7 +208,7 @@ async def download_video(v_url):
                         await v_url.client.send_file(
                             v_url.chat_id,
                             single_file,
-                            caption=f"{ytdl_data['id']}.mp3",
+                            caption=f"{ytdl_data['title']}.mp3",
                             force_document=force_document,
                             supports_streaming=supports_streaming,
                             allow_cache=False,
@@ -224,7 +224,7 @@ async def download_video(v_url):
                         )
                         continue
                     os.remove(single_file)
-            # os.remove(out_folder)
+            os.remove(out_folder)
     if video:
         for single_file in filename:
             if os.path.exists(single_file):
@@ -258,7 +258,7 @@ async def download_video(v_url):
                         await v_url.client.send_file(
                             v_url.chat_id,
                             single_file,
-                            caption=f"{ytdl_data['id']}.mp4",
+                            caption=f"{ytdl_data['title']}.mp4",
                             force_document=force_document,
                             supports_streaming=supports_streaming,
                             allow_cache=False,
@@ -274,7 +274,7 @@ async def download_video(v_url):
                         )
                         continue
                     os.remove(single_file)
-            # os.remove(out_folder)
+            os.remove(out_folder)
         
 
 
