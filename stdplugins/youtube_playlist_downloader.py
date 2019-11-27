@@ -126,6 +126,7 @@ async def download_video(v_url):
             'format':'best',
             'addmetadata':True,
             'noplaylist': False,
+            'getthumbnail':True,
             'embedthumbnail': True,
             'key':'FFmpegMetadata',
             'prefer_ffmpeg':True,
