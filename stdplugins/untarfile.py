@@ -67,8 +67,8 @@ async def _(event):
             if os.path.exists(single_file):
                 # https://stackoverflow.com/a/678242/4723940
                 caption_rts = os.path.basename(single_file)
-                force_document = True
-                supports_streaming = False
+                force_document = False
+                supports_streaming = True
                 document_attributes = []
                 if single_file.endswith((".mp4", ".mp3", ".flac", ".webm")):
                     metadata = extractMetadata(createParser(single_file))
