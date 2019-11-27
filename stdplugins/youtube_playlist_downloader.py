@@ -136,7 +136,6 @@ async def download_video(v_url):
             'postprocessors': [{
                 'key': 'FFmpegVideoConvertor',
                 'preferedformat': 'mp4'},
-                {'key': 'EmbedThumbnail',}],
             'outtmpl':out_folder + '%(title)s.%(ext)s',
             'logtostderr':False,
             'quiet':True
