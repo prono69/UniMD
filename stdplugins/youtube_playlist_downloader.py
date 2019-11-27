@@ -212,7 +212,7 @@ async def download_video(v_url):
                         await v_url.client.send_file(
                             v_url.chat_id,
                             single_file,
-                            caption=f"{ytdl_data_name_audio}",
+                            caption=f"`{ytdl_data_name_audio}`",
                             force_document=force_document,
                             supports_streaming=supports_streaming,
                             allow_cache=False,
@@ -263,7 +263,7 @@ async def download_video(v_url):
                         await v_url.client.send_file(
                             v_url.chat_id,
                             single_file,
-                            caption=f"{ytdl_data_name_video}",
+                            caption=f"`{ytdl_data_name_video}`",
                             force_document=force_document,
                             supports_streaming=supports_streaming,
                             allow_cache=False,
