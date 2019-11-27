@@ -126,6 +126,7 @@ async def download_video(v_url):
             'format':'best',
             'addmetadata':True,
             'noplaylist': False,
+            'embedthumbnail': True,
             'key':'FFmpegMetadata',
             'prefer_ffmpeg':True,
             'geo_bypass':True,
@@ -216,6 +217,7 @@ async def download_video(v_url):
                             force_document=force_document,
                             supports_streaming=supports_streaming,
                             allow_cache=False,
+                            reply_to=v_url.message.id,
                             attributes=document_attributes,
                             progress_callback=lambda d, t: asyncio.get_event_loop(
                                 ).create_task(
@@ -267,6 +269,7 @@ async def download_video(v_url):
                             force_document=force_document,
                             supports_streaming=supports_streaming,
                             allow_cache=False,
+                            reply_to=v_url.message.id,
                             attributes=document_attributes,
                             progress_callback=lambda d, t: asyncio.get_event_loop(
                                 ).create_task(
