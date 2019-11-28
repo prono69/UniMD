@@ -211,9 +211,6 @@ async def download_video(v_url):
                     try:
                         ytdl_data_name_audio = os.path.basename(single_file)
                         print(ytdl_data_name_audio)
-                        thumb = None
-                        if os.path.exists(thumb_image_path):
-                            thumb = thumb_image_path
                         await v_url.client.send_file(
                             v_url.chat_id,
                             single_file,
@@ -223,7 +220,6 @@ async def download_video(v_url):
                             allow_cache=False,
                             reply_to=v_url.message.id,
                             attributes=document_attributes,
-                            thumb=thumb,
                             progress_callback=lambda d, t: asyncio.get_event_loop(
                                 ).create_task(
                                     progress(d, t, v_url, c_time, "Uploading..",
@@ -267,10 +263,6 @@ async def download_video(v_url):
                         ]
                     try:
                         ytdl_data_name_video = os.path.basename(single_file)
-                        print(ytdl_data_name_video)
-                        thumb = None
-                        if os.path.exists(thumb_image_path):
-                            thumb = thumb_image_path
                         await v_url.client.send_file(
                             v_url.chat_id,
                             single_file,
@@ -278,7 +270,6 @@ async def download_video(v_url):
                             force_document=force_document,
                             supports_streaming=supports_streaming,
                             allow_cache=False,
-                            thumb=thumb,
                             reply_to=v_url.message.id,
                             attributes=document_attributes,
                             progress_callback=lambda d, t: asyncio.get_event_loop(
