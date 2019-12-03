@@ -64,7 +64,7 @@ The core features offered by the custom `TelegramClient` live under the
 directory, with some utilities, enhancements, the `_core` plugin, and the `_inline_bot` plugin.
 
 
-## [@SpEcHlDe](https://telegram.dog/ThankTelegram)
+## [@By_Azade](https://telegram.dog/By_Azade)
 
 - Only two of the environment variables are mandatory.
 - This is because of `telethon.errors.rpc_error_list.ApiIdPublishedFloodError`
