@@ -71,7 +71,7 @@ directory, with some utilities, enhancements, the `_core` plugin, and the `_inli
     - `APP_ID`:   You can get this value from https://my.telegram.org
     - `API_HASH`:   You can get this value from https://my.telegram.org
 - The userbot will work without setting the non-mandatory environment variables.
-- Please report any issues to the support group: [@SpEcHlDe](https://t.me/joinchat/AHAujEjG4FBO-TH-NrVVbg)
+- Please report any issues to the support group: [support group](https://t.me/joinchat/AHAujEjG4FBO-TH-NrVVbg)
 
 
 ## design
