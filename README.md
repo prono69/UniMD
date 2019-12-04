@@ -60,18 +60,18 @@ class Development(Config):
 ## internals
 
 The core features offered by the custom `TelegramClient` live under the
-[`uniborg/`](https://github.com/SpEcHiDe/uniborg/tree/master/uniborg)
+[`uniborg/`](https://github.com/muhammedfurkan/uniborg/tree/master/uniborg)
 directory, with some utilities, enhancements, the `_core` plugin, and the `_inline_bot` plugin.
 
 
-## [@SpEcHlDe](https://telegram.dog/ThankTelegram)
+## [@By_Azade](https://telegram.dog/By_Azade)
 
 - Only two of the environment variables are mandatory.
 - This is because of `telethon.errors.rpc_error_list.ApiIdPublishedFloodError`
     - `APP_ID`:   You can get this value from https://my.telegram.org
     - `API_HASH`:   You can get this value from https://my.telegram.org
 - The userbot will work without setting the non-mandatory environment variables.
-- Please report any issues to the support group: [@SpEcHlDe](https://t.me/joinchat/AHAujEjG4FBO-TH-NrVVbg)
+- Please report any issues to the support group: [support group](https://t.me/joinchat/AHAujEjG4FBO-TH-NrVVbg)
 
 
 ## design
@@ -106,5 +106,4 @@ Check out the already-mentioned [plugins](https://github.com/SpEcHiDe/UniBorg/tr
 
 Thanks to:
 - [lonami](https://lonami.dev) for creating [Telethon](https://github.com/lonamiwebs/Telethon)
-- [![CopyLeft](https://telegra.ph/file/b514ed14d994557a724cb.jpg)](https://telegra.ph/file/fab1017e21c42a5c1e613.mp4 "CopyLeft Credit Video")
 
