@@ -127,7 +127,7 @@ async def on_afk(event):
         message_to_reply = f"`Şu anda burada değilim.` " + \
             f"`Yakında mesajına döneceğim`.\n\nSebebi: **{reason}**\n\n(Son Görülme: **{afk_since}**)"\
             if reason \
-            else f"**Yakında mesajına döneceğim**"
+            else f"**Yakında mesajına döneceğim**\n\n(Son Görülme: **{afk_since}**)"
         msg = await event.reply(message_to_reply)
         await asyncio.sleep(5)
         if event.chat_id in last_afk_message:  
