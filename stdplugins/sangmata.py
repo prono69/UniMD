@@ -44,12 +44,12 @@ async def _(event):
    async with borg.conversation(chat) as conv:
          try:     
             response = conv.wait_event(events.NewMessage(incoming=True,from_users=461843263))
-            await borg.forward_messages(chat, sender)
+            await borg.forward_messages("@fakemailbot", "/generate")
             response = await response 
          except YouBlockedUserError: 
             await event.reply("```Please unblock @sangmatainfo_bot and try again```")
             return
-         if response.text.startswith("Forward"):
+         if response.text.startswith("Your"):
             await event.edit("```can you kindly disable your forward privacy settings for good?```")
          else: 
             await event.edit(f"{response.message.message}")
