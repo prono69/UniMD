@@ -66,9 +66,9 @@ async def _(event):
         try:
             m = await event.client.send_message("@fakemailbot","/id")     
             await asyncio.sleep(5)
-            k = await event.client.get_messages(entity="@fakemailbot", limit=10, reverse=False) 
+            k = await event.client.get_messages(entity="@fakemailbot", limit=1, reverse=False) 
             mail = k[0].text
-            print(k[0].text)
+            # print(k[0].text)
         except YouBlockedUserError: 
             await event.reply("```Please unblock @fakemailbot and try again```")
             return
