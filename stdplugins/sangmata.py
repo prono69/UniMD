@@ -55,6 +55,25 @@ async def _(event):
          return
       await event.edit(mail)
 
+@borg.on(admin_cmd(pattern=("mailid ?(.*)")))
+async def _(event):
+   if event.fwd_from:
+      return 
+   chat = "@fakemailbot"
+   command = "/id"
+   await event.edit("```Fakemail list getting```")
+   async with borg.conversation(chat) as conv:
+        try:
+            m = await event.client.send_message("@fakemailbot","/id")     
+            await asyncio.sleep(5)
+            k = await event.client.get_messages(entity="@fakemailbot", limit=1, reverse=False) 
+            mail = k[0].text
+            print(k[0].text)
+        except YouBlockedUserError: 
+            await event.reply("```Please unblock @fakemailbot and try again```")
+            return
+        await event.edit(mail)
+
 
 @borg.on(admin_cmd(pattern=("ub ?(.*)")))
 async def _(event):
