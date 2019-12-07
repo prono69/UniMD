@@ -154,7 +154,7 @@
   }, {
     "url": "https://github.com/heroku/heroku-buildpack-chromedriver"
   }, {
-    "url": "https://github.com/amivin/aria2-heroku"
+    "url": "https://github.com/muhammedfurkan/aria2-heroku"
     }, {
     "url": "heroku/python"
   }]
