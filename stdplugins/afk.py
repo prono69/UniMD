@@ -106,7 +106,7 @@ async def on_afk(event):
             time %= 60
             seconds = time
             if days == 1:
-                afk_since = "**Yesterday**"
+                afk_since = "**Dün**"
             elif days > 1:
                 if days > 6:
                     date = now + \
@@ -124,7 +124,7 @@ async def on_afk(event):
                 afk_since = f"`{int(seconds)}s` **ago**"
         msg = None
         message_to_reply = f"`Şu anda burada değilim.` " + \
-            f"`Yakında mesajına döneceğim`.\n__Sebebi:__ {reason}" \
+            f"`Yakında mesajına döneceğim`.\n__Sebebi:__ {reason}\n(Son Görülme: {afk_since})"\
             if reason \
             else f"**Important Notice**\n\n[This User Is Ded Forever...](https://telegra.ph//file/a53fa950ff31781d5930a.jpg) "
         msg = await event.reply(message_to_reply)
