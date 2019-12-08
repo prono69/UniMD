@@ -248,29 +248,6 @@ async def download_video(v_url):
                     height = 0
                     if metadata.has("duration"):
                         duration = metadata.get('duration').seconds
-                    # thumb_image_path = await take_screen_shot(
-                    #     single_file,
-                    #     os.path.dirname(os.path.abspath(single_file)),
-                    #     (duration / 2)
-                    # )
-                    # if os.path.exists(thumb_image_path):
-                    #     metadata = extractMetadata(createParser(thumb_image_path))
-                    #     if metadata.has("width"):
-                    #         width = metadata.get("width")
-                    #     if metadata.has("height"):
-                    #         height = metadata.get("height")
-                    #     Image.open(thumb_image_path).convert(
-                    #         "RGB"
-                    #     ).save(thumb_image_path)
-                    #     img = Image.open(thumb_image_path)
-                    #     img.resize((320, height))
-                    #     img.save(thumb_image_path, "JPEG")
-                    # thumb = None
-                    # if os.path.exists(thumb_image_path):
-                    #     thumb = thumb_image_path
-                    if single_file.endswith(".jpg"):
-                        thumb = os.path.dirname(os.path.abspath(single_file)) + single_file
-                        # os.path.dirname(os.path.abspath(dosya)) + dosya
                         document_attributes = [
                             DocumentAttributeVideo(
                                 duration=duration,
@@ -322,37 +299,59 @@ def get_lst_of_files(input_directory, output_lst):
         output_lst.append(current_file_name)
     return output_lst
 
-import asyncio
-import os
-import time
+async def progress(current, total, event, start, type_of_ps, file_name=None):
+    """Generic progress_callback for uploads and downloads."""
+    now = time.time()
+    diff = now - start
+    if round(diff % 10.00) == 0 or current == total:
+        percentage = current * 100 / total
+        speed = current / diff
+        elapsed_time = round(diff) * 1000
+        time_to_completion = round((total - current) / speed) * 1000
+        estimated_total_time = elapsed_time + time_to_completion
+        progress_str = "{0}{1} {2}%\n".format(
+            ''.join(["█" for i in range(math.floor(percentage / 10))]),
+            ''.join(["░" for i in range(10 - math.floor(percentage / 10))]),
+            round(percentage, 2))
+        tmp = progress_str + \
+            "{0} of {1}\nETA: {2}".format(
+                humanbytes(current),
+                humanbytes(total),
+                time_formatter(estimated_total_time)
+            )
+        if file_name:
+            await event.edit("{}\nFile Name: `{}`\n{}".format(
+                type_of_ps, file_name, tmp))
+        else:
+            await event.edit("{}\n{}".format(type_of_ps, tmp))
 
 
-async def take_screen_shot(video_file, output_directory, ttl):
-    # https://stackoverflow.com/a/13891070/4723940
-    out_put_file_name = output_directory + \
-        "/" + str(time.time()) + ".jpg"
-    file_genertor_command = [
-        "ffmpeg",
-        "-ss",
-        str(ttl),
-        "-i",
-        video_file,
-        "-vframes",
-        "1",
-        out_put_file_name
-    ]
-    # width = "90"
-    process = await asyncio.create_subprocess_exec(
-        *file_genertor_command,
-        # stdout must a pipe to be accessible as process.stdout
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE,
-    )
-    # Wait for the subprocess to finish
-    stdout, stderr = await process.communicate()
-    e_response = stderr.decode().strip()
-    t_response = stdout.decode().strip()
-    if os.path.lexists(out_put_file_name):
-        return out_put_file_name
-    else:
-        return None
+def humanbytes(size):
+    """Input size in bytes,
+    outputs in a human readable format"""
+    # https://stackoverflow.com/a/49361727/4723940
+    if not size:
+        return ""
+    # 2 ** 10 = 1024
+    power = 2**10
+    raised_to_pow = 0
+    dict_power_n = {0: "", 1: "Ki", 2: "Mi", 3: "Gi", 4: "Ti"}
+    while size > power:
+        size /= power
+        raised_to_pow += 1
+    return str(round(size, 2)) + " " + dict_power_n[raised_to_pow] + "B"
+
+
+def time_formatter(milliseconds: int) -> str:
+    """Inputs time in milliseconds, to get beautified time,
+    as string"""
+    seconds, milliseconds = divmod(int(milliseconds), 1000)
+    minutes, seconds = divmod(seconds, 60)
+    hours, minutes = divmod(minutes, 60)
+    days, hours = divmod(hours, 24)
+    tmp = ((str(days) + " day(s), ") if days else "") + \
+        ((str(hours) + " hour(s), ") if hours else "") + \
+        ((str(minutes) + " minute(s), ") if minutes else "") + \
+        ((str(seconds) + " second(s), ") if seconds else "") + \
+        ((str(milliseconds) + " millisecond(s), ") if milliseconds else "")
+    return tmp[:-2]

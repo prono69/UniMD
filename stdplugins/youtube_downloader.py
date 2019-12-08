@@ -18,6 +18,12 @@ from youtube_dl.utils import (DownloadError, ContentTooShortError,
 from asyncio import sleep
 from telethon.tl.types import DocumentAttributeAudio
 from uniborg.util import admin_cmd
+import wget
+
+out_folder = Config.TMP_DOWNLOAD_DIRECTORY + "youtubedl/"
+thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
+if not os.path.isdir(out_folder):
+    os.makedirs(out_folder)
 
 async def progress(current, total, event, start, type_of_ps, file_name=None):
     """Generic progress_callback for uploads and downloads."""
@@ -147,6 +153,7 @@ async def download_video(v_url):
         await v_url.edit("`Fetching data, please wait..`")
         with YoutubeDL(opts) as ytdl:
             ytdl_data = ytdl.extract_info(url)
+        filename = sorted(get_lst_of_files(out_folder, []))
     except DownloadError as DE:
         await v_url.edit(f"`{str(DE)}`")
         return
@@ -197,18 +204,36 @@ async def download_video(v_url):
         os.remove(f"{ytdl_data['id']}.mp3")
         await v_url.delete()
     elif video:
-        await v_url.edit(f"`Preparing to upload video:`\
-        \n**{ytdl_data['title']}**\
-        \nby *{ytdl_data['uploader']}*")
-        await v_url.client.send_file(
-            v_url.chat_id,
-            f"{ytdl_data['id']}.mp4",
-            supports_streaming=True,
-            caption=ytdl_data['title'],
-            progress_callback=lambda d, t: asyncio.get_event_loop(
-            ).create_task(
-                progress(d, t, v_url, c_time, "Uploading..",
-                         f"{ytdl_data['title']}.mp4")))
-        os.remove(f"{ytdl_data['id']}.mp4")
-        await v_url.delete()
+        for single_file in filename:
+            image_link = ytdl_data['thumbnail']
+            downloaded_image = wget.download(image_link,out_folder)
+            thumb = downloaded_image
+            await v_url.edit(f"`Preparing to upload video:`\
+            \n**{ytdl_data['title']}**\
+            \nby *{ytdl_data['uploader']}*")
+            await v_url.client.send_file(
+                v_url.chat_id,
+                f"{ytdl_data['id']}.mp4",
+                supports_streaming=True,
+                caption=ytdl_data['title'],
+                thumb=thumb,
+                progress_callback=lambda d, t: asyncio.get_event_loop(
+                ).create_task(
+                    progress(d, t, v_url, c_time, "Uploading..",
+                            f"{ytdl_data['title']}.mp4")))
+            os.remove(f"{ytdl_data['id']}.mp4")
+            await v_url.delete()
+            os.remove(single_file)
+        os.remove(out_folder)
+    
         
+
+
+    def get_lst_of_files(input_directory, output_lst):
+        filesinfolder = os.listdir(input_directory)
+        for file_name in filesinfolder:
+            current_file_name = os.path.join(input_directory, file_name)
+            if os.path.isdir(current_file_name):
+                return get_lst_of_files(current_file_name, output_lst)
+            output_lst.append(current_file_name)
+        return output_lst
