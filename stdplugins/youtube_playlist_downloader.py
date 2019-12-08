@@ -224,7 +224,8 @@ async def download_video(v_url):
                                 w=width,
                                 h=height,
                                 round_message=False,
-                                supports_streaming=True
+                                supports_streaming=True,
+                                thumb=thumb
                             )
                         ]
                     try:
@@ -244,7 +245,7 @@ async def download_video(v_url):
                                 ).create_task(
                                     progress(d, t, v_url, c_time, "Uploading..",
                                     f"{ytdl_data_name_audio}")))
-                        os.remove(thumb)
+                        # os.remove(thumb)
                     except Exception as e:
                         await v_url.client.send_message(
                             v_url.chat_id,
@@ -293,7 +294,8 @@ async def download_video(v_url):
                                 w=width,
                                 h=height,
                                 round_message=False,
-                                supports_streaming=True
+                                supports_streaming=True,
+                                thumb=thumb
                             )
                         ]
                     try:
@@ -312,7 +314,7 @@ async def download_video(v_url):
                                 ).create_task(
                                     progress(d, t, v_url, c_time, "Uploading..",
                                     f"{ytdl_data_name_video}")))
-                        os.remove(thumb)
+                        # os.remove(thumb)
                     except Exception as e:
                         await v_url.client.send_message(
                             v_url.chat_id,
