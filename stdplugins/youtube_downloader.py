@@ -170,8 +170,10 @@ async def download_video(v_url):
         return
     c_time = time.time()
     if song:
-        raster_size = os.path.getsize(f"{out_folder + ytdl_data['id']}.mp3")
-        song_size = size(raster_size)
+        # raster_size = os.path.getsize(f"{out_folder + ytdl_data['id']}.mp3")
+        # song_size = size(raster_size)
+        file_path = f"{out_folder + ytdl_data['id']}.mp3"
+        video_size = file_size(file_path)
         await v_url.edit(f"`Preparing to upload song:`\
         \n**{ytdl_data['title']}**\
         \nby *{ytdl_data['uploader']}*")
@@ -196,8 +198,9 @@ async def download_video(v_url):
             # image_link = ytdl_data['thumbnail']
             # downloaded_image = wget.download(image_link,out_folder)
             # thumb = downloaded_image
-            raster_size = os.path.getsize(f"{out_folder + ytdl_data['id']}.mp4")
-            video_size = size(raster_size)
+            # raster_size = os.path.getsize(f"{out_folder + ytdl_data['id']}.mp4")
+            file_path = f"{out_folder + ytdl_data['id']}.mp4"
+            video_size = file_size(file_path)
             image = f"{ytdl_data['id']}.jpg"
             thumb = f"{out_folder + ytdl_data['id']}.jpg"
             await v_url.edit(f"`Preparing to upload video:`\
@@ -229,3 +232,21 @@ def get_lst_of_files(input_directory, output_lst):
             return get_lst_of_files(current_file_name, output_lst)
         output_lst.append(current_file_name)
     return output_lst
+
+def convert_bytes(num):
+    """
+    this function will convert bytes to MB.... GB... etc
+    """
+    for x in ['bytes', 'KB', 'MB', 'GB', 'TB']:
+        if num < 1024.0:
+            return "%3.1f %s" % (num, x)
+        num /= 1024.0
+
+
+def file_size(file_path):
+    """
+    this function will return the file size
+    """
+    if os.path.isfile(file_path):
+        file_info = os.stat(file_path)
+        return convert_bytes(file_info.st_size)
