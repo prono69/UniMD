@@ -136,7 +136,7 @@ async def download_video(v_url):
                 'key': 'FFmpegVideoConvertor',
                 'preferedformat': 'mp4'
             }],
-            'outtmpl':'%(id)s.mp4',
+            'outtmpl':out_folder+'%(id)s.mp4',
             'logtostderr':False,
             'quiet':True
         }
