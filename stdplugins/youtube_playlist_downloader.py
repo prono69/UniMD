@@ -114,7 +114,6 @@ async def download_video(v_url):
                 'key': 'FFmpegExtractAudio',
                 'preferredcodec': 'mp3',
                 'preferredquality': '320',
-                'key': 'EmbedThumbnail'
             }],
             'outtmpl':out_folder + '%(title)s.%(ext)s',
             'quiet':True,
@@ -138,8 +137,7 @@ async def download_video(v_url):
             'nocheckcertificate':True,
             'postprocessors': [{
                 'key': 'FFmpegVideoConvertor',
-                'preferedformat': 'mp4',
-                'key': 'EmbedThumbnail'}],
+                'preferedformat': 'mp4'},],
             'outtmpl':out_folder + '%(title)s.%(ext)s',
             'logtostderr':False,
             'quiet':True
@@ -179,7 +177,7 @@ async def download_video(v_url):
         await v_url.edit("`There was an error during info extraction.`")
         return
     except Exception as e:
-        # await v_url.edit(f"{str(type(e)): {str(e)}}")
+        await v_url.edit(f"{str(type(e)): {str(e)}}")
         return
     c_time = time.time()
     await v_url.edit("`YouTube Playlist Downloading Processing Now.\nPlease Wait!`")
