@@ -127,17 +127,21 @@ async def download_video(v_url):
             'format':'best',
             'addmetadata':True,
             'noplaylist': False,
-            'getthumbnail':True,
-            'embedthumbnail': True,
+            
+            
             'xattrs':True,
-            'writethumbnail': True,
+            
             'key':'FFmpegMetadata',
             'prefer_ffmpeg':True,
             'geo_bypass':True,
             'nocheckcertificate':True,
             'postprocessors': [{
                 'key': 'FFmpegVideoConvertor',
-                'preferedformat': 'mp4'},],
+                'preferedformat': 'mp4',
+                'getthumbnail':True,
+                'embedthumbnail': True,
+                'writethumbnail': True
+                },],
             'outtmpl':out_folder + '%(title)s.%(ext)s',
             'logtostderr':False,
             'quiet':True
