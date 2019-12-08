@@ -36,3 +36,4 @@ lxml
 remotezip
 patool
 pytube
+wget

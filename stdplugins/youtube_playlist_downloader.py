@@ -26,6 +26,7 @@ from telethon.tl.types import DocumentAttributeAudio
 from uniborg.util import admin_cmd
 from sample_config import Config
 import shutil
+import wget
 
 
 
@@ -280,7 +281,8 @@ async def download_video(v_url):
                             )
                         ]
                     image_link = ytdl_data['thumbnail']
-                    thumb = image_link
+                    downloaded_image = wget.download(image_link,out_folder)
+                    thumb = downloaded_image
                     try:
                         ytdl_data_name_video = os.path.basename(single_file)
                         await v_url.client.send_file(
