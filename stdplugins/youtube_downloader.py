@@ -93,31 +93,21 @@ async def download_video(v_url):
 
     if type == "a":
         opts = {
-            'format':
-            'bestaudio',
-            'addmetadata':
-            True,
-            'key':
-            'FFmpegMetadata',
-            'writethumbnail':
-            True,
-            'prefer_ffmpeg':
-            True,
-            'geo_bypass':
-            True,
-            'nocheckcertificate':
-            True,
+            'format':'bestaudio',
+            'addmetadata':True,
+            'key':'FFmpegMetadata',
+            'writethumbnail':True,
+            'prefer_ffmpeg':True,
+            'geo_bypass':True,
+            'nocheckcertificate':True,
             'postprocessors': [{
                 'key': 'FFmpegExtractAudio',
                 'preferredcodec': 'mp3',
                 'preferredquality': '320',
             }],
-            'outtmpl':
-            '%(id)s.mp3',
-            'quiet':
-            True,
-            'logtostderr':
-            False
+            'outtmpl':out_folder+'%(id)s.mp3',
+            'quiet':True,
+            'logtostderr':False
         }
         video = False
         song = True
@@ -188,7 +178,7 @@ async def download_video(v_url):
         await v_url.client.send_file(
             v_url.chat_id,
             f"{ytdl_data['id']}.mp3",
-            caption=ytdl_data['title'] + song_size,
+            caption=ytdl_data['title'] + "\n" + song_size,
             supports_streaming=True,
             attributes=[
                 DocumentAttributeAudio(duration=int(ytdl_data['duration']),
@@ -217,7 +207,7 @@ async def download_video(v_url):
                 v_url.chat_id,
                 f"{out_folder + ytdl_data['id']}.mp4",
                 supports_streaming=True,
-                caption=ytdl_data['title'] +  video_size,
+                caption=ytdl_data['title'] + "\n" + video_size,
                 thumb=thumb,
                 progress_callback=lambda d, t: asyncio.get_event_loop(
                 ).create_task(
