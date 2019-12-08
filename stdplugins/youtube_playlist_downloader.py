@@ -195,7 +195,7 @@ async def download_video(v_url):
                     metadata = extractMetadata(createParser(single_file))
                     duration = 0
                     width = 0
-                    height = 0
+                    height = 180
                     if metadata.has("duration"):
                         duration = metadata.get('duration').seconds
                     thumb_image_path = await take_screen_shot(
@@ -213,7 +213,7 @@ async def download_video(v_url):
                             "RGB"
                         ).save(thumb_image_path)
                         img = Image.open(thumb_image_path)
-                        img.resize((320, height))
+                        img.resize((180, height))
                         img.save(thumb_image_path, "JPEG")
                     thumb = None
                     if os.path.exists(thumb_image_path):
