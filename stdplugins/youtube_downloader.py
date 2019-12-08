@@ -173,7 +173,7 @@ async def download_video(v_url):
         # raster_size = os.path.getsize(f"{out_folder + ytdl_data['id']}.mp3")
         # song_size = size(raster_size)
         file_path = f"{out_folder + ytdl_data['id']}.mp3"
-        video_size = file_size(file_path)
+        song_size = file_size(file_path)
         await v_url.edit(f"`Preparing to upload song:`\
         \n**{ytdl_data['title']}**\
         \nby *{ytdl_data['uploader']}*")
