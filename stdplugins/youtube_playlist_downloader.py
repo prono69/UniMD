@@ -152,6 +152,7 @@ async def download_video(v_url):
         await v_url.edit("`Fetching playlist data, please wait..`")
         with YoutubeDL(opts) as ytdl:
             ytdl_data = ytdl.extract_info(url)
+            print(ytdl_data['size'])
         filename = sorted(get_lst_of_files(out_folder, []))
     except DownloadError as DE:
         await v_url.edit(f"`{str(DE)}`")
@@ -203,18 +204,18 @@ async def download_video(v_url):
                         os.path.dirname(os.path.abspath(single_file)),
                         (duration / 2)
                     )
-                    if os.path.exists(thumb_image_path):
-                        metadata = extractMetadata(createParser(thumb_image_path))
-                        if metadata.has("width"):
-                            width = metadata.get("width")
-                        if metadata.has("height"):
-                            height = metadata.get("height")
-                        Image.open(thumb_image_path).convert(
-                            "RGB"
-                        ).save(thumb_image_path)
-                        img = Image.open(thumb_image_path)
-                        img.resize((180, height))
-                        img.save(thumb_image_path, "JPEG")
+                    # if os.path.exists(thumb_image_path):
+                    #     metadata = extractMetadata(createParser(thumb_image_path))
+                    #     if metadata.has("width"):
+                    #         width = metadata.get("width")
+                    #     if metadata.has("height"):
+                    #         height = metadata.get("height")
+                    #     Image.open(thumb_image_path).convert(
+                    #         "RGB"
+                    #     ).save(thumb_image_path)
+                    #     img = Image.open(thumb_image_path)
+                    #     img.resize((180, height))
+                    #     img.save(thumb_image_path, "JPEG")
                     thumb = None
                     if os.path.exists(thumb_image_path):
                         thumb= thumb_image_path
