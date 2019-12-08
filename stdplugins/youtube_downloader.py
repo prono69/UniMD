@@ -218,7 +218,7 @@ async def download_video(v_url):
             os.remove(f"{ytdl_data['id']}.mp4")
             await v_url.delete()
             os.remove(single_file)
-        os.remove(out_folder)
+        os.removedirs(out_folder)
     
         
 
