@@ -287,6 +287,8 @@ async def download_video(v_url):
                     thumb = None
                     if os.path.exists(thumb_image_path):
                         thumb: thumb_image_path
+                    if single_file.endswith(".jpg"):
+                        thumb = single_file
                         document_attributes = [
                             DocumentAttributeVideo(
                                 duration=duration,
@@ -304,7 +306,7 @@ async def download_video(v_url):
                             caption=f"`{ytdl_data_name_video}`",
                             force_document=force_document,
                             supports_streaming=supports_streaming,
-                            thumb = single_file.endswith(".jpg"),
+                            thumb = thumb,
                             allow_cache=False,
                             reply_to=v_url.message.id,
                             attributes=document_attributes,
