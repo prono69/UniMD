@@ -114,6 +114,7 @@ async def download_video(v_url):
                 'key': 'FFmpegExtractAudio',
                 'preferredcodec': 'mp3',
                 'preferredquality': '320',
+                'key': 'EmbedThumbnail'
             }],
             'outtmpl':out_folder + '%(title)s.%(ext)s',
             'quiet':True,
@@ -137,7 +138,8 @@ async def download_video(v_url):
             'nocheckcertificate':True,
             'postprocessors': [{
                 'key': 'FFmpegVideoConvertor',
-                'preferedformat': 'mp4'},],
+                'preferedformat': 'mp4',
+                'key': 'EmbedThumbnail'}],
             'outtmpl':out_folder + '%(title)s.%(ext)s',
             'logtostderr':False,
             'quiet':True
