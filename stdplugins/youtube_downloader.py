@@ -129,9 +129,11 @@ async def download_video(v_url):
             True,
             'nocheckcertificate':
             True,
+            'writethumbnail': True,
             'postprocessors': [{
                 'key': 'FFmpegVideoConvertor',
-                'preferedformat': 'mp4'
+                'preferedformat': 'mp4',
+                'key': 'EmbedThumbnail'
             }],
             'outtmpl':
             '%(id)s.mp4',
