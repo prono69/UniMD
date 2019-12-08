@@ -207,7 +207,7 @@ async def download_video(v_url):
             \nby *{ytdl_data['uploader']}*")
             await v_url.client.send_file(
                 v_url.chat_id,
-                f"{ytdl_data['id']}.mp4",
+                f"{out_folder + ytdl_data['id']}.mp4",
                 supports_streaming=True,
                 caption=ytdl_data['title'],
                 thumb=thumb,
