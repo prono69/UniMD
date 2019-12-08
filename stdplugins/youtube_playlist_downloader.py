@@ -127,7 +127,6 @@ async def download_video(v_url):
         opts = {
             'format':'best',
             'addmetadata': True,
-            'addmetadata':True,
             'noplaylist': False,
             'getthumbnail':True,
             'embedthumbnail': True,

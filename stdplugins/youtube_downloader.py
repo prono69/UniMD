@@ -123,28 +123,22 @@ async def download_video(v_url):
 
     elif type == "v":
         opts = {
-            'format':
-            'best',
-            'addmetadata':
-            True,
-            'key':
-            'FFmpegMetadata',
-            'prefer_ffmpeg':
-            True,
-            'geo_bypass':
-            True,
-            'nocheckcertificate':
-            True,
+            'format':'best',
+            'addmetadata':True,
+            'key':'FFmpegMetadata',
+            'prefer_ffmpeg':True,
+            'getthumbnail':True,
+            'embedthumbnail': True,
+            'writethumbnail': True,
+            'geo_bypass':True,
+            'nocheckcertificate':True,
             'postprocessors': [{
                 'key': 'FFmpegVideoConvertor',
                 'preferedformat': 'mp4'
             }],
-            'outtmpl':
-            '%(id)s.mp4',
-            'logtostderr':
-            False,
-            'quiet':
-            True
+            'outtmpl':'%(id)s.mp4',
+            'logtostderr':False,
+            'quiet':True
         }
         song = False
         video = True
