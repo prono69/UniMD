@@ -19,7 +19,7 @@ from asyncio import sleep
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 
 from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
-
+from PIL import Image
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from telethon.tl.types import DocumentAttributeAudio
@@ -136,11 +136,11 @@ async def download_video(v_url):
             'prefer_ffmpeg':True,
             'geo_bypass':True,
             'nocheckcertificate':True,
-            'postprocessors': [{
+            'postprocessors': 
+            [{
                 'key': 'FFmpegVideoConvertor',
                 'preferedformat': 'mp4'},
-                {'key': 'EmbedThumbnail'},
-                {'key': 'FFmpegMetadata'},],
+            ],
             'outtmpl':out_folder + '%(title)s.%(ext)s',
             'logtostderr':False,
             'quiet':True
@@ -198,12 +198,26 @@ async def download_video(v_url):
                     height = 0
                     if metadata.has("duration"):
                         duration = metadata.get('duration').seconds
+                    thumb_image_path = await take_screen_shot(
+                        single_file,
+                        os.path.dirname(os.path.abspath(single_file)),
+                        (duration / 2)
+                    )
                     if os.path.exists(thumb_image_path):
                         metadata = extractMetadata(createParser(thumb_image_path))
                         if metadata.has("width"):
                             width = metadata.get("width")
                         if metadata.has("height"):
                             height = metadata.get("height")
+                        Image.open(thumb_image_path).convert(
+                            "RGB"
+                        ).save(thumb_image_path)
+                        img = Image.open(thumb_image_path)
+                        img.resize((320, height))
+                        img.save(thumb_image_path, "JPEG")
+                    thumb = None
+                    if os.path.exists(thumb_image_path):
+                        thumb: thumb_image_path
                         document_attributes = [
                             DocumentAttributeVideo(
                                 duration=duration,
@@ -222,6 +236,7 @@ async def download_video(v_url):
                             caption=f"`{ytdl_data_name_audio}`",
                             force_document=force_document,
                             supports_streaming=supports_streaming,
+                            thumb=thumb,
                             allow_cache=False,
                             reply_to=v_url.message.id,
                             attributes=document_attributes,
@@ -229,6 +244,7 @@ async def download_video(v_url):
                                 ).create_task(
                                     progress(d, t, v_url, c_time, "Uploading..",
                                     f"{ytdl_data_name_audio}")))
+                        os.remove(thumb)
                     except Exception as e:
                         await v_url.client.send_message(
                             v_url.chat_id,
@@ -251,12 +267,26 @@ async def download_video(v_url):
                     height = 0
                     if metadata.has("duration"):
                         duration = metadata.get('duration').seconds
+                    thumb_image_path = await take_screen_shot(
+                        single_file,
+                        os.path.dirname(os.path.abspath(single_file)),
+                        (duration / 2)
+                    )
                     if os.path.exists(thumb_image_path):
                         metadata = extractMetadata(createParser(thumb_image_path))
                         if metadata.has("width"):
                             width = metadata.get("width")
                         if metadata.has("height"):
                             height = metadata.get("height")
+                        Image.open(thumb_image_path).convert(
+                            "RGB"
+                        ).save(thumb_image_path)
+                        img = Image.open(thumb_image_path)
+                        img.resize((320, height))
+                        img.save(thumb_image_path, "JPEG")
+                    thumb = None
+                    if os.path.exists(thumb_image_path):
+                        thumb: thumb_image_path
                         document_attributes = [
                             DocumentAttributeVideo(
                                 duration=duration,
@@ -274,6 +304,7 @@ async def download_video(v_url):
                             caption=f"`{ytdl_data_name_video}`",
                             force_document=force_document,
                             supports_streaming=supports_streaming,
+                            thumb = thumb,
                             allow_cache=False,
                             reply_to=v_url.message.id,
                             attributes=document_attributes,
@@ -281,6 +312,7 @@ async def download_video(v_url):
                                 ).create_task(
                                     progress(d, t, v_url, c_time, "Uploading..",
                                     f"{ytdl_data_name_video}")))
+                        os.remove(thumb)
                     except Exception as e:
                         await v_url.client.send_message(
                             v_url.chat_id,
@@ -302,3 +334,38 @@ def get_lst_of_files(input_directory, output_lst):
             return get_lst_of_files(current_file_name, output_lst)
         output_lst.append(current_file_name)
     return output_lst
+
+import asyncio
+import os
+import time
+
+
+async def take_screen_shot(video_file, output_directory, ttl):
+    # https://stackoverflow.com/a/13891070/4723940
+    out_put_file_name = output_directory + \
+        "/" + str(time.time()) + ".jpg"
+    file_genertor_command = [
+        "ffmpeg",
+        "-ss",
+        str(ttl),
+        "-i",
+        video_file,
+        "-vframes",
+        "1",
+        out_put_file_name
+    ]
+    # width = "90"
+    process = await asyncio.create_subprocess_exec(
+        *file_genertor_command,
+        # stdout must a pipe to be accessible as process.stdout
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.PIPE,
+    )
+    # Wait for the subprocess to finish
+    stdout, stderr = await process.communicate()
+    e_response = stderr.decode().strip()
+    t_response = stdout.decode().strip()
+    if os.path.lexists(out_put_file_name):
+        return out_put_file_name
+    else:
+        return None
