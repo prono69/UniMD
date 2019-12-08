@@ -37,3 +37,4 @@ remotezip
 patool
 pytube
 wget
+hurry.filesize

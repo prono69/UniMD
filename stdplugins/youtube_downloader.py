@@ -19,6 +19,7 @@ from asyncio import sleep
 from telethon.tl.types import DocumentAttributeAudio
 from uniborg.util import admin_cmd
 import wget
+from hurry.filesize import size
 
 out_folder = Config.TMP_DOWNLOAD_DIRECTORY + "youtubedl/"
 thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
@@ -179,12 +180,15 @@ async def download_video(v_url):
         return
     c_time = time.time()
     if song:
+        raster_size = os.path.getsize(f"{out_folder + ytdl_data['id']}.mp3")
+        song_size = size(raster_size)
         await v_url.edit(f"`Preparing to upload song:`\
         \n**{ytdl_data['title']}**\
         \nby *{ytdl_data['uploader']}*")
         await v_url.client.send_file(
             v_url.chat_id,
             f"{ytdl_data['id']}.mp3",
+            caption=ytdl_data['title'] + song_size,
             supports_streaming=True,
             attributes=[
                 DocumentAttributeAudio(duration=int(ytdl_data['duration']),
@@ -202,6 +206,8 @@ async def download_video(v_url):
             # image_link = ytdl_data['thumbnail']
             # downloaded_image = wget.download(image_link,out_folder)
             # thumb = downloaded_image
+            raster_size = os.path.getsize(f"{out_folder + ytdl_data['id']}.mp4")
+            video_size = size(raster_size)
             image = f"{ytdl_data['id']}.jpg"
             thumb = f"{out_folder + ytdl_data['id']}.jpg"
             await v_url.edit(f"`Preparing to upload video:`\
@@ -211,7 +217,7 @@ async def download_video(v_url):
                 v_url.chat_id,
                 f"{out_folder + ytdl_data['id']}.mp4",
                 supports_streaming=True,
-                caption=ytdl_data['title'],
+                caption=ytdl_data['title'] +  video_size,
                 thumb=thumb,
                 progress_callback=lambda d, t: asyncio.get_event_loop(
                 ).create_task(
