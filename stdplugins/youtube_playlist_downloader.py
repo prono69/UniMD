@@ -203,8 +203,8 @@ async def download_video(v_url):
                         os.path.dirname(os.path.abspath(single_file)),
                         (duration / 2)
                     )
-                    # if os.path.exists(thumb_image_path):
-                    #     metadata = extractMetadata(createParser(thumb_image_path))
+                    if os.path.exists(thumb_image_path):
+                        metadata = extractMetadata(createParser(thumb_image_path))
                         if metadata.has("width"):
                             width = metadata.get("width")
                         if metadata.has("height"):
