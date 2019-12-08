@@ -225,7 +225,6 @@ async def download_video(v_url):
                                 h=height,
                                 round_message=False,
                                 supports_streaming=True,
-                                thumb=thumb
                             )
                         ]
                     try:
@@ -295,7 +294,6 @@ async def download_video(v_url):
                                 h=height,
                                 round_message=False,
                                 supports_streaming=True,
-                                thumb=thumb
                             )
                         ]
                     try:
