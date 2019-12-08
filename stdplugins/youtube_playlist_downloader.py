@@ -139,7 +139,7 @@ async def download_video(v_url):
             'postprocessors': 
             [{
                 'key': 'FFmpegVideoConvertor',
-                'preferedformat': 'mp4'},
+                'preferedformat': 'mp4'},               
             ],
             'outtmpl':out_folder + '%(title)s.%(ext)s',
             'logtostderr':False,
@@ -236,7 +236,7 @@ async def download_video(v_url):
                             caption=f"`{ytdl_data_name_audio}`",
                             force_document=force_document,
                             supports_streaming=supports_streaming,
-                            thumb=thumb,
+                            thumb=out_folder + "https://i1.ytimg.com/vi/{}/mqdefault.jpg".format("%(id)s"),
                             allow_cache=False,
                             reply_to=v_url.message.id,
                             attributes=document_attributes,
@@ -304,7 +304,7 @@ async def download_video(v_url):
                             caption=f"`{ytdl_data_name_video}`",
                             force_document=force_document,
                             supports_streaming=supports_streaming,
-                            thumb = thumb,
+                            thumb = out_folder + "https://i1.ytimg.com/vi/{}/mqdefault.jpg".format("%(id)s"),
                             allow_cache=False,
                             reply_to=v_url.message.id,
                             attributes=document_attributes,
