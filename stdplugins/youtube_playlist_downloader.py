@@ -217,7 +217,9 @@ async def download_video(v_url):
                         img.save(thumb_image_path, "JPEG")
                     thumb = None
                     if os.path.exists(thumb_image_path):
-                        thumb: thumb_image_path
+                        thumb= thumb_image_path
+                    if single_file.endswith(".jpg"):
+                        thumb = os.path.dirname(os.path.abspath(single_file)) + single_file
                         document_attributes = [
                             DocumentAttributeVideo(
                                 duration=duration,
@@ -236,7 +238,7 @@ async def download_video(v_url):
                             caption=f"`{ytdl_data_name_audio}`",
                             force_document=force_document,
                             supports_streaming=supports_streaming,
-                            thumb=out_folder + "https://i1.ytimg.com/vi/{}/mqdefault.jpg".format("%(id)s"),
+                            thumb=thumb,
                             allow_cache=False,
                             reply_to=v_url.message.id,
                             attributes=document_attributes,
@@ -289,7 +291,6 @@ async def download_video(v_url):
                         thumb = thumb_image_path
                     if single_file.endswith(".jpg"):
                         thumb = os.path.dirname(os.path.abspath(single_file)) + single_file
-                        print(thumb)
                         # os.path.dirname(os.path.abspath(dosya)) + dosya
                         document_attributes = [
                             DocumentAttributeVideo(
