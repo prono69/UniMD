@@ -199,9 +199,11 @@ async def download_video(v_url):
         await v_url.delete()
     elif video:
         for single_file in filename:
-            image_link = ytdl_data['thumbnail']
-            downloaded_image = wget.download(image_link,out_folder)
-            thumb = downloaded_image
+            # image_link = ytdl_data['thumbnail']
+            # downloaded_image = wget.download(image_link,out_folder)
+            # thumb = downloaded_image
+            image = f"{ytdl_data['id']}.jpg"
+            thumb = f"{ytdl_data['id']}.jpg"
             await v_url.edit(f"`Preparing to upload video:`\
             \n**{ytdl_data['title']}**\
             \nby *{ytdl_data['uploader']}*")
