@@ -223,11 +223,11 @@ async def download_video(v_url):
         
 
 
-    def get_lst_of_files(input_directory, output_lst):
-        filesinfolder = os.listdir(input_directory)
-        for file_name in filesinfolder:
-            current_file_name = os.path.join(input_directory, file_name)
-            if os.path.isdir(current_file_name):
-                return get_lst_of_files(current_file_name, output_lst)
-            output_lst.append(current_file_name)
-        return output_lst
+def get_lst_of_files(input_directory, output_lst):
+    filesinfolder = os.listdir(input_directory)
+    for file_name in filesinfolder:
+        current_file_name = os.path.join(input_directory, file_name)
+        if os.path.isdir(current_file_name):
+            return get_lst_of_files(current_file_name, output_lst)
+        output_lst.append(current_file_name)
+    return output_lst
