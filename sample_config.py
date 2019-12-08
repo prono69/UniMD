@@ -114,6 +114,7 @@ class Config(object):
     # define the "types" that should be uplaoded as streamable
     TL_VID_STREAM_TYPES = ("MP4", "WEBM")
     TL_MUS_STREAM_TYPES = ("MP3", "WAV", "FLAC")
+    YOUTUBE_API_KEY = os.environ.get("YOUTUBE_API_KEY", None)
 
 class Production(Config):
     LOGGER = False
