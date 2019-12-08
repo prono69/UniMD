@@ -28,7 +28,7 @@ from sample_config import Config
 import shutil
 import wget
 
-
+DELETE_TIMEOUT = 5
 
 out_folder = Config.TMP_DOWNLOAD_DIRECTORY + "youtubedl/"
 thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
@@ -234,6 +234,8 @@ async def download_video(v_url):
                         )
                         continue
                     os.remove(single_file)
+                    await asyncio.sleep(DELETE_TIMEOUT)
+                    await v_url.delete()
         shutil.rmtree(out_folder)
     if video:
         for single_file in filename:
@@ -287,6 +289,8 @@ async def download_video(v_url):
                         )
                         continue
                     os.remove(single_file)
+                    await asyncio.sleep(DELETE_TIMEOUT)
+                    await v_url.delete()
         shutil.rmtree(out_folder)
         
 

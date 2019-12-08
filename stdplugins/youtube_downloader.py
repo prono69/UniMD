@@ -26,6 +26,8 @@ thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
 if not os.path.isdir(out_folder):
     os.makedirs(out_folder)
 
+DELETE_TIMEOUT = 5
+
 async def progress(current, total, event, start, type_of_ps, file_name=None):
     """Generic progress_callback for uploads and downloads."""
     now = time.time()
@@ -192,7 +194,8 @@ async def download_video(v_url):
                 progress(d, t, v_url, c_time, "Uploading..",
                          f"{ytdl_data['title']}.mp3")))
         os.remove(f"{out_folder + ytdl_data['id']}.mp3")
-        await v_url.delete(v_url.chat_id)
+        await asyncio.sleep(DELETE_TIMEOUT)
+        await v_url.delete()
     elif video:
         for single_file in filename:
             # image_link = ytdl_data['thumbnail']
