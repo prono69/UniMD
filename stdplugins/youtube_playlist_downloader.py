@@ -198,8 +198,6 @@ async def download_video(v_url):
                     height = 180
                     if metadata.has("duration"):
                         duration = metadata.get('duration').seconds
-                    if single_file.endswith(".jpg"):
-                        thumb = os.path.dirname(os.path.abspath(single_file)) + single_file
                         document_attributes = [
                             DocumentAttributeVideo(
                                 duration=duration,
@@ -218,7 +216,6 @@ async def download_video(v_url):
                             caption=f"`{ytdl_data_name_audio}`",
                             force_document=force_document,
                             supports_streaming=supports_streaming,
-                            thumb=thumb,
                             allow_cache=False,
                             reply_to=v_url.message.id,
                             attributes=document_attributes,
