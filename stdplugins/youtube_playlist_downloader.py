@@ -152,7 +152,6 @@ async def download_video(v_url):
         await v_url.edit("`Fetching playlist data, please wait..`")
         with YoutubeDL(opts) as ytdl:
             ytdl_data = ytdl.extract_info(url)
-            print(ytdl_data['size'])
         filename = sorted(get_lst_of_files(out_folder, []))
     except DownloadError as DE:
         await v_url.edit(f"`{str(DE)}`")
