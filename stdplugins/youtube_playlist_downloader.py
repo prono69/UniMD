@@ -152,7 +152,7 @@ async def download_video(v_url):
         await v_url.edit("`Fetching playlist data, please wait..`")
         with YoutubeDL(opts) as ytdl:
             ytdl_data = ytdl.extract_info(url)
-            print(ytdl_data['thumbnail'])
+            # print(ytdl_data['thumbnail'])
         filename = sorted(get_lst_of_files(out_folder, []))
     except DownloadError as DE:
         await v_url.edit(f"`{str(DE)}`")
@@ -247,26 +247,26 @@ async def download_video(v_url):
                     height = 0
                     if metadata.has("duration"):
                         duration = metadata.get('duration').seconds
-                    thumb_image_path = await take_screen_shot(
-                        single_file,
-                        os.path.dirname(os.path.abspath(single_file)),
-                        (duration / 2)
-                    )
-                    if os.path.exists(thumb_image_path):
-                        metadata = extractMetadata(createParser(thumb_image_path))
-                        if metadata.has("width"):
-                            width = metadata.get("width")
-                        if metadata.has("height"):
-                            height = metadata.get("height")
-                        Image.open(thumb_image_path).convert(
-                            "RGB"
-                        ).save(thumb_image_path)
-                        img = Image.open(thumb_image_path)
-                        img.resize((320, height))
-                        img.save(thumb_image_path, "JPEG")
-                    thumb = None
-                    if os.path.exists(thumb_image_path):
-                        thumb = thumb_image_path
+                    # thumb_image_path = await take_screen_shot(
+                    #     single_file,
+                    #     os.path.dirname(os.path.abspath(single_file)),
+                    #     (duration / 2)
+                    # )
+                    # if os.path.exists(thumb_image_path):
+                    #     metadata = extractMetadata(createParser(thumb_image_path))
+                    #     if metadata.has("width"):
+                    #         width = metadata.get("width")
+                    #     if metadata.has("height"):
+                    #         height = metadata.get("height")
+                    #     Image.open(thumb_image_path).convert(
+                    #         "RGB"
+                    #     ).save(thumb_image_path)
+                    #     img = Image.open(thumb_image_path)
+                    #     img.resize((320, height))
+                    #     img.save(thumb_image_path, "JPEG")
+                    # thumb = None
+                    # if os.path.exists(thumb_image_path):
+                    #     thumb = thumb_image_path
                     if single_file.endswith(".jpg"):
                         thumb = os.path.dirname(os.path.abspath(single_file)) + single_file
                         # os.path.dirname(os.path.abspath(dosya)) + dosya
@@ -279,6 +279,8 @@ async def download_video(v_url):
                                 supports_streaming=True,
                             )
                         ]
+                    image_link = ytdl_data['thumbnail']
+                    thumb = image_link
                     try:
                         ytdl_data_name_video = os.path.basename(single_file)
                         await v_url.client.send_file(
