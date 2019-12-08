@@ -203,7 +203,7 @@ async def download_video(v_url):
             # downloaded_image = wget.download(image_link,out_folder)
             # thumb = downloaded_image
             image = f"{ytdl_data['id']}.jpg"
-            thumb = f"{ytdl_data['id']}.jpg"
+            thumb = f"{out_folder + ytdl_data['id']}.jpg"
             await v_url.edit(f"`Preparing to upload video:`\
             \n**{ytdl_data['title']}**\
             \nby *{ytdl_data['uploader']}*")
