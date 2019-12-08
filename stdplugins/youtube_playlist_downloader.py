@@ -288,7 +288,8 @@ async def download_video(v_url):
                     if os.path.exists(thumb_image_path):
                         thumb: thumb_image_path
                     if single_file.endswith(".jpg"):
-                        thumb = single_file
+                        thumb = os.path.dirname(os.path.abspath(single_file)) + single_file
+                        # os.path.dirname(os.path.abspath(dosya)) + dosya
                         document_attributes = [
                             DocumentAttributeVideo(
                                 duration=duration,
