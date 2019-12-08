@@ -211,10 +211,12 @@ async def download_video(v_url):
                     try:
                         ytdl_data_name_audio = os.path.basename(single_file)
                         print(ytdl_data_name_audio)
+                        file_path = single_file
+                        song_size = file_size(file_path)
                         await v_url.client.send_file(
                             v_url.chat_id,
                             single_file,
-                            caption=f"`{ytdl_data_name_audio}`",
+                            caption=f"`{ytdl_data_name_audio}`" + "\n" + f"{song_size}",
                             force_document=force_document,
                             supports_streaming=supports_streaming,
                             allow_cache=False,
@@ -259,12 +261,14 @@ async def download_video(v_url):
                     image_link = ytdl_data['thumbnail']
                     downloaded_image = wget.download(image_link,out_folder)
                     thumb = downloaded_image
+                    file_path = single_file
+                    video_size = file_size(file_path)
                     try:
                         ytdl_data_name_video = os.path.basename(single_file)
                         await v_url.client.send_file(
                             v_url.chat_id,
                             single_file,
-                            caption=f"`{ytdl_data_name_video}`",
+                            caption=f"`{ytdl_data_name_video}`" + "\n" + f"{video_size}",
                             force_document=force_document,
                             supports_streaming=supports_streaming,
                             thumb = thumb,
@@ -354,3 +358,21 @@ def time_formatter(milliseconds: int) -> str:
         ((str(seconds) + " second(s), ") if seconds else "") + \
         ((str(milliseconds) + " millisecond(s), ") if milliseconds else "")
     return tmp[:-2]
+
+def convert_bytes(num):
+    """
+    this function will convert bytes to MB.... GB... etc
+    """
+    for x in ['bytes', 'KB', 'MB', 'GB', 'TB']:
+        if num < 1024.0:
+            return "%3.1f %s" % (num, x)
+        num /= 1024.0
+
+
+def file_size(file_path):
+    """
+    this function will return the file size
+    """
+    if os.path.isfile(file_path):
+        file_info = os.stat(file_path)
+        return convert_bytes(file_info.st_size)

@@ -180,7 +180,7 @@ async def download_video(v_url):
         await v_url.client.send_file(
             v_url.chat_id,
             f"{out_folder + ytdl_data['id']}.mp3",
-            caption=ytdl_data['title'] + "\n" + song_size,
+            caption=ytdl_data['title'] + "\n" + f"`{song_size}`",
             supports_streaming=True,
             attributes=[
                 DocumentAttributeAudio(duration=int(ytdl_data['duration']),
@@ -191,8 +191,8 @@ async def download_video(v_url):
             ).create_task(
                 progress(d, t, v_url, c_time, "Uploading..",
                          f"{ytdl_data['title']}.mp3")))
-        os.remove(f"{ytdl_data['id']}.mp3")
-        await v_url.delete()
+        os.remove(f"{out_folder + ytdl_data['id']}.mp3")
+        await v_url.delete(v_url.chat_id)
     elif video:
         for single_file in filename:
             # image_link = ytdl_data['thumbnail']
@@ -210,14 +210,14 @@ async def download_video(v_url):
                 v_url.chat_id,
                 f"{out_folder + ytdl_data['id']}.mp4",
                 supports_streaming=True,
-                caption=ytdl_data['title'] + "\n" + video_size,
+                caption=ytdl_data['title'] + "\n" + f"`{video_size}`",
                 thumb=thumb,
                 progress_callback=lambda d, t: asyncio.get_event_loop(
                 ).create_task(
                     progress(d, t, v_url, c_time, "Uploading..",
                             f"{ytdl_data['title']}.mp4")))
             os.remove(f"{out_folder + ytdl_data['id']}.mp4")
-            await v_url.delete()
+            await v_url.delete(v_url.chat_id)
             os.remove(single_file)
         os.removedirs(out_folder)
     
