@@ -220,7 +220,8 @@ async def download_video(v_url):
                     progress(d, t, v_url, c_time, "Uploading..",
                             f"{ytdl_data['title']}.mp4")))
             os.remove(f"{out_folder + ytdl_data['id']}.mp4")
-            await v_url.delete(v_url.chat_id)
+            await asyncio.sleep(DELETE_TIMEOUT)
+            await v_url.delete()
             os.remove(single_file)
         os.removedirs(out_folder)
     
