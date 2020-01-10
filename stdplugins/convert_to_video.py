@@ -107,6 +107,9 @@ async def _(event):
 
                     ms = (end - start).seconds
                     await mone.edit("Uploaded in {} seconds.".format(ms))
+                    os.remove(thumb_image_path)
+                    await asyncio.sleep(5)
+                    os.remove(downloaded_file_name)
             else:
                 await mone.edit("404: File Not Found")
 
