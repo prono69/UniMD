@@ -55,13 +55,10 @@ async def _(event):
             await borg.send_file(
                 event.chat_id,
                 downloaded_file_name,
-                caption=caption_rts,
                 force_document=force_document,
                 supports_streaming=True,
                 allow_cache=False,
-                reply_to=event.message.id,
-                thumb=thumb,
-                attributes=document_attributes,
+                reply_to=event.message.id
             )
 
     #         start = datetime.now()
