@@ -25,10 +25,7 @@ async def convert_to_video(event):
         download_location = Config.TMP_DOWNLOAD_DIRECTORY 
         reply_message = await event.get_reply_message()
         mone = await event.edit("Processing ...")
-        a = await borg.send_message(
-            reply_message,
-            "converting started",
-        )
+        a = mone.edit("converting started please wait for a while!")
         c_time = time.time()
         the_real_download_location = await borg.download_media(
             reply_message,
