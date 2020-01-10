@@ -112,6 +112,9 @@ async def ANTI_SPAMBOT(welcm):
                     elif "bit.ly/" in message.text:
                         reason = "Match on `bit.ly` URLs"
                         spambot = True
+                    elif "5万电报微信群推广群发广告、批量私聊电报指定群成员、非小号Mytoken关注惊爆价，拉币圈指定群活粉  、twitter/facebook/potato/Linkedin/微博/YouTube/增粉评论转发点赞、国内外KYC身份材料出售、电报群/微信群增粉拉人 、交易所APP实名注册认证 、专业中英文客服 、水军群活跃聊天 、交易所实名账号、推特脸书带粉丝账号、出售实名微信号👉咨询   @yx7779" in message.text:
+                        reason = "Chinese spammer"
+                        spambot = True
                     else:
                         if check_user.first_name in ("Bitmex", "Promotion",
                                                      "Information", "Dex",
