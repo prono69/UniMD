@@ -94,6 +94,8 @@ async def _(event):
             await event.edit("Downloaded in {} seconds. Uploaded in {} seconds.".format(ms_dl, ms_two))
         else:
             await event.edit("File Not Found {}".format(input_str))
+            await asyncio.sleep(5)
+            await event.delete()
     else:
         await event.edit("Incorrect URL\n {}".format(input_str))
 
