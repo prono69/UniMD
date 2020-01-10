@@ -62,7 +62,7 @@ async def _(event):
                 if os.path.exists(thumb_image_path):
                     thumb = thumb_image_path   
                 else:
-                    thumb = get_video_thumb(downloaded_file_name, thumb_image_path)
+                    thumb = get_video_thumb(downloaded_file_name, thumb_image_path,width=90)
                 start = datetime.now()
                 metadata = extractMetadata(createParser(downloaded_file_name))
                 duration = 0
@@ -104,6 +104,7 @@ async def _(event):
                 else:
                     end = datetime.now()
                     # os.remove(input_str)
+
                     ms = (end - start).seconds
                     await mone.edit("Uploaded in {} seconds.".format(ms))
             else:
