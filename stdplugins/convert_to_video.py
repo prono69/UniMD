@@ -20,7 +20,7 @@ from sample_config import Config
 from uniborg.util import *
 from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
 
-thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
+thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "thumb_image.jpg"
 
 @borg.on(admin_cmd(pattern="converttovideo ?(.*)"))
 async def _(event):
