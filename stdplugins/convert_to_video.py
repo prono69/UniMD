@@ -39,11 +39,7 @@ async def convert_to_video(event):
             )
         )
         if the_real_download_location is not None:
-            await borg.send_message
-            (
-                reply_message,
-                "converting error download location is none",
-            )
+            await event.edit("converting error download location is none")
             # don't care about the extension
             await mone.edit("preparing to upload")
             logger.info(the_real_download_location)
