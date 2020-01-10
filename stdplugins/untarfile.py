@@ -20,10 +20,7 @@ from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from sample_config import Config
 
-extracted = Config.TMP_DOWNLOAD_DIRECTORY + "extracted/"
-thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
-if not os.path.isdir(extracted):
-    os.makedirs(extracted)
+
 
 
 @borg.on(admin_cmd(pattern="untar"))
@@ -33,6 +30,10 @@ async def _(event):
     mone = await event.edit("Processing ...")
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
+    extracted = Config.TMP_DOWNLOAD_DIRECTORY + "extracted/"
+    thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
+    if not os.path.isdir(extracted):
+        os.makedirs(extracted)
     if event.reply_to_msg_id:
         start = datetime.now()
         reply_message = await event.get_reply_message()
