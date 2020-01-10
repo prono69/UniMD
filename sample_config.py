@@ -115,6 +115,9 @@ class Config(object):
     TL_VID_STREAM_TYPES = ("MKV", "MP4", "WEBM")
     TL_MUS_STREAM_TYPES = ("MP3", "WAV", "FLAC")
     YOUTUBE_API_KEY = os.environ.get("YOUTUBE_API_KEY", None)
+    # Anti Spambot Config
+    ANTI_SPAMBOT = os.environ.get("ANTI_SPAMBOT", None)
+    ANTI_SPAMBOT_SHOUT = os.environ.get("ANTI_SPAMBOT_SHOUT", None)
 
 class Production(Config):
     LOGGER = False
