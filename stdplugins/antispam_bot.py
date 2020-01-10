@@ -33,7 +33,7 @@ async def ANTI_SPAMBOT(welcm):
                 except AttributeError:
                     return
 
-            async for admin in bot.iter_participants(
+            async for admin in borg.iter_participants(
                     welcm.chat_id, filter=ChannelParticipantsAdmins):
                 if admin.id == adder:
                     ignore = True
