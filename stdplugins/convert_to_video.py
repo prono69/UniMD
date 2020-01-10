@@ -62,7 +62,7 @@ async def _(event):
                 if os.path.exists(thumb_image_path):
                     thumb = thumb_image_path   
                 else:
-                    thumb = get_video_thumb(file_name, thumb_image_path)
+                    thumb = get_video_thumb(downloaded_file_name, thumb_image_path)
                 start = datetime.now()
                 metadata = extractMetadata(createParser(downloaded_file_name))
                 duration = 0
