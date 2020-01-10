@@ -54,7 +54,7 @@ async def _(event):
         # if os.path.exists(input_str):
             thumb = None
             if os.path.exists(Config.TMP_DOWNLOAD_DIRECTORY):
-                if not downloaded_file_name.endswith((".mkv", ".mp4", ".mp3", ".flac")):
+                if not downloaded_file_name.endswith((".mkv", ".mp4", ".mp3", ".flac",".webm",".ts",".mov")):
                     await mone.edit(
                         "**Supported Formats**: MKV, MP4, MP3, FLAC"
                     )
