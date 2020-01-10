@@ -29,7 +29,7 @@ async def _(event):
     mone = await event.edit("Processing ...")
     input_str = event.pattern_match.group(1)
     thumb = None
-    thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + str(time.time()) + ".jpg"
+    thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "thumb_image.jpg"
     logger.info(thumb_image_path)
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
