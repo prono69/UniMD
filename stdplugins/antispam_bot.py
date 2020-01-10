@@ -12,6 +12,8 @@ from telethon.events import ChatAction
 from telethon.tl.types import ChannelParticipantsAdmins, Message
 from sample_config import Config
 from uniborg.util import *
+from telethon import TelegramClient
+from telethon.sessions import StringSession
 # from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP, ANTI_SPAMBOT, ANTI_SPAMBOT_SHOUT, bot
 
 if Config.HU_STRING_SESSION:

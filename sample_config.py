@@ -3,14 +3,7 @@
 # Create a new config.py file in same dir and import, then extend this class.
 import os
 
-from sys import version_info
-from logging import basicConfig, getLogger, INFO, DEBUG
-from distutils.util import strtobool as sb
 
-
-from requests import get
-from telethon import TelegramClient
-from telethon.sessions import StringSession
 
 
 class Config(object):
