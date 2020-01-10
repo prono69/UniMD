@@ -55,7 +55,6 @@ async def _(event):
             await borg.send_file(
                 event.chat_id,
                 downloaded_file_name,
-                force_document=force_document,
                 supports_streaming=True,
                 allow_cache=False,
                 reply_to=event.message.id
