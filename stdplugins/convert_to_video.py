@@ -129,11 +129,10 @@ def get_video_thumb(file, output=None, width=90):
         return output
 
 def convert_to_streaming_format(input_file,output_file):
-    output_file_last = Config.TMP_DOWNLOAD_DIRECTORY + ".mp4"
     p = subprocess.Popen([
-        'ffmpeg','-i', input_file , output_file_last
+        'ffmpeg','-i', input_file , output_file
     ],stdout=subprocess.PIPE,stderr=subprocess.DEVNULL)
-    return output_file_last
+    return p
 
 
 
