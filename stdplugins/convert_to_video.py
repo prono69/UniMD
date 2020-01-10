@@ -56,7 +56,7 @@ async def _(event):
             if os.path.exists(Config.TMP_DOWNLOAD_DIRECTORY):
                 if not downloaded_file_name.endswith(Config.TL_VID_STREAM_TYPES):
                     await mone.edit(
-                        "**Supported Formats**: MP4, WEBM"
+                        "**Supported Formats**: MKV, MP4, WEBM"
                     )
                     return False
                 if os.path.exists(thumb_image_path):
