@@ -49,19 +49,9 @@ async def convert_to_video(event):
             width = 0
             height = 0
             duration = 0
-            thumb = None
-            if os.path.exists(thumb_image_path):
-                thumb = thumb_image_path
-            if os.path.exists(thumb_image_path):
-                metadata = extractMetadata(createParser(the_real_download_location))
-                if metadata.has("width"):
-                   width = metadata.get("width")
-                if metadata.has("height"):
-                   height = metadata.get("height")  
-            # metadata = extractMetadata(createParser(the_real_download_location))
-            # if metadata.has("duration"):
-            #     duration = metadata.get('duration').seconds
-            thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY  + str(event.reply_to_msg_id) + ".jpg"
+            metadata = extractMetadata(createParser(the_real_download_location))
+            if metadata.has("duration"):
+                duration = metadata.get('duration').seconds
             if not os.path.exists(thumb_image_path):
                 thumb_image_path = None
             else:
