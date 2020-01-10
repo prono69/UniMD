@@ -51,11 +51,10 @@ async def _(event):
             end = datetime.now()
             ms = (end - start).seconds
             await mone.edit("Downloaded now preparing to streaming upload")
-            converted_file = convert_to_streaming_format(downloaded_file_name,Config.TMP_DOWNLOAD_DIRECTORY)
         # if os.path.exists(input_str):
             thumb = None
             if os.path.exists(Config.TMP_DOWNLOAD_DIRECTORY):
-                if not converted_file.endswith((".mkv", ".mp4", ".mp3", ".flac",".webm",".ts",".mov")):
+                if not downloaded_file_name.endswith((".mkv", ".mp4", ".mp3", ".flac",".webm",".ts",".mov")):
                     await mone.edit(
                         "**Supported Formats**: MKV, MP4, MP3, FLAC"
                     )
@@ -63,9 +62,13 @@ async def _(event):
                 if os.path.exists(thumb_image_path):
                     thumb = thumb_image_path   
                 else:
-                    thumb = get_video_thumb(converted_file, thumb_image_path)
+                    thumb = thumb_image_path = await take_screen_shot(
+                        local_file_name,
+                        os.path.dirname(os.path.abspath(local_file_name)),
+                        (duration / 2)
+                    )
                 start = datetime.now()
-                metadata = extractMetadata(createParser(converted_file))
+                metadata = extractMetadata(createParser(downloaded_file_name))
                 duration = 0
                 width = 0
                 height = 0
@@ -81,7 +84,7 @@ async def _(event):
                 try:
                     await borg.send_file(
                         event.chat_id,
-                        converted_file,
+                        downloaded_file_name,
                         thumb=thumb,
                         caption=input_str,
                         force_document=False,
@@ -128,11 +131,39 @@ def get_video_thumb(file, output=None, width=90):
     if not p.returncode and os.path.lexists(file):
         return output
 
-def convert_to_streaming_format(input_file,output_file):
-    p = subprocess.Popen([
-        'ffmpeg','-i', input_file , output_file
-    ],stdout=subprocess.PIPE,stderr=subprocess.DEVNULL)
-    return p
+async def take_screen_shot(video_file, output_directory, ttl):
+    # https://stackoverflow.com/a/13891070/4723940
+    out_put_file_name = os.path.join(
+        output_directory,
+        str(time.time()) + ".jpg"
+    )
+    if video_file.upper().endswith(("MKV", "MP4", "WEBM")):
+        file_genertor_command = [
+            "ffmpeg",
+            "-ss",
+            str(ttl),
+            "-i",
+            video_file,
+            "-vframes",
+            "1",
+            out_put_file_name
+        ]
+        # width = "90"
+        process = await asyncio.create_subprocess_exec(
+            *file_genertor_command,
+            # stdout must a pipe to be accessible as process.stdout
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+        )
+        # Wait for the subprocess to finish
+        stdout, stderr = await process.communicate()
+        e_response = stderr.decode().strip()
+        t_response = stdout.decode().strip()
+    #
+    if os.path.lexists(out_put_file_name):
+        return out_put_file_name
+    else:
+        return None
 
 
 
