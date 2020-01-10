@@ -104,8 +104,8 @@ async def _(event):
                     )
                     # some media were having some issues
                     continue
-                os.remove(single_file)
-        os.remove(downloaded_file_name)
+                # os.remove(single_file)
+        # os.remove(downloaded_file_name)
 # async def _(event):
 #     if event.fwd_from:
 #         return
