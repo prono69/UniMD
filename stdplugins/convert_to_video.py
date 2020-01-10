@@ -29,7 +29,11 @@ async def _(event):
     mone = await event.edit("Processing ...")
     input_str = event.pattern_match.group(1)
     thumb = None
-    thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "thumb_image.jpg"
+    # thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + str(time.time())".jpg"
+    jpgRegex = re.compile(r".+\.jpg")
+    list1 = jpgRegex.findall(Config.TMP_DOWNLOAD_DIRECTORY)
+    thumb_image_path = list1[0]
+    logger.info(thumb_image_path)
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
     if os.path.exists(thumb_image_path):
@@ -120,9 +124,9 @@ async def _(event):
 
                     ms = (end - start).seconds
                     await mone.edit("Uploaded in {} seconds.".format(ms))
-                    os.remove(thumb_image_path)
-                    await asyncio.sleep(5)
-                    os.remove(downloaded_file_name)
+                os.remove(thumb_image_path)
+                await asyncio.sleep(5)
+                os.remove(downloaded_file_name)
             else:
                 await mone.edit("404: File Not Found")
 
