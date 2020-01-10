@@ -28,8 +28,10 @@ async def _(event):
         return
     mone = await event.edit("Processing ...")
     input_str = event.pattern_match.group(1)
-    thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + str(time.time()) + ".jpg"
+    thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + str(event) + ".jpg"
     logger.info(thumb_image_path)
+    logger.info(str(event))
+    logger.info(str(time.time()))
     # thumb_image_path = os.path.join(
     #     Config.TMP_DOWNLOAD_DIRECTORY,
     #     +,
