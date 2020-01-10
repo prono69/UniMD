@@ -18,12 +18,14 @@ from telethon.sessions import StringSession
 
 if Config.HU_STRING_SESSION:
     # pylint: disable=invalid-name
-    bot = TelegramClient(StringSession(Config.HU_STRING_SESSION),
-                         API_ID,
-                         API_HASH,
-                         connection_retries=None,
-                         auto_reconnect=False,
-                         lang_code='en')
+    bot = TelegramClient(StringSession(
+        Config.HU_STRING_SESSION),
+        Config.API_ID,
+        Config.API_HASH,
+        connection_retries=None,
+        auto_reconnect=False,
+        lang_code='en'
+    )
 
 
 
