@@ -11,6 +11,7 @@ from requests import get
 from telethon.events import ChatAction
 from telethon.tl.types import ChannelParticipantsAdmins, Message
 from sample_config import Config
+from uniborg.util import *
 # from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP, ANTI_SPAMBOT, ANTI_SPAMBOT_SHOUT, bot
 
 
@@ -56,7 +57,7 @@ async def ANTI_SPAMBOT(welcm):
                 return
 
             for user_id in users:
-                async for message in bot.iter_messages(welcm.chat_id,
+                async for message in borg.iter_messages(welcm.chat_id,
                                                        from_user=user_id):
 
                     correct_type = isinstance(message, Message)
@@ -95,8 +96,8 @@ async def ANTI_SPAMBOT(welcm):
 
                     if data and data['ok']:
                         reason = f"[Banned by Combot Anti Spam](https://combot.org/cas/query?u={check_user.id})"
-                        spambot = True
-                    elif "t.cn/" in message.text:
+                        spambott.cn = True
+                    elif "/" in message.text:
                         reason = "Match on `t.cn` URLs"
                         spambot = True
                     elif "t.me/joinchat" in message.text:
