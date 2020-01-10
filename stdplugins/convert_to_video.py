@@ -23,73 +23,132 @@ from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
 thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
 
 @borg.on(admin_cmd(pattern="converttovideo ?(.*)"))
-async def convert_to_video(event):
+async def _(event):
     if event.fwd_from:
         return
-    if event.reply_to_msg_id is not None:
-        download_location = Config.TMP_DOWNLOAD_DIRECTORY 
+    mone = await event.edit("Processing ...")
+    input_str = event.pattern_match.group(1)
+    thumb = None
+    if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
+        os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
+    if os.path.exists(thumb_image_path):
+        thumb = thumb_image_path
+    if event.reply_to_msg_id:
+        start = datetime.now()
         reply_message = await event.get_reply_message()
-        mone = await event.edit("Processing ...")
-        a = mone.edit("converting started please wait for a while!")
-        c_time = time.time()
-        the_real_download_location = await borg.download_media(
-            reply_message,
-            Config.TMP_DOWNLOAD_DIRECTORY,
-            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(d, t, mone, c_time, "trying to download")
-            )
-        )
-        if the_real_download_location is not None:
-            await event.edit("converting error download location is none")
-            # don't care about the extension
-            await mone.edit("preparing to upload")
-            logger.info(the_real_download_location)
-            # get the correct width, height, and duration for videos greater than 10MB
-            # ref: message from @BotSupport
-            width = 0
-            height = 0
-            duration = 0
-            metadata = extractMetadata(createParser(the_real_download_location))
-            if metadata.has("duration"):
-                duration = metadata.get('duration').seconds
-            if not os.path.exists(thumb_image_path):
-                thumb_image_path = None
-            else:
-                metadata = extractMetadata(createParser(thumb_image_path))
-                if metadata.has("width"):
-                    width = metadata.get("width")
-                if metadata.has("height"):
-                    height = metadata.get("height")
-                # get the correct width, height, and duration for videos greater than 10MB
-                # resize image
-                # ref: https://t.me/PyrogramChat/44663
-                # https://stackoverflow.com/a/21669827/4723940
-                Image.open(thumb_image_path).convert("RGB").save(thumb_image_path)
-                img = Image.open(thumb_image_path)
-                # https://stackoverflow.com/a/37631799/4723940
-                # img.thumbnail((90, 90))
-                img.resize((90, height))
-                img.save(thumb_image_path, "JPEG")
-                # https://pillow.readthedocs.io/en/3.1.x/reference/Image.html#create-thumbnails
-            # try to upload file
+        try:
             c_time = time.time()
-            await borg.send_file(
-                chat_id=event.chat.id,
-                video=the_real_download_location,
-                caption=description,
-                duration=duration,
-                width=width,
-                height=height,
-                supports_streaming=True,
-                # reply_markup=reply_markup,
-                thumb=thumb_image_path,
-                reply_to_message_id=event.reply_to_msg_id,
+            downloaded_file_name = await borg.download_media(
+                reply_message,
+                Config.TMP_DOWNLOAD_DIRECTORY,
+                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                    progress(d, t, mone, c_time, "trying to download")
+                )
             )
-            try:
-                os.remove(the_real_download_location)
-                os.remove(thumb_image_path)
-            except:
-                pass
-            await mone.edit("uploaded successfully")
-    else:
-        await mone.edit("send video")
+        except Exception as e:  # pylint:disable=C0103,W0703
+            await mone.edit(str(e))
+        else:
+            end = datetime.now()
+            ms = (end - start).seconds
+            await mone.edit("Downloaded now preparing to streaming upload")
+        if os.path.exists(input_str):
+            start = datetime.now()
+            lst_of_files = sorted(get_lst_of_files(input_str, []))
+            logger.info(lst_of_files)
+            u = 0
+            await event.edit(
+                "Found {} files. ".format(len(lst_of_files)) + \
+                "Uploading will start soon. " + \
+                "Please wait!"
+            )
+            thumb = None
+            if os.path.exists(thumb_image_path):
+                thumb = thumb_image_path
+            for single_file in lst_of_files:
+                if os.path.exists(single_file):
+                    caption_rts = os.path.basename(single_file)
+                    force_document = True
+                    supports_streaming = False
+                    document_attributes = []
+                    width = 0
+                    height = 0
+                    if os.path.exists(thumb_image_path):
+                        metadata = extractMetadata(createParser(thumb_image_path))
+                        if metadata.has("width"):
+                            width = metadata.get("width")
+                        if metadata.has("height"):
+                            height = metadata.get("height")
+                    if single_file.upper().endswith(Config.TL_VID_STREAM_TYPES):
+                        metadata = extractMetadata(createParser(single_file))
+                        duration = 0
+                        if metadata.has("duration"):
+                            duration = metadata.get('duration').seconds
+                        document_attributes = [
+                            cumentAttributeVideo(
+                                duration=duration,
+                                w=width,  
+                                h=height,
+                                round_message=False,
+                                supports_streaming=True
+                            )
+                        ]
+                        supports_streaming = True
+                        force_document = False
+                    if single_file.upper().endswith(Config.TL_MUS_STREAM_TYPES):
+                        metadata = extractMetadata(createParser(single_file))
+                        duration = 0
+                        title = ""
+                        artist = ""
+                        if metadata.has("duration"):
+                            duration = metadata.get('duration').seconds
+                        if metadata.has("title"):
+                            title = metadata.get("title")
+                        if metadata.has("artist"):
+                            artist = metadata.get("artist")
+                        document_attributes = [
+                            DocumentAttributeAudio(
+                                duration=duration,
+                                voice=False,
+                                title=title,
+                                performer=artist,
+                                waveform=None
+                            )
+                        ]
+                        supports_streaming = True
+                        force_document = False
+                    try:
+                        await borg.send_file(
+                            event.chat_id,
+                            single_file,
+                            caption=caption_rts,
+                            force_document=force_document,
+                            supports_streaming=supports_streaming,
+                            allow_cache=False,
+                            reply_to=event.message.id,
+                            thumb=thumb,
+                            attributes=document_attributes,
+                        )
+                    except Exception as e:
+                        await borg.send_message(
+                            event.chat_id,
+                            "{} caused `{}`".format(caption_rts, str(e)),
+                            reply_to=event.message.id
+                        )
+                        continue
+                    os.remove(single_file)
+                    u = u + 1
+                    await asyncio.sleep(5)
+            end = datetime.now()
+            ms = (end - start).seconds
+            await event.edit("Uploaded {} files in {} seconds.".format(u, ms))
+        else:
+            await event.edit("404: Directory Not Found")
+
+def get_lst_of_files(input_directory, output_lst):
+    filesinfolder = os.listdir(input_directory)
+    for file_name in filesinfolder:
+        current_file_name = os.path.join(input_directory, file_name)
+        if os.path.isdir(current_file_name):
+            return get_lst_of_files(current_file_name, output_lst)
+        output_lst.append(current_file_name)
+    return output_lst
