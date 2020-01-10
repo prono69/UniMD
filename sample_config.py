@@ -112,7 +112,7 @@ class Config(object):
     if PM_LOGGR_BOT_API_ID:
         PM_LOGGR_BOT_API_ID = int(PM_LOGGR_BOT_API_ID)
     # define the "types" that should be uplaoded as streamable
-    TL_VID_STREAM_TYPES = ("MP4", "WEBM")
+    TL_VID_STREAM_TYPES = ("MKV", "MP4", "WEBM")
     TL_MUS_STREAM_TYPES = ("MP3", "WAV", "FLAC")
     YOUTUBE_API_KEY = os.environ.get("YOUTUBE_API_KEY", None)
 
