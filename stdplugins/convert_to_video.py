@@ -59,8 +59,8 @@ async def _(event):
                         "**Supported Formats**: MKV, MP4, MP3, FLAC"
                     )
                     return False
-                if local_file_name.upper().endswith(("MKV", "MP4", "WEBM")):
-                    metadata = extractMetadata(createParser(local_file_name))
+                if downloaded_file_name.upper().endswith(("MKV", "MP4", "WEBM")):
+                    metadata = extractMetadata(createParser(downloaded_file_name))
                     duration = 0
                     if metadata.has("duration"):
                         duration = metadata.get('duration').seconds
