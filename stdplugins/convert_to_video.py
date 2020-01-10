@@ -80,7 +80,7 @@ async def _(event):
                 try:
                     await borg.send_file(
                         event.chat_id,
-                        file_name,
+                        downloaded_file_name,
                         thumb=thumb,
                         caption=input_str,
                         force_document=False,
@@ -103,7 +103,7 @@ async def _(event):
                     await mone.edit(str(e))
                 else:
                     end = datetime.now()
-                    os.remove(input_str)
+                    # os.remove(input_str)
                     ms = (end - start).seconds
                     await mone.edit("Uploaded in {} seconds.".format(ms))
             else:
