@@ -20,7 +20,7 @@ if Config.HU_STRING_SESSION:
     # pylint: disable=invalid-name
     bot = TelegramClient(StringSession(
         Config.HU_STRING_SESSION),
-        Config.API_ID,
+        Config.APP_ID,
         Config.API_HASH,
         connection_retries=None,
         auto_reconnect=False,
