@@ -21,7 +21,7 @@ from uniborg.util import *
 async def convert_to_video(event):
     if event.fwd_from:
         return
-    if event.reply_to_message is not None:
+    if event.reply_to_msg_id is not None:
         download_location = Config.TMP_DOWNLOAD_DIRECTORY 
         reply_message = await event.get_reply_message()
         mone = await event.edit("Processing ...")
@@ -54,7 +54,7 @@ async def convert_to_video(event):
             metadata = extractMetadata(createParser(the_real_download_location))
             if metadata.has("duration"):
                 duration = metadata.get('duration').seconds
-            thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY  + str(event.reply_to_message) + ".jpg"
+            thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY  + str(event.reply_to_msg_id) + ".jpg"
             if not os.path.exists(thumb_image_path):
                 thumb_image_path = None
             else:
@@ -86,7 +86,7 @@ async def convert_to_video(event):
                 supports_streaming=True,
                 # reply_markup=reply_markup,
                 thumb=thumb_image_path,
-                reply_to_message_id=event.reply_to_message.message_id,
+                reply_to_message_id=event.reply_to_msg_id,
             )
             try:
                 os.remove(the_real_download_location)
