@@ -60,7 +60,6 @@ async def _(event):
                 allow_cache=False,
                 reply_to=event.message.id
             )
-
     #         start = datetime.now()
     #         lst_of_files = sorted(get_lst_of_files(Config.TMP_DOWNLOAD_DIRECTORY, []))
     #         logger.info(lst_of_files)
