@@ -15,7 +15,7 @@ from hachoir.parser import createParser
 from PIL import Image
 from sample_config import Config
 from uniborg.util import *
-
+from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
 
 @borg.on(admin_cmd(pattern="converttovideo ?(.*)"))
 async def convert_to_video(event):
