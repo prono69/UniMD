@@ -192,7 +192,17 @@ async def _(event):
 
 
 
-
+def get_video_thumb(file, output=None, width=90):
+    metadata = extractMetadata(createParser(file))
+    p = subprocess.Popen([
+        'ffmpeg', '-i', file,
+        '-ss', str(int((0, metadata.get('duration').seconds)[metadata.has('duration')] / 2)),
+        '-filter:v', 'scale={}:-1'.format(width),
+        '-vframes', '1',
+        output,
+    ], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+    if not p.returncode and os.path.lexists(file):
+        return output
 
 
 
