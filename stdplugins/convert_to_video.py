@@ -20,7 +20,7 @@ from sample_config import Config
 from uniborg.util import *
 from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
 
-thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "thumb_image.jpg"
+
 
 @borg.on(admin_cmd(pattern="converttovideo ?(.*)"))
 async def _(event):
@@ -28,6 +28,14 @@ async def _(event):
         return
     mone = await event.edit("Processing ...")
     input_str = event.pattern_match.group(1)
+    # thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + str(time.time()) + ".jpg"
+    # LOGGER.info(thumb_image_path)
+    thumb_image_path = os.path.join(
+        Config.DOWNLOAD_LOCATION,
+        +
+        str(time.time()) + ".jpg"
+    )
+    LOGGER.info(thumb_image_path)
     thumb = None
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
