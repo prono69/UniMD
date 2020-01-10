@@ -62,9 +62,9 @@ async def _(event):
                 if os.path.exists(thumb_image_path):
                     thumb = thumb_image_path   
                 else:
-                    thumb = thumb_image_path = await take_screen_shot(
-                        local_file_name,
-                        os.path.dirname(os.path.abspath(local_file_name)),
+                    thumb =  await take_screen_shot(
+                        downloaded_file_name,
+                        os.path.dirname(os.path.abspath(downloaded_file_name)),
                         (duration / 2)
                     )
                 start = datetime.now()
