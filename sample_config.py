@@ -118,6 +118,24 @@ class Config(object):
     # Anti Spambot Config
     ANTI_SPAMBOT = os.environ.get("ANTI_SPAMBOT", None)
     ANTI_SPAMBOT_SHOUT = os.environ.get("ANTI_SPAMBOT_SHOUT", None)
+    # 'bot' variable
+if HU_STRING_SESSION:
+    # pylint: disable=invalid-name
+    bot = TelegramClient(StringSession(HU_STRING_SESSION),
+                         API_ID,
+                         API_HASH,
+                         connection_retries=None,
+                         auto_reconnect=False,
+                         lang_code='en')
+else:
+    # pylint: disable=invalid-name
+    bot = TelegramClient("userbot",
+                         API_ID,
+                         API_HASH,
+                         connection_retries=None,
+                         auto_reconnect=False,
+                         lang_code='en')
+
 
 class Production(Config):
     LOGGER = False
