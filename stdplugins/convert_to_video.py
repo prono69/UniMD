@@ -31,7 +31,7 @@ async def _(event):
     # thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + str(time.time()) + ".jpg"
     # LOGGER.info(thumb_image_path)
     thumb_image_path = os.path.join(
-        Config.TMP_DOWNLOAD_LOCATION,
+        Config.TMP_DOWNLOAD_DIRECTORY,
         +
         str(time.time()) + ".jpg"
     )
