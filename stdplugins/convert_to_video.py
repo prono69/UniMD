@@ -51,7 +51,7 @@ async def _(event):
             end = datetime.now()
             ms = (end - start).seconds
             await mone.edit("Downloaded now preparing to streaming upload")
-        if os.path.exists(input_str):
+        # if os.path.exists(input_str):
             start = datetime.now()
             lst_of_files = sorted(get_lst_of_files(input_str, []))
             logger.info(lst_of_files)
