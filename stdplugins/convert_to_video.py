@@ -84,7 +84,7 @@ async def _(event):
                         if metadata.has("duration"):
                             duration = metadata.get('duration').seconds
                         document_attributes = [
-                            cumentAttributeVideo(
+                            documentAttributeVideo(
                                 duration=duration,
                                 w=width,  
                                 h=height,
@@ -141,6 +141,8 @@ async def _(event):
             end = datetime.now()
             ms = (end - start).seconds
             await event.edit("Uploaded {} files in {} seconds.".format(u, ms))
+            await asyncio.sleep(5)
+            os.remove(downloaded_file_name)
     else:
         await event.edit("404: Directory Not Found")
 
