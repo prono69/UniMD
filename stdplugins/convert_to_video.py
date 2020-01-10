@@ -52,13 +52,21 @@ async def _(event):
             ms = (end - start).seconds
             await mone.edit("Downloaded now preparing to streaming upload")
         # if os.path.exists(input_str):
-            thumb = None
+            
             if os.path.exists(Config.TMP_DOWNLOAD_DIRECTORY):
                 if not downloaded_file_name.endswith((".mkv", ".mp4", ".mp3", ".flac",".webm",".ts",".mov")):
                     await mone.edit(
                         "**Supported Formats**: MKV, MP4, MP3, FLAC"
                     )
                     return False
+                if local_file_name.upper().endswith(("MKV", "MP4", "WEBM")):
+                    metadata = extractMetadata(createParser(local_file_name))
+                    duration = 0
+                    if metadata.has("duration"):
+                        duration = metadata.get('duration').seconds
+                    width = 0
+                    height = 0
+                    thumb = None
                 if os.path.exists(thumb_image_path):
                     thumb = thumb_image_path   
                 else:
@@ -69,11 +77,11 @@ async def _(event):
                     )
                 start = datetime.now()
                 metadata = extractMetadata(createParser(downloaded_file_name))
-                duration = 0
+                # duration = 0
                 width = 0
                 height = 0
-                if metadata.has("duration"):
-                    duration = metadata.get('duration').seconds
+                # if metadata.has("duration"):
+                    # duration = metadata.get('duration').seconds
                 if os.path.exists(thumb_image_path):
                     metadata = extractMetadata(createParser(thumb_image_path))
                     if metadata.has("width"):
