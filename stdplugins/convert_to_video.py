@@ -51,10 +51,11 @@ async def _(event):
             end = datetime.now()
             ms = (end - start).seconds
             await mone.edit("Downloaded now preparing to streaming upload")
+            converted_file = convert_to_streaming_format(downloaded_file_name,Config.TMP_DOWNLOAD_DIRECTORY)
         # if os.path.exists(input_str):
             thumb = None
             if os.path.exists(Config.TMP_DOWNLOAD_DIRECTORY):
-                if not downloaded_file_name.endswith((".mkv", ".mp4", ".mp3", ".flac",".webm",".ts",".mov")):
+                if not converted_file.endswith((".mkv", ".mp4", ".mp3", ".flac",".webm",".ts",".mov")):
                     await mone.edit(
                         "**Supported Formats**: MKV, MP4, MP3, FLAC"
                     )
@@ -62,9 +63,9 @@ async def _(event):
                 if os.path.exists(thumb_image_path):
                     thumb = thumb_image_path   
                 else:
-                    thumb = get_video_thumb(downloaded_file_name, thumb_image_path)
+                    thumb = get_video_thumb(converted_file, thumb_image_path)
                 start = datetime.now()
-                metadata = extractMetadata(createParser(downloaded_file_name))
+                metadata = extractMetadata(createParser(converted_file))
                 duration = 0
                 width = 0
                 height = 0
@@ -80,7 +81,7 @@ async def _(event):
                 try:
                     await borg.send_file(
                         event.chat_id,
-                        downloaded_file_name,
+                        converted_file,
                         thumb=thumb,
                         caption=input_str,
                         force_document=False,
@@ -127,7 +128,13 @@ def get_video_thumb(file, output=None, width=90):
     if not p.returncode and os.path.lexists(file):
         return output
 
-
+def convert_to_streaming_format(input_file,output_file):
+    input_file = downloaded_file_name
+    output_file_last = Config.TMP_DOWNLOAD_DIRECTORY + ".mp4"
+    p = subprocess.Popen([
+        'ffmpeg','-i', input_file , output_file_last
+    ],stdout=subprocess.PIPE,stderr=subprocess.DEVNULL)
+    return input_file
 
 
 
