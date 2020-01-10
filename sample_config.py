@@ -3,6 +3,16 @@
 # Create a new config.py file in same dir and import, then extend this class.
 import os
 
+from sys import version_info
+from logging import basicConfig, getLogger, INFO, DEBUG
+from distutils.util import strtobool as sb
+
+from pylast import LastFMNetwork, md5
+from pySmartDL import SmartDL
+from dotenv import load_dotenv
+from requests import get
+from telethon import TelegramClient
+from telethon.sessions import StringSession
 
 
 class Config(object):
@@ -119,7 +129,7 @@ class Config(object):
     ANTI_SPAMBOT = os.environ.get("ANTI_SPAMBOT", None)
     ANTI_SPAMBOT_SHOUT = os.environ.get("ANTI_SPAMBOT_SHOUT", None)
     # 'bot' variable
-if HU_STRING_SESSION:
+if STRING_SESSION:
     # pylint: disable=invalid-name
     bot = TelegramClient(StringSession(HU_STRING_SESSION),
                          API_ID,
