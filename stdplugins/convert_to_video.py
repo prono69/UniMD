@@ -60,19 +60,19 @@ async def _(event):
                 force_document = False
                 supports_streaming = True
                 document_attributes = []
-                if single_file.endswith((".mp4", ".mp3", ".flac", ".webm")):
+                if single_file.upper().endswith(Config.TL_VID_STREAM_TYPES):
                     metadata = extractMetadata(createParser(single_file))
                     duration = 0
                     width = 0
                     height = 0
                     if metadata.has("duration"):
                         duration = metadata.get('duration').seconds
-                    if os.path.exists(thumb_image_path):
-                        metadata = extractMetadata(createParser(thumb_image_path))
-                        if metadata.has("width"):
-                            width = metadata.get("width")
-                        if metadata.has("height"):
-                            height = metadata.get("height")
+                    # if os.path.exists(thumb_image_path):
+                    #     metadata = extractMetadata(createParser(thumb_image_path))
+                    #     if metadata.has("width"):
+                    #         width = metadata.get("width")
+                    #     if metadata.has("height"):
+                    #         height = metadata.get("height")
                     document_attributes = [
                         DocumentAttributeVideo(
                             duration=duration,
