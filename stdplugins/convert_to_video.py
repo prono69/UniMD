@@ -141,8 +141,8 @@ async def _(event):
             end = datetime.now()
             ms = (end - start).seconds
             await event.edit("Uploaded {} files in {} seconds.".format(u, ms))
-        else:
-            await event.edit("404: Directory Not Found")
+    else:
+        await event.edit("404: Directory Not Found")
 
 def get_lst_of_files(input_directory, output_lst):
     filesinfolder = os.listdir(input_directory)
