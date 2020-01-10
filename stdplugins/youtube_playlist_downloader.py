@@ -39,6 +39,10 @@ async def progress(current, total, event, start, type_of_ps, file_name=None):
     """Generic progress_callback for uploads and downloads."""
     now = time.time()
     diff = now - start
+    out_folder = Config.TMP_DOWNLOAD_DIRECTORY + "youtubedl/"
+    thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
+    if not os.path.isdir(out_folder):
+        os.makedirs(out_folder)
     if round(diff % 10.00) == 0 or current == total:
         percentage = current * 100 / total
         speed = current / diff

@@ -21,10 +21,7 @@ from uniborg.util import admin_cmd
 import wget
 from hurry.filesize import size
 
-out_folder = Config.TMP_DOWNLOAD_DIRECTORY + "youtubedl/"
-thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
-if not os.path.isdir(out_folder):
-    os.makedirs(out_folder)
+
 
 DELETE_TIMEOUT = 5
 
@@ -90,7 +87,10 @@ async def download_video(v_url):
     """ For .ytdl command, download media from YouTube and many other sites. """
     url = v_url.pattern_match.group(2)
     type = v_url.pattern_match.group(1).lower()
-
+    out_folder = Config.TMP_DOWNLOAD_DIRECTORY + "youtubedl/"
+    thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
+    if not os.path.isdir(out_folder):
+        os.makedirs(out_folder)
     await v_url.edit("`Preparing to download...`")
 
     if type == "a":
