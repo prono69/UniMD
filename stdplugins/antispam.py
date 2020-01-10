@@ -3,6 +3,7 @@
 
 from telethon import events
 from uniborg.util import admin_cmd
+from sample_config import Config
 
 @borg.on(events.ChatAction())
 async def _(cas):
