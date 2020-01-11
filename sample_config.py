@@ -60,7 +60,8 @@ class Config(object):
     # because of their ephemeral file system
     NO_LOAD = [
         "gban",
-        "notification_mtab_manager"
+        "notification_mtab_manager",
+        "antispam"
     ]
     # Get your own API key from https://www.remove.bg/ or
     # feel free to use http://telegram.dog/Remove_BGBot
@@ -109,9 +110,9 @@ class Config(object):
     # define "spam" in PMs
     MAX_FLOOD_IN_P_M_s = int(os.environ.get("MAX_FLOOD_IN_P_M_s", 3))
     # leave this blank, should be automatically filled for Heroku.com users
-    PM_LOGGR_BOT_API_ID = int(os.environ.get("PM_LOGGR_BOT_API_ID", None))
-    # if PM_LOGGR_BOT_API_ID:
-    #     PM_LOGGR_BOT_API_ID = int(PM_LOGGR_BOT_API_ID)
+    PM_LOGGR_BOT_API_ID = os.environ.get("PM_LOGGR_BOT_API_ID", None)
+    if PM_LOGGR_BOT_API_ID:
+        PM_LOGGR_BOT_API_ID = int(PM_LOGGR_BOT_API_ID)
     # define the "types" that should be uplaoded as streamable
     TL_VID_STREAM_TYPES = ("MKV", "MP4", "WEBM")
     TL_MUS_STREAM_TYPES = ("MP3", "WAV", "FLAC")
