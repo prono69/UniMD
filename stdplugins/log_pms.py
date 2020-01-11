@@ -1,15 +1,20 @@
 """Log PMs
 Check https://t.me/tgbeta/3505"""
 import asyncio
+import logging
+import os
+import sys
+
 from telethon import events
 from telethon.tl import functions, types
-from uniborg.util import admin_cmd
-import sys
+from telethon.tl.types import Channel, Chat, User
+
 from sample_config import Config
-import os
-import logging
+from uniborg.util import admin_cmd
+
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.WARN)
+
 global NO_PM_LOG_USERS
 NO_PM_LOG_USERS = []
 
