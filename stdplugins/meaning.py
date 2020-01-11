@@ -1,6 +1,8 @@
 """Dictionary Plugin for @UniBorg
 Syntax: .meaning <word>"""
-
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 import requests
 from telethon import events
 

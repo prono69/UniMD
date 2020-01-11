@@ -1,5 +1,8 @@
 """Get Detailed info about any message
 Syntax: .json"""
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 import io
 
 from telethon import events

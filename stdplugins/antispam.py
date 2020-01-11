@@ -8,7 +8,9 @@ from telethon.tl.types import ChannelParticipantsAdmins, Message
 
 from sample_config import Config
 from uniborg.util import admin_cmd
-
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 
 @borg.on(events.ChatAction())
 async def _(cas):

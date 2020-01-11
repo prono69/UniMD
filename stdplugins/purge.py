@@ -1,4 +1,7 @@
 """Purge your messages without the admins seeing it in Recent Actions"""
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 from telethon import events
 import asyncio
 from uniborg.util import admin_cmd

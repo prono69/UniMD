@@ -1,6 +1,8 @@
 """Create Button Posts
 """
-
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 import re
 from telethon import custom
 from uniborg.util import admin_cmd

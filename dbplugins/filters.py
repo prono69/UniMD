@@ -13,7 +13,9 @@ from telethon import events, utils
 from telethon.tl import types
 from sql_helpers.filters_sql import get_filter, add_filter, remove_filter, get_all_filters, remove_all_filters
 from uniborg.util import admin_cmd
-
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 
 DELETE_TIMEOUT = 300
 last_triggered_filters = {}

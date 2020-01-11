@@ -8,7 +8,9 @@ from telethon.tl import types
 from sql_helpers.welcome_sql import get_current_welcome_settings, \
     add_welcome_setting, rm_welcome_setting, update_previous_welcome
 from uniborg.util import admin_cmd
-
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 
 @borg.on(events.ChatAction())  # pylint:disable=E0602
 async def _(event):

@@ -16,7 +16,9 @@ from telethon.errors import (MessageEmptyError, MessageNotModifiedError,
 from uniborg.util import admin_cmd
 
 from sample_config import Config
-
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 
 @borg.on(admin_cmd(pattern="exec ?(.*)"))
 async def _(event):

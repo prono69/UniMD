@@ -10,7 +10,10 @@ import os
 import subprocess
 import sys
 from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
-
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
+                    
 
 @borg.on(events.NewMessage(pattern=r"\.getc", outgoing=True))
 async def get_media(event):

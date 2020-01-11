@@ -7,7 +7,9 @@ Syntax:
 # there might be some changes made to suit the needs for this repository
 # Licensed under MIT License
 
-
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 import aiohttp
 import asyncio
 import math

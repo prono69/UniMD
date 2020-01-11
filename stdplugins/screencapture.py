@@ -1,6 +1,8 @@
 """Take screenshot of any website
 Syntax: .screencapture <Website URL>"""
-
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 import io
 import traceback
 from datetime import datetime

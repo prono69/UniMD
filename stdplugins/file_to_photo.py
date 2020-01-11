@@ -1,6 +1,9 @@
 """
 Reply to a file with .f to send it as a photo
 """
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 from io import BytesIO
 
 from telethon import types

@@ -19,7 +19,9 @@ from PIL import Image
 from sample_config import Config
 from uniborg.util import *
 from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
-
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 # thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "thumb_image.jpg"
 
 @borg.on(admin_cmd(pattern="converttovideo ?(.*)"))

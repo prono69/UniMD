@@ -1,6 +1,8 @@
 """Get weather data using OpenWeatherMap
 Syntax: .weather <Location> """
-
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 import io
 import time
 from datetime import datetime, tzinfo

@@ -2,7 +2,9 @@
 Syntax:
 .download
 .download url | file.name to download files from a Public Link"""
-
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 import asyncio
 import math
 import os

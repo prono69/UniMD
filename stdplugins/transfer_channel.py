@@ -1,7 +1,9 @@
 """Transfer Ownership of Channels
 Available Commands:
 .otransfer @username"""
-
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 import telethon.password as pwd_mod
 # https://t.me/TelethonChat/140200
 from telethon.tl import functions, types

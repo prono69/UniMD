@@ -5,7 +5,9 @@ import asyncio
 from datetime import datetime
 from telethon.tl.types import User, Chat, Channel
 from uniborg.util import admin_cmd
-
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 
 
 @borg.on(admin_cmd(pattern="count"))

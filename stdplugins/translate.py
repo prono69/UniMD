@@ -2,6 +2,9 @@
 Available Commands:
 .tr LanguageCode as reply to a message
 .tr LangaugeCode | text to sepak"""
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 from telethon import events
 
 from uniborg.util import admin_cmd

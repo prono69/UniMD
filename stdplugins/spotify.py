@@ -1,3 +1,6 @@
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 from asyncio import sleep
 from json import loads
 from json.decoder import JSONDecodeError

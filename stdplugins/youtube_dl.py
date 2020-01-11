@@ -4,7 +4,9 @@
 # file, You can obtain one at https://www.gnu.org/licenses/gpl-3.0.en.html
 """YoutubeDL
 Click on any of the Buttons"""
-
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 import asyncio
 import json
 import os

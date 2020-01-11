@@ -4,7 +4,11 @@
 
 from telethon import events
 from telethon.tl.functions.messages import SaveDraftRequest
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 
+                    
 @borg.on(events.NewMessage(pattern=r"\.chain", outgoing=True))
 async def _(event):
     await event.edit("Counting...")

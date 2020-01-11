@@ -4,7 +4,9 @@
 from telethon import events
 import asyncio
 from collections import deque
-
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 
 @borg.on(events.NewMessage(pattern=r"\.kalp", outgoing=True))
 async def _(event):

@@ -1,5 +1,8 @@
 """Get information about an user on GitHub
 Syntax: .github USERNAME"""
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 import requests
 from telethon import events
 

@@ -1,5 +1,8 @@
 """Get Administrators of any Chat*
 Syntax: .get_admin"""
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 from telethon import events
 from telethon.tl.types import (ChannelParticipantAdmin,
                                ChannelParticipantCreator,

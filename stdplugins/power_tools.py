@@ -2,7 +2,9 @@
 Available Commands:
 .restart
 .shutdown"""
-
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 # This Source Code Form is subject to the terms of the GNU
 import asyncio
 import os

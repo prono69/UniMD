@@ -6,7 +6,9 @@ from datetime import datetime
 import requests
 import json
 from uniborg.util import admin_cmd
-
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 
 @borg.on(admin_cmd(pattern="calendar (.*)"))
 async def _(event):

@@ -2,7 +2,9 @@
 coded by @By_Azade
 """
 
-
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 import asyncio
 import os
 import time

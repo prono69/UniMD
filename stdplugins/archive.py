@@ -20,7 +20,9 @@ from telethon import events
 from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
 import subprocess
 import patoolib
-
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 
 extracted = Config.TMP_DOWNLOAD_DIRECTORY + "extracted/"
 thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"

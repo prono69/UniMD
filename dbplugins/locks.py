@@ -5,7 +5,9 @@ DB Options: bots, commands, email, forward, url"""
 
 from telethon import events, functions, types
 from uniborg.util import admin_cmd
-
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 
 @borg.on(admin_cmd(pattern="lock( (?P<target>\S+)|$)"))
 async def _(event):

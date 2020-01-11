@@ -1,6 +1,8 @@
 """Invite the user(s) to the current chat
 Syntax: .invite <User(s)>"""
-
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 from telethon import functions
 from uniborg.util import admin_cmd
 

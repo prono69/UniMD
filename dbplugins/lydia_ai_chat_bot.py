@@ -12,7 +12,9 @@ Credits:
 @Hackintosh5 (for inspiring me to write this module)
 @Zero_cool7870 (For Writing The Original Module)
 Zi Xing (For CoffeeHouse API)"""
-
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 
 import coffeehouse as cf
 

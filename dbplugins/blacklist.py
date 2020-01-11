@@ -13,7 +13,9 @@ import sql_helpers.blacklist_sql as sql
 from telethon import events, utils
 from telethon.tl import types, functions
 from uniborg.util import admin_cmd
-
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 
 @borg.on(admin_cmd(incoming=True))
 async def on_new_message(event):

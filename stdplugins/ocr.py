@@ -1,6 +1,9 @@
 """Optical Character Recognition by OCR.Space
 Syntax: .ocr <LangCode>
 Available Languages: .ocrlanguages"""
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 import json
 import os
 

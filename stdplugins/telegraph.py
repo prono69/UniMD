@@ -2,6 +2,9 @@
 Available Commands:
 .telegraph media as reply to a media
 .telegraph text as reply to a large text"""
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 import os
 from datetime import datetime
 

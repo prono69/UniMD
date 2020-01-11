@@ -4,6 +4,9 @@ usage: .gdl File-Link
 By: @Zero_cool7870
 
 """
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 import requests
 from telethon import events
 import asyncio

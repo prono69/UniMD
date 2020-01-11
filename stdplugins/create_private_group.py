@@ -3,7 +3,9 @@ Available Commands:
 .create (b|g) GroupName"""
 from telethon.tl import functions, types
 from uniborg import util
-
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 
 
 @borg.on(util.admin_cmd(pattern="create (b|g|c) (.*)"))  # pylint:disable=E0602

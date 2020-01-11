@@ -1,3 +1,6 @@
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 import cfscrape  # https://github.com/Anorov/cloudflare-scrape
 import requests
 from datetime import datetime

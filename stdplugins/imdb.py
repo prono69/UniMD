@@ -6,7 +6,9 @@
 Imdb Module
 .imdb
 """
-
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 import bs4
 import requests
 import asyncio

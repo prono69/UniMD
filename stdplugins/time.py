@@ -1,6 +1,8 @@
 """ It does not do to dwell on dreams and forget to live
 Syntax: .getime"""
-
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 import asyncio
 import os
 from datetime import datetime

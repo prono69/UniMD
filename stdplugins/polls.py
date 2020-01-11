@@ -1,5 +1,8 @@
 """Get Poll Info on non supported clients
 Syntax: .get_poll"""
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 from telethon import events
 import asyncio
 from uniborg.util import admin_cmd
