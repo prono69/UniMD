@@ -2,7 +2,12 @@
 #created for @uniborg (unfinished)
 
 from telethon import events
+from telethon.events import ChatAction
+from telethon.tl.types import ChannelParticipantsAdmins, Message
+
+from sample_config import Config
 from uniborg.util import admin_cmd
+
 
 @borg.on(events.ChatAction())
 async def _(cas):
