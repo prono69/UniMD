@@ -7,7 +7,9 @@ from uniborg.util import admin_cmd
 import sys
 from sample_config import Config
 import os
-
+import logging
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                    level=logging.WARN)
 global NO_PM_LOG_USERS
 NO_PM_LOG_USERS = []
 
@@ -26,7 +28,7 @@ async def monito_p_m_s(event):
                     silent=True
                 )
             except Exception as e:
-                logger.warn(str(e))
+                # logger.warn(str(e))
                 exc_type, exc_obj, exc_tb = sys.exc_info()
                 fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
                 print(exc_type, fname, exc_tb.tb_lineno)
