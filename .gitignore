@@ -7,3 +7,4 @@ data/
 config.py
 sessions/
 
+.vscode/settings.json
