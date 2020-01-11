@@ -15,7 +15,7 @@ async def _(cas):
     if (chat.admin_rights or chat.creator):
         if cas.user_joined or cas.user_added: 
             user = await cas.get_user()
-        id = user.id
+            id = user.id
         mid = "{}".format(chat.title)
         mention = "[{}](tg://user?id={})".format(user.first_name, user.id) 
         from requests import get
