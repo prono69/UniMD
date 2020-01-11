@@ -2,22 +2,26 @@
 # This Source Code Form is subject to the terms of the GNU
 # General Public License, v.3.0. If a copy of the GPL was not distributed with this
 # file, You can obtain one at https://www.gnu.org/licenses/gpl-3.0.en.html
-import logging
-logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
-                    level=logging.WARNING)
 from __future__ import unicode_literals
 
 import asyncio
 import json
+import logging
 import os
 import time
 from datetime import datetime
 
-import youtube_dl
 from telethon import events
 
-
+import youtube_dl
 from sample_config import Config
+
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
+
+
+
+
 
 
 @borg.on(events.NewMessage(pattern=r"\.youtube search (.*)", outgoing=True))
