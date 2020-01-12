@@ -15,7 +15,7 @@ from telethon.tl.types import (ChannelParticipantsAdmins, ChatBannedRights,
                                Message, PeerChannel, PeerChat, PeerUser)
 
 from sample_config import Config
-
+from langdetect import detect
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)
 
@@ -96,9 +96,9 @@ async def ANTI_SPAMBOT(welcm):
                         )
                         data = None
                         pass
-                    chinese_lang = re.search("(?m)([\u4e00-\u9fa5])+", check_user.first_name)
-                    arabic_lang = re.search("^[\u0621-\u064A]+$",check_user.first_name)
-                    persian_lang = re.search("^([\u0600-\u06FF]+\s?)", check_user.first_name)
+                    chinese_lang = detect(check_user.first_name)
+                    arabic_lang = detect(check_user.first_name)
+                    persian_lang = detect(check_user.first_name)
                     if data and data['ok']:
                         reason = f"[Banned by Combot Anti Spam](https://combot.org/cas/query?u={check_user.id})"
                         spambot = True
@@ -117,13 +117,13 @@ async def ANTI_SPAMBOT(welcm):
                     elif "bit.ly/" in message.text:
                         reason = "Match on `bit.ly` URLs"
                         spambot = True
-                    elif check_user.first_name or check_user.last_name == chinese_lang:
+                    elif chinese_lang in "zh-cn":
                         reason = "Match on Chinese Userbot"
                         spambot = True
-                    elif check_user.first_name or check_user.last_name == arabic_lang:
+                    elif persian_lang in "ar":
                         reason = "Match on Arabic Userbot or User"
                         spambot = True
-                    elif check_user.first_name or check_user.last_name == persian_lang:
+                    elif persian_lang in "fa":
                         reason = "Match on Persian Userbot or User"
                         spambot = True
                     else:
