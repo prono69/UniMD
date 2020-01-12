@@ -8,6 +8,7 @@ import logging
 from asyncio import sleep
 
 from requests import get
+from telethon import events
 from telethon.events import ChatAction
 from telethon.tl.functions.channels import EditBannedRequest
 from telethon.tl.types import (ChannelParticipantsAdmins, ChatBannedRights,
@@ -186,4 +187,3 @@ async def ANTI_SPAMBOT(welcm):
                             f"MESSAGE:\n\n{message.text}")
     except ValueError:
         pass
-
