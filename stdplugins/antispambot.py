@@ -15,7 +15,7 @@ from telethon.tl.types import (ChannelParticipantsAdmins, ChatBannedRights,
                                Message, PeerChannel, PeerChat, PeerUser)
 
 from sample_config import Config
-from langdetect import detect
+
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)
 
@@ -96,9 +96,6 @@ async def ANTI_SPAMBOT(welcm):
                         )
                         data = None
                         pass
-                    chinese_lang = detect(check_user.first_name)
-                    arabic_lang = detect(check_user.first_name)
-                    persian_lang = detect(check_user.first_name)
                     if data and data['ok']:
                         reason = f"[Banned by Combot Anti Spam](https://combot.org/cas/query?u={check_user.id})"
                         spambot = True
@@ -116,15 +113,6 @@ async def ANTI_SPAMBOT(welcm):
                         spambot = True
                     elif "bit.ly/" in message.text:
                         reason = "Match on `bit.ly` URLs"
-                        spambot = True
-                    elif chinese_lang in "zh-cn":
-                        reason = "Match on Chinese Userbot"
-                        spambot = True
-                    elif persian_lang in "ar":
-                        reason = "Match on Arabic Userbot or User"
-                        spambot = True
-                    elif persian_lang in "fa":
-                        reason = "Match on Persian Userbot or User"
                         spambot = True
                     else:
                         if check_user.first_name in ("Bitmex", "Promotion",

@@ -38,4 +38,3 @@ patool
 pytube
 wget
 hurry.filesize
-langdetect
