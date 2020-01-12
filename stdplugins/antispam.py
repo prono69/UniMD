@@ -10,10 +10,15 @@ import sys
 from requests import get
 from telethon import events
 from telethon.events import ChatAction
-from telethon.tl.types import ChannelParticipantsAdmins, Message
+from telethon.tl.functions.channels import EditBannedRequest
+from telethon.tl.types import (ChannelParticipantsAdmins, ChatBannedRights,
+                               Message)
 
 from sample_config import Config
 from uniborg.util import admin_cmd
+
+
+
 
 
 
@@ -31,8 +36,6 @@ async def _(cas):
             if r_dict['ok']:
                 try:                
                     more = r_dict['result']
-                    from telethon.tl.types import ChatBannedRights
-                    from telethon.tl.functions.channels import EditBannedRequest
                     rights = ChatBannedRights(
                         until_date=None,
                         view_messages=True,
