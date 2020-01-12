@@ -44,8 +44,7 @@ async def ANTI_SPAMBOT(welcm):
                 except AttributeError:
                     return
 
-            async for admin in borg.iter_participants(
-                    welcm.chat_id, filter=ChannelParticipantsAdmins):
+            async for admin in borg.iter_participants(welcm.chat_id, filter=ChannelParticipantsAdmins):
                 if admin.id == adder:
                     ignore = True
                     break
@@ -67,21 +66,15 @@ async def ANTI_SPAMBOT(welcm):
                 return
 
             for user_id in users:
-                async for message in borg.iter_messages(welcm.chat_id,
-                                                       from_user=user_id):
-
+                async for message in borg.iter_messages(welcm.chat_id,from_user=user_id):
                     correct_type = isinstance(message, Message)
                     if not message or not correct_type:
                         break
-
                     join_time = welcm.action_message.date
                     message_date = message.date
-
                     if message_date < join_time:
                         continue  # The message was sent before the user joined, thus ignore it
-
                     check_user = await welcm.client.get_entity(user_id)
-
                     # DEBUGGING. LEAVING IT HERE FOR SOME TIME ###
                     print(
                         f"User Joined: {check_user.first_name} [ID: {check_user.id}]"
