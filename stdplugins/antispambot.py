@@ -96,7 +96,9 @@ async def ANTI_SPAMBOT(welcm):
                         )
                         data = None
                         pass
-
+                    chinese_lang = re.search("(?m)([\u4e00-\u9fa5])+", check_user.first_name)
+                    arabic_lang = re.search("^[\u0621-\u064A]+$",check_user.first_name)
+                    persian_lang = re.search("^([\u0600-\u06FF]+\s?)", check_user.first_name)
                     if data and data['ok']:
                         reason = f"[Banned by Combot Anti Spam](https://combot.org/cas/query?u={check_user.id})"
                         spambot = True
@@ -115,15 +117,12 @@ async def ANTI_SPAMBOT(welcm):
                     elif "bit.ly/" in message.text:
                         reason = "Match on `bit.ly` URLs"
                         spambot = True
-                    chinese_lang = re.search("(?m)([\u4e00-\u9fa5])+", check_user.first_name)
                     elif check_user.first_name or check_user.last_name == chinese_lang:
                         reason = "Match on Chinese Userbot"
                         spambot = True
-                    arabic_lang = re.search("^[\u0621-\u064A]+$",check_user.first_name)
                     elif check_user.first_name or check_user.last_name == arabic_lang:
                         reason = "Match on Arabic Userbot or User"
                         spambot = True
-                    persian_lang = re.search("^([\u0600-\u06FF]+\s?)", check_user.first_name)
                     elif check_user.first_name or check_user.last_name == persian_lang:
                         reason = "Match on Persian Userbot or User"
                         spambot = True
