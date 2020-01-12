@@ -6,7 +6,7 @@
 ''' A module for helping ban group join spammers. '''
 import logging
 from asyncio import sleep
-
+import re
 from requests import get
 from telethon import events
 from telethon.events import ChatAction
@@ -114,6 +114,18 @@ async def ANTI_SPAMBOT(welcm):
                         spambot = True
                     elif "bit.ly/" in message.text:
                         reason = "Match on `bit.ly` URLs"
+                        spambot = True
+                    chinese_lang = re.search("(?m)([\u4e00-\u9fa5])+", check_user.first_name)
+                    elif check_user.first_name or check_user.last_name == chinese_lang:
+                        reason = "Match on Chinese Userbot"
+                        spambot = True
+                    arabic_lang = re.search("^[\u0621-\u064A]+$",check_user.first_name)
+                    elif check_user.first_name or check_user.last_name == arabic_lang:
+                        reason = "Match on Arabic Userbot or User"
+                        spambot = True
+                    persian_lang = re.search("^([\u0600-\u06FF]+\s?)", check_user.first_name)
+                    elif check_user.first_name or check_user.last_name == persian_lang:
+                        reason = "Match on Persian Userbot or User"
                         spambot = True
                     else:
                         if check_user.first_name in ("Bitmex", "Promotion",
