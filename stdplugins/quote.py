@@ -50,7 +50,7 @@ if 1 == 1:
         "channel": "Channel"
     }
 
-    config = dict({"api_token": os.environ.get("QUOTE_API_TOKEN"), 
+    config = dict({"api_token": os.environ.get("API_TOKEN"), 
                                           "api_url": "http://api.antiddos.systems",
                                           "username_colors": ["#fb6169", "#faa357", "#b48bf2", "#85de85",
                                                               "#62d4e3", "#65bdf3", "#ff5694"],
@@ -133,7 +133,7 @@ if 1 == 1:
             "Text": reply.message,
             "Markdown": get_markdown(reply),
             "Template": args[0],
-            "APIKey": config["QUOTE_API_TOKEN"]
+            "APIKey": config["api_token"]
         })
 
         resp = requests.post(config["api_url"] + "/api/v2/quote", data=request)
@@ -155,7 +155,7 @@ if 1 == 1:
         elif resp["status"] == 404:
             if resp["message"] == "ERROR_TEMPLATE_NOT_FOUND":
                 newreq = requests.post(config["api_url"] + "/api/v1/getalltemplates", data={
-                    "token": config["QUOTE_API_TOKEN"]
+                    "token": config["api_token"]
                 })
                 newreq = newreq.json()
 

@@ -118,8 +118,8 @@ class Config(object):
     YOUTUBE_API_KEY = os.environ.get("YOUTUBE_API_KEY", None)
     ANTI_SPAMBOT = os.environ.get("ANTI_SPAMBOT", None)
     ANTI_SPAMBOT_SHOUT = os.environ.get("ANTI_SPAMBOT_SHOUT", None)
-    #QUOTE_API_TOKEN for quote plugin
-    QUOTE_API_TOKEN = os.environ.get("QUOTE_API_TOKEN",None)
+    #API_TOKEN for quote plugin
+    API_TOKEN = os.environ.get("API_TOKEN",None)
 
 
 class Production(Config):
