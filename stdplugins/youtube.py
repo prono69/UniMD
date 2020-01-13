@@ -24,7 +24,7 @@ logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s'
 
 
 
-@borg.on(events.NewMessage(pattern=r"\.youtube search (.*)", outgoing=True))
+
 @borg.on(events.MessageEdited(pattern=r"\.youtube search (.*)", outgoing=True))
 async def _(event):
     if event.fwd_from:
