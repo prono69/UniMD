@@ -34,9 +34,6 @@ async def _(event):
         except Exception as e:
             await mone.edit(str(e))
             return False
-        else:
-            pass
-    
         if response:
             try:
                 response = json.dumps(json.loads(response), sort_keys=True, indent=6)

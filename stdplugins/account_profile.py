@@ -34,7 +34,7 @@ async def _(event):
     names = event.pattern_match.group(1)
     first_name = names
     last_name = ""
-    if  "\\n" in names:
+    if "\\n" in first_name:
         first_name, last_name = names.split("\\n", 1)
     try:
         await borg(functions.account.UpdateProfileRequest(  # pylint:disable=E0602

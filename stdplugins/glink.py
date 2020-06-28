@@ -237,8 +237,7 @@ async def upload_file(http, file_path, file_name, mime_type, event):
     drive_service.permissions().insert(fileId=response.get('id'), body=permissions).execute()
     # Define file instance and get url for download
     file = drive_service.files().get(fileId=response.get('id')).execute()
-    download_url = response.get("webContentLink")
-    return download_url
+    return response.get("webContentLink")
 
 @borg.on(admin_cmd(pattern="gfolder ?(.*)", allow_sudo=True))
 async def _(event):

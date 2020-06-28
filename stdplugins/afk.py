@@ -43,27 +43,27 @@ async def set_not_afk(event):
         afk_time = None  
 
 
-@borg.on(events.NewMessage(pattern=r"\.afk ?(.*)", outgoing=True))  
+@borg.on(events.NewMessage(pattern=r"\.afk ?(.*)", outgoing=True))
 async def _(event):
     if event.fwd_from:
         return
-    global USER_AFK  
-    global afk_time  
-    global last_afk_message  
+    global USER_AFK
+    global afk_time
+    global last_afk_message
     global reason
     USER_AFK = {}
     afk_time = datetime.datetime.now()
     last_afk_message = {}
-    reason = event.pattern_match.group(1)
     if not USER_AFK:  
+        reason = event.pattern_match.group(1)
         last_seen_status = await borg(  
             functions.account.GetPrivacyRequest(
                 types.InputPrivacyKeyStatusTimestamp()
             )
         )
         if isinstance(last_seen_status.rules, types.PrivacyValueAllowAll):
-            afk_time = datetime.datetime.now()  
-        USER_AFK = f"yes: {reason}"  
+            afk_time = datetime.datetime.now()
+        USER_AFK = f"yes: {reason}"
         if reason:
             await event.edit(f"Set AFK mode to True, and Reason is {reason}")
         else:
@@ -86,9 +86,9 @@ async def _(event):
 async def on_afk(event):
     if event.fwd_from:
         return
-    global USER_AFK  
-    global afk_time  
-    global last_afk_message  
+    global USER_AFK
+    global afk_time
+    global last_afk_message
     afk_since = "yakın bir zaman"
     current_message_text = event.message.message.lower()
     if "afk" in current_message_text:
@@ -97,12 +97,12 @@ async def on_afk(event):
         return False
     if USER_AFK and not (await event.get_sender()).bot:  
         if afk_time:
-            afk_since = "" 
+            afk_since = ""
             now = datetime.datetime.now()
-            datime_since_afk = now - afk_time  
+            datime_since_afk = now - afk_time
             time = float(datime_since_afk.seconds)
             days = time // (24 * 3600)
-            time = time % (24 * 3600)
+            time %= 24 * 3600
             hours = time // 3600
             time %= 3600
             minutes = time // 60
@@ -133,5 +133,5 @@ async def on_afk(event):
         msg = await event.reply(message_to_reply)
         await asyncio.sleep(5)
         if event.chat_id in last_afk_message:  
-            await last_afk_message[event.chat_id].delete()  
+            await last_afk_message[event.chat_id].delete()
         last_afk_message[event.chat_id] = msg  

@@ -97,8 +97,6 @@ async def _(event):
 
 
 async def download_coroutine(session, url, file_name, event, start):
-    CHUNK_SIZE = 2341
-    downloaded = 0
     display_message = ""
     async with session.get(url) as response:
         total_length = int(response.headers["Content-Length"])
@@ -110,6 +108,8 @@ URL: {}
 File Name: {}
 File Size: {}""".format(url, file_name, humanbytes(total_length)))
         with open(file_name, "wb") as f_handle:
+            CHUNK_SIZE = 2341
+            downloaded = 0
             while True:
                 chunk = await response.content.read(CHUNK_SIZE)
                 if not chunk:
@@ -126,22 +126,21 @@ File Size: {}""".format(url, file_name, humanbytes(total_length)))
                         (total_length - downloaded) / speed) * 1000
                     estimated_total_time = elapsed_time + time_to_completion
                     try:
-                        current_message = """**Download Status**
+                                                current_message = """**Download Status**
 URL: {}
 File Name: {}
 File Size: {}
 Downloaded: {}
 ETA: {}""".format(
-    url,
-    file_name,
-    humanbytes(total_length),
-    humanbytes(downloaded),
-    time_formatter(estimated_total_time)
-)
-                        if current_message != display_message:
-                            await event.edit(current_message)
-                            display_message = current_message
+                            url,
+                            file_name,
+                            humanbytes(total_length),
+                            humanbytes(downloaded),
+                            time_formatter(estimated_total_time)
+                        )
+                                                if current_message != display_message:
+                                                    await event.edit(current_message)
+                                                    display_message = current_message
                     except Exception as e:
                         logger.info(str(e))
-                        pass
         return await response.release()

@@ -60,12 +60,11 @@ async def set_no_log_p_m(event):
     if Config.PM_LOGGR_BOT_API_ID is not None:
         reason = event.pattern_match.group(1)
         chat = await event.get_chat()
-        if event.is_private:
-            if not no_log_pms_sql.is_approved(chat.id):
-                no_log_pms_sql.approve(chat.id)
-                await event.edit("Won't Log Messages from this chat")
-                await asyncio.sleep(3)
-                await event.delete()
+        if event.is_private and not no_log_pms_sql.is_approved(chat.id):
+            no_log_pms_sql.approve(chat.id)
+            await event.edit("Won't Log Messages from this chat")
+            await asyncio.sleep(3)
+            await event.delete()
 
 
 @borg.on(admin_cmd(pattern="dellog ?(.*)"))
@@ -73,12 +72,11 @@ async def set_no_log_p_m(event):
     if Config.PM_LOGGR_BOT_API_ID is not None:
         reason = event.pattern_match.group(1)
         chat = await event.get_chat()
-        if event.is_private:
-            if no_log_pms_sql.is_approved(chat.id):
-                no_log_pms_sql.disapprove(chat.id)
-                await event.edit("Will Log Messages from this chat")
-                await asyncio.sleep(3)
-                await event.delete()
+        if event.is_private and no_log_pms_sql.is_approved(chat.id):
+            no_log_pms_sql.disapprove(chat.id)
+            await event.edit("Will Log Messages from this chat")
+            await asyncio.sleep(3)
+            await event.delete()
 
 
 @borg.on(admin_cmd(pattern="approvepm ?(.*)"))
@@ -87,18 +85,20 @@ async def approve_p_m(event):
         return
     reason = event.pattern_match.group(1)
     chat = await event.get_chat()
-    if Config.PM_LOGGR_BOT_API_ID is not None:
-        if event.is_private:
-            if not pmpermit_sql.is_approved(chat.id):
-                if chat.id in PM_WARNS:
-                    del PM_WARNS[chat.id]
-                if chat.id in PREV_REPLY_MESSAGE:
-                    await PREV_REPLY_MESSAGE[chat.id].delete()
-                    del PREV_REPLY_MESSAGE[chat.id]
-                pmpermit_sql.approve(chat.id, reason)
-                await event.edit("Private Message Accepted")
-                await asyncio.sleep(3)
-                await event.delete()
+    if (
+        Config.PM_LOGGR_BOT_API_ID is not None
+        and event.is_private
+        and not pmpermit_sql.is_approved(chat.id)
+    ):
+        if chat.id in PM_WARNS:
+            del PM_WARNS[chat.id]
+        if chat.id in PREV_REPLY_MESSAGE:
+            await PREV_REPLY_MESSAGE[chat.id].delete()
+            del PREV_REPLY_MESSAGE[chat.id]
+        pmpermit_sql.approve(chat.id, reason)
+        await event.edit("Private Message Accepted")
+        await asyncio.sleep(3)
+        await event.delete()
 
 
 @borg.on(admin_cmd(pattern="blockpm ?(.*)"))
@@ -107,13 +107,15 @@ async def approve_p_m(event):
         return
     reason = event.pattern_match.group(1)
     chat = await event.get_chat()
-    if Config.PM_LOGGR_BOT_API_ID is not None:
-        if event.is_private:
-            if pmpermit_sql.is_approved(chat.id):
-                pmpermit_sql.disapprove(chat.id)
-                await event.edit("Blocked PM")
-                await asyncio.sleep(3)
-                await event.client(functions.contacts.BlockRequest(chat.id))
+    if (
+        Config.PM_LOGGR_BOT_API_ID is not None
+        and event.is_private
+        and pmpermit_sql.is_approved(chat.id)
+    ):
+        pmpermit_sql.disapprove(chat.id)
+        await event.edit("Blocked PM")
+        await asyncio.sleep(3)
+        await event.client(functions.contacts.BlockRequest(chat.id))
 
 
 @borg.on(admin_cmd(pattern="list approved pms"))
@@ -193,10 +195,6 @@ async def on_new_private_message(event):
 async def on_new_chat_action_message(event):
     if Config.PM_LOGGR_BOT_API_ID is None:
         return
-    # logger.info(event.stringify())
-    chat_id = event.chat_id
-    message_id = event.action_message.id
-
     if event.created or event.user_added:
         added_by_users = event.action_message.action.users
         if borg.uid in added_by_users:
@@ -205,6 +203,10 @@ async def on_new_chat_action_message(event):
             the_message = ""
             the_message += "#MessageActionChatAddUser\n\n"
             the_message += f"[User](tg://user?id={added_by_user}): `{added_by_user}`\n"
+            # logger.info(event.stringify())
+            chat_id = event.chat_id
+            message_id = event.action_message.id
+
             the_message += f"[Private Link](https://t.me/c/{chat_id}/{message_id})\n"
             await event.client.send_message(
                 entity=Config.PM_LOGGR_BOT_API_ID,

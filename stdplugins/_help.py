@@ -44,10 +44,10 @@ UserBot Forked from https://github.com/expectocode/uniborg""".format(
             reply_to=event.reply_to_msg_id,
             hide_via=True
         )
-        await event.delete()
     else:
         await event.reply(help_string + "\n\n" + s_help_string)
-        await event.delete()
+
+    await event.delete()
 
 
 @borg.on(admin_cmd(pattern="dc"))  # pylint:disable=E0602
