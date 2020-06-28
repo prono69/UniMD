@@ -107,8 +107,7 @@ async def remove_all(event):
 async def show_all(event):
 	if event.fwd_from:
 		return
-	output = "output.txt"
-	downloads = aria2.get_downloads() 
+	downloads = aria2.get_downloads()
 	msg = ""
 	for download in downloads:
 		msg = msg+"File: `"+str(download.name) +"`\nSpeed: "+ str(download.download_speed_string())+"\nProgress: "+str(download.progress_string())+"\nTotal Size: "+str(download.total_length_string())+"\nStatus: "+str(download.status)+"\nETA:  "+str(download.eta_string())+"\n\n"
@@ -116,10 +115,11 @@ async def show_all(event):
 		await event.edit("`Current Downloads: `\n"+msg)
 	else:
 		await event.edit("`Output is huge. Sending as a file...`")
+		output = "output.txt"
 		with open(output,'w') as f:
 			f.write(msg)
-		await asyncio.sleep(2)	
-		await event.delete()	
+		await asyncio.sleep(2)
+		await event.delete()
 		await borg.send_file(
 			event.chat_id,
 			output,

@@ -70,10 +70,7 @@ class Main(object):
 		return None
 
 	def dict_has_props(self, dic, props):
-		for p in props:
-			if not p in dic:
-				return False
-		return True
+		return all(p in dic for p in props)
 
 	def assert_status_code(self, code, expected):
 		if code != expected:
@@ -143,8 +140,6 @@ class Main(object):
 		return r
 
 	def request_download(self, url, dest, progress, cont=False):
-		buffer_size = self.options.buffer
-
 		# Open the output file, append mode if continue.
 		with open(dest, 'ab' if cont else 'wb') as fp:
 			status = 200
@@ -162,6 +157,8 @@ class Main(object):
 
 			start = time.time()
 			progress(self.DL_PROGRESS_START, start, start, offset, 0, offset, None)
+
+			buffer_size = self.options.buffer
 
 			res = self.request(url, headers)
 			code = res.getcode()
@@ -352,7 +349,7 @@ class Main(object):
 			self.log('Output dir: %s' % (out_dir))
 
 		file_name = self.create_file_name(None)
-		if not file_name is None:
+		if file_name is not None:
 			self.log('Output file: %s' % (file_name))
 			self.assert_not_exists(os.path.join(out_dir, file_name))
 

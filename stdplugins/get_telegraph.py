@@ -81,10 +81,7 @@ class FilesOpener(object):
                 file_or_name = file_or_name[0]
             if hasattr(file_or_name, 'read'):
                 f = file_or_name
-                if hasattr(f, 'name'):
-                    filename = f.name
-                else:
-                    filename = name
+                filename = f.name if hasattr(f, 'name') else name
             else:
                 filename = file_or_name
                 f = open(filename, 'rb')
